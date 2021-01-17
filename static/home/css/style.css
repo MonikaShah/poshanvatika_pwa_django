@@ -98,3 +98,18 @@
     background: var(--title);
     box-shadow: 1px 1px 3px rgba(90,90,90,0.2);
   }
+
+  .main-image {
+    max-width: 70%;
+    max-height: 50%;
+    /* width: 800; */
+    /* height: 550; */
+    margin: auto;
+    display: block;
+  }
+
+  .msg-box{
+    margin: 10px;
+    display: block;
+    text-align: center;
+  }
