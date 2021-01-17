@@ -1,0 +1,45 @@
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Poshan Vatika</title>
+  <link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
+
+  <!-- materialize icons, css & js -->
+  <link type="text/css" href="{% static 'home/css/materialize.min.css' %}" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link type="text/css" href="{% static 'home/css/style.css' %}" rel="stylesheet">
+  <script type="text/javascript" src="{% static 'home/js/materialize.min.js' %}"></script>
+</head>
+<body class="grey lighten-4">
+
+  <!-- top nav -->
+  <nav class="z-depth-0">
+    <div class="nav-wrapper container">
+      <a href="/">Poshan<span>Vatika</span></a>
+      <span class="right grey-text text-darken-1">
+        <i class="material-icons sidenav-trigger" data-target="side-menu">menu</i>
+      </span>
+    </div>
+  </nav>
+
+  <!-- side nav -->
+  <ul id="side-menu" class="sidenav side-menu">
+    <li><a class="subheader">POSHANVATIKA</a></li>
+    <li><a href="{% url 'map' %}" class="waves-effect">Map</a></li>
+    <li><a href="{% url 'home'%}" class="waves-effect">Forms</a></li>
+    <li><a href="{% url 'about' %}" class="waves-effect">About</a></li>
+    <li><div class="divider"></div></li>
+    <li><a href="{% url 'contact' %}" class="waves-effect">
+      <i class="material-icons">mail_outline</i>Contact</a>
+    </li>
+  </ul>
+
+  {% block content %}
+  {% endblock %}
+
+  <script src="{% static 'home/js/ui.js' %}"></script>
+</body>
+</html>

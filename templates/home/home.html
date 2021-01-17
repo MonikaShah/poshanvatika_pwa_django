@@ -1,0 +1,82 @@
+{% extends 'home/base.html'%}
+{% block content %}
+  <!-- recipes -->
+  <div class="recipes container grey-text text-darken-1">
+
+
+
+    <div class="card-panel recipe white row">
+      <img src="/img/dish.png" alt="recipe thumb">
+      <div class="recipe-details">
+        <div class="recipe-title">Edame Noodles</div>
+        <div class="recipe-ingredients">Edame Beans, Noodels, Garlic oil</div>
+      </div>
+      <div class="recipe-delete">
+        <i class="material-icons">delete_outline</i>
+      </div>
+    </div>
+  </div>
+
+  <div class="center">
+    <a class="btn-floating btn-small btn-large add-btn">
+      <i class="material-icons">add</i>
+    </a>
+  </div>
+
+  <!-- add recipe side nav -->
+  <div id="side-form" class="side-form">
+    <form class="add-recipe container section">
+      <h6 >Add NutiGarden</h6>
+      <div class="divider"></div>
+
+      <video id="player" autoplay></video>
+      <canvas id='canvas' width="320px" height="240px"></canvas>
+      <div class="input-field center">
+        <a id="capture-btn" class="waves-effect waves-light btn-small">Capture</a>
+      </div>
+      <!-- <button  class="mdl-button mdl-is-button mdl-button--raised mdl-button--colored"></button> -->
+
+      <div id='pick-image'>
+        <h6>pick a image instead</h6>
+        <input type="file" accept="image/*" id="image-picker">
+      </div>
+
+      <div class="input-section center">
+      <a id="location-btn" class="waves-effect waves-light btn-small">Get Location</a>
+
+        <!-- <button class="" id="location-btn"></button> -->
+        <div class="preloader-wrapper small active" id="location-loader">
+          <div class="spinner-layer spinner-green">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div><div class="gap-patch">
+              <div class="circle"></div>
+            </div><div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="input-field">
+        <input placeholder="Enter Institution Name" id="title" type="text" class="validate">
+        <label for="title">Name</label>
+      </div>
+      <div class="input-field">
+        <input placeholder="Enter Village Name" id="ingredients" type="text" class="validate">
+        <label for="ingredients">Village</label>
+      </div>
+      <div class="input-field center">
+        <button class="btn-small">Add</button>
+      </div>
+
+      <div class="center">
+        <a class="btn-floating btn-small btn-large close-btn">
+          <i class="material-icons">close</i>
+        </a>
+      </div>
+    </form>
+  </div>
+  {% endblock %}
+
+  
