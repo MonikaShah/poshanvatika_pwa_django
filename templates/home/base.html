@@ -1,4 +1,6 @@
 {% load static %}
+{% load wagtailcore_tags %}
+
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -32,6 +34,7 @@
     <li><a class="subheader">POSHANVATIKA</a></li>
     <li><a href="{% url 'map' %}" class="waves-effect">Map</a></li>
     <li><a href="{% url 'home'%}" class="waves-effect">Forms</a></li>
+    <li><a href="/pages/resources" class="waves-effect">Resources</a></li>
     <li><a href="{% url 'about' %}" class="waves-effect">About</a></li>
     <li><div class="divider"></div></li>
     <li><a href="{% url 'contact' %}" class="waves-effect">
