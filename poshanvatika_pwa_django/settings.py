@@ -25,11 +25,28 @@ SECRET_KEY = 'xyre8e*04pgg&_mktm4y_uy%(j!vxfj!_(=*pzov9+d8ur2ken'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['poshanvatika.communitygis.net']
+ALLOWED_HOSTS = ['poshanvatika.communitygis.net','127.0.0.1','localhost']
 
 
 # Application definition
 
+WAGTAIL_APPS = [
+    'wagtail.contrib.forms',
+    'wagtail.contrib.redirects',
+    'wagtail.embeds',
+    'wagtail.sites',
+    'wagtail.users',
+    'wagtail.snippets',
+    'wagtail.documents',
+    'wagtail.images',
+    'wagtail.search',
+    'wagtail.admin',
+    'wagtail.core',
+
+    'modelcluster',
+    'taggit',
+    'resources',
+]
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -39,8 +56,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'home',
     'map',
-]
+] + WAGTAIL_APPS
 
+WAGTAIL_MIDDLEWARE = [
+    'wagtail.contrib.redirects.middleware.RedirectMiddleware',
+]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -49,7 +69,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
+] + WAGTAIL_MIDDLEWARE
 
 ROOT_URLCONF = 'poshanvatika_pwa_django.urls'
 
@@ -126,3 +146,8 @@ STATICFILES_DIRS = (
 )
 
 STATIC_ROOT = BASE_DIR/ 'staticfiles'
+
+MEDIA_ROOT = BASE_DIR/ 'media'
+MEDIA_URL = '/media/'
+
+WAGTAIL_SITE_NAME = 'poshanvatika.communitygis.com'
