@@ -113,3 +113,22 @@
     display: block;
     text-align: center;
   }
+
+  #side-form video,#side-form canvas{
+    width: 512px;
+    max-width: 100%;
+    display: none;
+    margin: auto;
+  }
+
+  #side-form #pick-image, #side-form #location-loader{
+    display: none;
+  }
+
+  #side-form #capture-btn{
+    margin: 10px auto;
+  }
+
+  #location-loader{
+    margin: auto;
+  }

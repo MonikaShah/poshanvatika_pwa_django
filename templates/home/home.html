@@ -28,48 +28,57 @@
 
   <!-- add recipe side nav -->
   <div id="side-form" class="side-form">
-    <form class="add-recipe container section">
+    <form class="add-recipe container section" method="post">
+      {% csrf_token %}
       <h6 >Add NutiGarden</h6>
       <div class="divider"></div>
+      <!-- <form method="post" enctype="multipart/form-data"> -->
+        <video id="player" autoplay></video>
+        <canvas id='canvas' width="320px" height="240px" name="myfile" ></canvas>
+        <div class="input-field center">
+          <a id="capture-btn" class="waves-effect waves-light btn-small">Capture</a>
+        </div>
 
-      <video id="player" autoplay></video>
-      <canvas id='canvas' width="320px" height="240px"></canvas>
-      <div class="input-field center">
-        <a id="capture-btn" class="waves-effect waves-light btn-small">Capture</a>
-      </div>
+        <div id='pick-image'>
+          <h6>pick a image instead</h6>
+          <input type="file" accept="image/*" id="image-picker">
+        </div>
 
-      <!-- <div id='pick-image'>
-        <h6>pick a image instead</h6>
-        <input type="file" accept="image/*" id="image-picker">
-      </div> -->
+        <div class="input-field">
+          <input placeholder="Enter Latitude" id="lat" type="text" name="lat">
+          <label for="title">Latitude</label>
+        </div>
+        <div class="input-field">
+          <input placeholder="Enter  Longitude" id="lng" type="text" name="lng">
+          <label for="title">Longitude</label>
+        </div>
 
-      <div class="input-section center">
-      <a id="location-btn" class="waves-effect waves-light btn-small">Get Location</a>
+        <div class="input-section center">
+        <a id="location-btn" class="waves-effect waves-light btn-small">Get Location</a>
 
-        <!-- <div class="preloader-wrapper small active" id="location-loader">
-          <div class="spinner-layer spinner-green">
-            <div class="circle-clipper left">
-              <div class="circle"></div>
-            </div><div class="gap-patch">
-              <div class="circle"></div>
-            </div><div class="circle-clipper right">
-              <div class="circle"></div>
+
+          <div class="preloader-wrapper small active" id="location-loader">
+            <div class="spinner-layer spinner-green-only">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div><div class="gap-patch">
+                <div class="circle"></div>
+              </div><div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
             </div>
           </div>
-        </div> -->
-      </div>
 
-      <div class="input-field">
-        <input placeholder="Enter Institution Name" id="title" type="text" class="validate">
-        <label for="title">Name</label>
-      </div>
-      <div class="input-field">
-        <input placeholder="Enter Village Name" id="ingredients" type="text" class="validate">
-        <label for="ingredients">Village</label>
-      </div>
-      <div class="input-field center">
-        <button class="btn-small">Add</button>
-      </div>
+        </div>
+
+        <!-- 
+        <div class="input-field">
+          <input placeholder="Enter Village Name" id="ingredients" type="text" class="validate">
+          <label for="ingredients">Village</label>
+        </div> -->
+        <div class="input-field center">
+          <button class="btn-small" type="submit" name="action">Add</button>
+        </div>
 
       <div class="center">
         <a class="btn-floating btn-small btn-large close-btn">
