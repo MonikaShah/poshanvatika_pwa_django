@@ -49,9 +49,17 @@ document.addEventListener('DOMContentLoaded', function() {
       fetchedLocation = {lat: 0, lng: 0};
     },{timeout:7000})
   })
-
+  
+   getCamera = async () => {
+    let devices = await navigator.mediaDevices.enumerateDevices()
+    camaras = devices.filter(device => device.kind === 'videoinput')
+    deviceID= camaras[camaras.length -1].deviceId
+    // console.log(deviceID)
+    return deviceID
+  }
   const initializeMedia = () =>{
     console.log('media initialized');
+    
     if(!('mediaDevices' in navigator)){   // if mediaDevices not in navigator create ownpolyfill
       navigator.mediaDevices = {};
       console.log(navigator)
@@ -68,14 +76,18 @@ document.addEventListener('DOMContentLoaded', function() {
         })
       }
     }
+    getCamera().then(cID=>{
+      let streamConstraints={ video: { deviceId: cID } }
+      console.log(streamConstraints)
 
-    navigator.mediaDevices.getUserMedia({video:true})
-    .then(function(stream){
-      videoPlayer.srcObject = stream;
-      videoPlayer.style.display = 'block';
-    })
-    .catch(function(err){
-      imagePickerArea.style.display = 'block';
+      navigator.mediaDevices.getUserMedia(streamConstraints)
+      .then(function(stream){
+        videoPlayer.srcObject = stream;
+        videoPlayer.style.display = 'block';
+      })
+      .catch(function(err){
+        imagePickerArea.style.display = 'block';
+      })
     })
   }
 
