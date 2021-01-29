@@ -14,4 +14,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('home.urls')),
     path('', include('map.urls')),
+    path('', include('forms.urls')),
 ] + wagtail_urlpatterns

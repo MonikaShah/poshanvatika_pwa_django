@@ -4,6 +4,10 @@
     --secondary: #FFE1C4;
     --title: #FF8816;
   }
+
+  .heading{
+    color: var(--title);
+  }
   
   /* layout styles */
   nav{
@@ -63,6 +67,9 @@
     background: var(--title) !important;
   }
   .close-btn{
+    background: var(--title) !important;
+  }
+  .login-btn{
     background: var(--title) !important;
   }
   input{

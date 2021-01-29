@@ -1,0 +1,90 @@
+{% extends 'home/base.html'%}
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+{% csrf_token %}
+<div class="container">
+<div class="row">
+<div class="section"></div>
+<main>
+ <div class="container">
+    <div  class="z-depth-3 y-depth-3 x-depth-3 grey  lighten-4 row" style="padding:20px;border: 1px;">
+    
+      <h3 class="heading" style="text-align: center;"><b>Basic Information </b></h3>
+
+      <div class='row'>
+          <div class='input-field col s12'>
+           <span style="float: left; color: black;">Name of Organization : </span>
+           <input type="text" class="fieldlabels" placeholder=" Organization Name" name="organization" id="organization">
+            
+          </div>
+        </div>
+        <div class='row' >
+          <div class='input-field col s12'>
+            <span style="float: left; color: black;">Name of District : </span>
+            <input type="text" class="fieldlabels" placeholder=" District Name" name="district" id="district "> 
+          </div>
+         
+        </div>
+        <div class='row' >
+          <div class='input-field col s12'>
+            <span style="float: left; color: black;">Name of Village : </span>
+            <input type="text" class="fieldlabels" placeholder=" District Name"  name = "village" id = "village"></td>
+          </div>
+         
+        </div>
+        <div class='row' >
+          <div class='input-field col s12'>
+            <span style="float: left; color: black;">  Are you an Anemia Free India Forum (AFIF) partner ? </span><br>
+            <p><label><input class="with-gap" name="afifpartner" type="radio" /><span>Yes</span></label></p>
+            
+                <p><label><input  class="with-gap" name="afifpartner" type="radio" id = "chkno"><span>No</span></label></p> 
+                <div id="text" style="display:none" class="row" >
+                  <span style="float: left; color: black;"> would you like to be a part of AFIF ? </span> <br>
+                  <p><label><input class="with-gap" name="afif" type="radio" id = "afifyes" /><span>Yes</span></label></p>
+                  <p><label><input class="with-gap" name="afif" type="radio"  /><span>No</span></label></p>
+                </div>
+                <div id="afiftext" style="display:none" class="row" >
+                  <p style="color: black; float: left;">Contact Us</p>
+                </div>
+          </div>
+         
+        </div>
+        <div class='row' >
+          <div class='input-field col s12'>
+            <span style="float: left; color: black;"> How many villages your organization has been covering ? </span>
+            <input type="number" class="fieldlabels" placeholder="Village Covered" name = "covervillage" id = "covervillage"> 
+          </div>
+         
+        </div>
+        <div class='row' >
+          <div class='input-field col s12'>
+            <span style="float: left; color: black;">  In average, How many households in a village ?</span>
+            <input type="number" class="fieldlabels" placeholder="Average Household" name = "averagehousehold" id = "averagehousehold">
+          </div>
+         
+        </div>
+        <div class='row' >
+          <div class='input-field col s12'>
+            <span style="float: left; color: black;">  How many Self Health Groups (SHGs) have been working with ?</span>
+            <input type="number" class="fieldlabels" placeholder=" " name = "shg" id = "shg">
+          </div>
+         
+        </div>
+            <div class="form-field" style="margin-bottom: 10px ;text-align:center;">
+                <button class="login-btn btn-large waves-effect waves-dark">Submit</button>
+            </div>
+    </div>
+   </div>
+  </main>
+
+
+</div>
+</div>
+
+
+
+
+
+   
+</form>
+{% endblock%}

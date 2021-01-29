@@ -16,7 +16,6 @@ from django.contrib.auth import authenticate
 
 # Create your views here.
 def home(request):
-    # if request.method == 'POST' and request.FILES['myfile']:
     global datauri
     if request.is_ajax():
         datauri = request.POST['picture']
@@ -73,3 +72,4 @@ def login(request):
 def logout(request):
     auth.logout(request)
     messages.info(request, "Logged out successfully!")
+    return redirect('/')
