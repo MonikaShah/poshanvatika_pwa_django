@@ -33,18 +33,20 @@
          
         </div>
         <div class='row' >
-          <div class='input-field col s12'>
-            <span style="float: left; color: black;">  Are you an Anemia Free India Forum (AFIF) partner ? </span><br>
-            <p><label><input class="with-gap" name="afifpartner" type="radio" /><span>Yes</span></label></p>
-            
-                <p><label><input  class="with-gap" name="afifpartner" type="radio" id = "chkno"><span>No</span></label></p> 
-                <div id="text" style="display:none" class="row" >
-                  <span style="float: left; color: black;"> would you like to be a part of AFIF ? </span> <br>
-                  <p><label><input class="with-gap" name="afif" type="radio" id = "afifyes" /><span>Yes</span></label></p>
-                  <p><label><input class="with-gap" name="afif" type="radio"  /><span>No</span></label></p>
-                </div>
-                <div id="afiftext" style="display:none" class="row" >
-                  <p style="color: black; float: left;">Contact Us</p>
+          <div class='input-field col s8'>
+            <span style="color: black;">  Are you an Anemia Free India Forum (AFIF) partner ? </span>
+            <p style="float: left; margin-right: 20px;"><label><input class="with-gap" name="afifpartner" type="radio" /><span>Yes</span></label> </p>
+            <p><label><input  class="with-gap" name="afifpartner" type="radio" id = "chkno"><span>No</span></label></p>
+            <div id="text" style="display:none" class="row" >
+              <div class='input-field col s10'>
+                <span style="color: black;">Would you like to be a part of AFIF ? </span>
+                <p style="float: left; margin-right: 20px;"><label><input class="with-gap" name="afif" type="radio" id = "afifyes" /><span>Yes</span></label></p>
+                <p><label><input class="with-gap" name="afif" type="radio"  /><span>No</span></label></p>
+              </div>
+                
+              </div>
+                <div id="afiftext" style="display:none" >
+                  <p>Contact <a href="https://www.sahayaktrust.org/" target="blank">Sahayak trust</a>  and be part of AFIF</p>
                 </div>
           </div>
          
@@ -87,4 +89,26 @@
 
    
 </form>
+
+<script>
+
+  $(function() {
+     $("input[name='afifpartner']").click(function() {
+       if ($("#chkno").is(":checked")) {
+         $("#text").show();
+       } else {
+         $("#text").hide();
+       }
+     });
+   });
+   $(function() {
+     $("input[name='afif']").click(function() {
+       if ($("#afifyes").is(":checked")) {
+         $("#afiftext").show();
+       } else {
+         $("#afiftext").hide();
+       }
+     });
+   });
+  </script>
 {% endblock%}
