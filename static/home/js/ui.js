@@ -58,7 +58,6 @@ document.addEventListener('DOMContentLoaded', function() {
     return deviceID
   }
   const initializeMedia = () =>{
-    console.log('media initialized');
     
     if(!('mediaDevices' in navigator)){   // if mediaDevices not in navigator create ownpolyfill
       navigator.mediaDevices = {};
@@ -139,6 +138,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   function openCreatePostModal() {
     form.style.display = 'block';
+    captureButton.style.display = 'inline-block';
     initializeMedia();
   }
 
@@ -150,5 +150,5 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   add_btn.addEventListener('click', openCreatePostModal);
-  close_btn.addEventListener('click', ()=>closeCreatePostModal);
+  close_btn.addEventListener('click', closeCreatePostModal);
 

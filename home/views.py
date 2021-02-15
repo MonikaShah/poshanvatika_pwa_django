@@ -31,7 +31,7 @@ def home(request):
             myfile = "profile-"+time.strftime("%Y%m%d-%H%M%S")+".png"
             fs = FileSystemStorage()
             filename = fs.save(myfile, data)
-            picLocation = PictureLocation.objects.create(picture_name=filename,lat=lat,lng=lng)
+            picLocation = PictureLocation.objects.create(user=request.user,picture_name=filename,lat=lat,lng=lng)
             picLocation.save()
             datauri = False
             del datauri
@@ -73,3 +73,25 @@ def logout(request):
     auth.logout(request)
     messages.info(request, "Logged out successfully!")
     return redirect('/')
+
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        print(form)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            messages.success(request, f"New account created: {username}")
+            user = authenticate(username=username, password=raw_password)
+            auth.login(request,user)
+            print("registeration Successful")
+            return redirect('/')
+        else:
+            
+            for msg in form.error_messages:
+                messages.error(request, f"{msg}: {form.error_messages[msg]}")
+            return render(request,"home/signup.html",{"form":form})
+    else:
+        form = UserCreationForm()
+    return render(request, 'home/signup.html', {'form': form})

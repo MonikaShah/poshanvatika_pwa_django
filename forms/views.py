@@ -6,7 +6,9 @@ def basicForm(request):
     if request.method == 'POST':
         form = BasicInformationForm(request.POST)
         if form.is_valid():
-            form.save()
+            instance = form.save()
+            instance.user = request.user
+            instance.save()
             print("data is saved.")
             return redirect('/home')
     else:
@@ -22,7 +24,9 @@ def NGForm(request):
     if request.method == 'POST':
         form = NutrigardenInformationForm(request.POST)
         if form.is_valid():
-            form.save()
+            instance = form.save()
+            instance.user = request.user
+            instance.save()
             return redirect('/nginfo')
     else:
         form = NutrigardenInformationForm()

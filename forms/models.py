@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 
 nutrigardentype = [
@@ -9,6 +10,7 @@ nutrigardentype = [
 
 
 class BasicInformationModel(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default = 1)
     organization = models.CharField(max_length = 100)
     district  = models.CharField(max_length = 50)  
     village = models.CharField(max_length = 50)
@@ -20,6 +22,7 @@ class BasicInformationModel(models.Model):
 
 
 class NutrigardenInformationModel(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default = 1)
     village = models.CharField(max_length = 50)
     pincode = models.CharField(max_length = 6)
     nutrigardentype = models.CharField(max_length = 50)
