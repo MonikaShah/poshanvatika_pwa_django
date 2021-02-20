@@ -139,3 +139,18 @@
   #location-loader{
     margin: auto;
   }
+
+
+  .image-options{
+    width: 100%;
+    height: 50%;
+    display: flex;
+  }
+
+  .camera-div{
+   margin: auto;
+  }
+
+  .upload-div{
+    margin:auto;
+  }

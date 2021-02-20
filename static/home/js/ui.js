@@ -12,8 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const add_btn = document.querySelector('.add-btn');
   const close_btn = document.querySelector('.close-btn');
   const form = document.querySelector('.side-form');
-
-
+  const capture_div = document.querySelector('.capture-div')
   const videoPlayer = document.querySelector('#player');
   const canvasElement = document.querySelector('#canvas');
   const captureButton = document.querySelector('#capture-btn');
@@ -27,6 +26,10 @@ document.addEventListener('DOMContentLoaded', function() {
   const lngInput = document.querySelector('#lng');
 
 
+  const capture_btn = document.querySelector('.capture-btn');
+  const upload_btn = document.querySelector('.upload-btn');
+
+
   locationBtn.addEventListener('click',()=>{
     if (!('geolocation' in navigator)) {
       return;
@@ -34,6 +37,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     locationBtn.style.display = 'none';
     locationLoader.style.display = 'block';
+    
+    capture_div.style.display = 'none';
 
     navigator.geolocation.getCurrentPosition(position =>{
       locationBtn.style.display = 'inline-block';
@@ -152,3 +157,6 @@ document.addEventListener('DOMContentLoaded', function() {
   add_btn.addEventListener('click', openCreatePostModal);
   close_btn.addEventListener('click', closeCreatePostModal);
 
+  capture_btn.addEventListener('click',()=>{
+    capture_div.style.display='block';
+  })
