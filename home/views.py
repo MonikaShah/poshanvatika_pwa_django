@@ -77,6 +77,9 @@ def logout(request):
     auth.logout(request)
     messages.info(request, "Logged out successfully!")
     return redirect('/')
+    
+def factsheet(request):
+	return render(request,"home/factsheet.html",{})
 
 def signup(request):
     if request.method == 'POST':
