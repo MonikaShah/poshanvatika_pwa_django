@@ -28,8 +28,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   const capture_btn = document.querySelector('.capture-btn');
   const upload_btn = document.querySelector('.upload-btn');
-
-
+  const image_options = document.querySelector('.image-options');
+  const upload_section = document.querySelector('.upload-section');
   locationBtn.addEventListener('click',()=>{
     if (!('geolocation' in navigator)) {
       return;
@@ -152,6 +152,11 @@ document.addEventListener('DOMContentLoaded', function() {
     imagePickerArea.style.display = 'none';
     videoPlayer.style.display = 'none';
     canvasElement.style.display = 'none';
+    capture_div.style.display='none';
+    upload_section.style.display="none";
+
+    image_options.style.display = 'flex';
+
   }
   
   add_btn.addEventListener('click', openCreatePostModal);
@@ -159,4 +164,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
   capture_btn.addEventListener('click',()=>{
     capture_div.style.display='block';
+    image_options.style.display = 'none';
+  })
+
+  upload_btn.addEventListener('click',()=>{
+    upload_section.style.display="block";
+    image_options.style.display = 'none';
+
   })

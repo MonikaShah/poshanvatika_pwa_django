@@ -145,12 +145,20 @@
     width: 100%;
     height: 50%;
     display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    vertical-align: center;
   }
 
   .camera-div{
-   margin: auto;
+   width: 50%;
   }
 
   .upload-div{
-    margin:auto;
+    width: 50%;
+  }
+
+  p> label{
+    float:left;
   }

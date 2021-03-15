@@ -34,11 +34,17 @@
         <a class="btn-floating btn-large capture-btn">
           <i class="material-icons">camera_alt</i>
         </a>
+        <hr style="width:50%;text-align:center;">
+
+        <small>click image from your camera</small>
       </div>
       <div class="upload-div">
         <a class="btn-floating  btn-large upload-btn">
           <i class="material-icons">upload</i>
         </a>
+        <hr style="width:50%;text-align:center;">
+        <small>Upload images</small>
+
       </div>
     </div>
     <div class="capture-div" style='display:none'>
@@ -53,8 +59,7 @@
           </div>
   
           <div id='pick-image'>
-            <h6>pick a image instead</h6>
-            <input type="file" accept="image/*" id="image-picker">
+            <small>Allow Camera access to app</small>
           </div>
   
           <div class="input-field">
@@ -89,6 +94,15 @@
             <button class="btn-small" type="submit" name="action">Add</button>
           </div>
       </form>
+    </div>
+
+    <div class="upload-section" style="display:none ">
+      <form class="container section" method="post">
+        {% csrf_token %}
+          {{form.as_p}}
+          <button class="btn-small" type="submit" name="action">Add</button>
+      </form>
+
     </div>
 
 

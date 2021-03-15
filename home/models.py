@@ -11,4 +11,11 @@ class PictureLocation(models.Model):
     lat = models.CharField(max_length=10)
     lng = models.CharField(max_length=10)
 
+class UploadPicture(models.Model):
+    picture = models.FileField(upload_to='uploadPics/', blank=True, null=True)
+    area = models.CharField(max_length=30)
+    village = models.CharField(max_length=30)
+    district = models.CharField(max_length=30)
+    state = models.CharField(max_length=30)
+    pincode = models.CharField(max_length=10)
     

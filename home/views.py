@@ -13,34 +13,38 @@ from django.contrib.auth.models import User,auth
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.contrib.auth import authenticate
-
+from .forms import UploadPictureForm
 # Create your views here.
 def home(request):
+    form = UploadPictureForm()
     global datauri
     if request.is_ajax():
         datauri = request.POST['picture']
     
 
     if request.method == 'POST' and not request.is_ajax():
-        lat = request.POST.get('lat')
-        lng = request.POST.get('lng')
+        form = UploadPictureForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+        # lat = request.POST.get('lat')
+        # lng = request.POST.get('lng')
 
-        try:
-            imgstr = re.search(r'base64,(.*)', datauri).group(1)
-            data = ContentFile(base64.b64decode(imgstr))
-            myfile = "profile-"+time.strftime("%Y%m%d-%H%M%S")+".png"
-            fs = FileSystemStorage()
-            filename = fs.save(myfile, data)
-            picLocation = PictureLocation.objects.create(user=request.user,picture_name=filename,lat=lat,lng=lng)
-            picLocation.save()
-            datauri = False
-            del datauri
-        except NameError:
-            print("Image is not captured")
+        # try:
+        #     imgstr = re.search(r'base64,(.*)', datauri).group(1)
+        #     data = ContentFile(base64.b64decode(imgstr))
+        #     myfile = "profile-"+time.strftime("%Y%m%d-%H%M%S")+".png"
+        #     fs = FileSystemStorage()
+        #     filename = fs.save(myfile, data)
+        #     picLocation = PictureLocation.objects.create(user=request.user,picture_name=filename,lat=lat,lng=lng)
+        #     picLocation.save()
+        #     datauri = False
+        #     del datauri
+        # except NameError:
+        #     print("Image is not captured")
        
         
 
-    return render(request,"home/home.html",{})
+    return render(request,"home/home.html",{'form':form})
 
 
 def contact(request):
