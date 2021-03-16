@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .forms import BasicInformationForm, NutrigardenInformationForm
+from .forms import BasicInformationForm, NutrigardenInformationForm, factsheetInformationForm
 from django.shortcuts import redirect
 # Create your views here.
 def basicForm(request):
@@ -31,3 +31,16 @@ def NGForm(request):
     else:
         form = NutrigardenInformationForm()
     return render(request,'forms/nutritiongarden_info.html',{'form': form})
+
+def factsheet(request):
+    if request.method == 'POST':
+        form = factsheetInformationForm(request.POST)
+        if form.is_valid():
+            instance = form.save()
+            instance.user = request.user
+            instance.save()
+            print("data is saved.")
+            return redirect('/home')
+    else:
+        form = factsheetInformationForm()
+    return render(request,'forms/factsheet.html',{})

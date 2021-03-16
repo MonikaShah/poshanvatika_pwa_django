@@ -1,13 +1,12 @@
-{% extends 'home/base.html'%}
+{% extends 'home/base.html' %}
 {% block content %}
-{% load static%} 
+{% load static %} 
 <style>
 select{display: block;padding: 0px;} 
 
 </style>
-   
     <form  method="post" enctype="multipart/form-data">
-        {% csrf_token %}
+      {% csrf_token %}
     <div class="container">
 	<div class="row">
 	<div class="section"></div>
@@ -102,9 +101,9 @@ select{display: block;padding: 0px;}
                 <div class='row'>
                   <div class='input-field col s12'>
                    <span style="float: left; color: black;">Nutri-garden patterns employed</span></br></br>
-                   <p style="display: inline;"><label><input class="with-gap" name="type" type="radio" id = "Circular"value = "Circular" /><span>Circular</span></label></p>
-                    <p style="display: inline;"><label><input  class="with-gap" name="type" type="radio" id = "Rectangular" value = "Rectangular" ><span>Rectangular/Square</span></label></p>
-                    <p style="display: inline;"><label><input  class="with-gap" name="type" type="radio" id = "Other" value = "Other" ><span>Other</span></label></p>
+                   <p style="display: inline;"><label><input class="with-gap" name="patt" type="radio" id = "Circular"value = "Circular" /><span>Circular</span></label></p>
+                    <p style="display: inline;"><label><input  class="with-gap" name="patt" type="radio" id = "Rectangular" value = "Rectangular" ><span>Rectangular/Square</span></label></p>
+                    <p style="display: inline;"><label><input  class="with-gap" name="patt" type="radio" id = "Other" value = "Other" ><span>Other</span></label></p>
                   </div>
                 </div>
 
@@ -149,8 +148,8 @@ select{display: block;padding: 0px;}
                 <div class='row'>
                   <div class='input-field col s12'>
                    <span style="float: left; color: black;">Type of seed</span></br></br>
-                   <p style="display: inline;"><label><input class="with-gap" name="type" type="radio" id = "Indigenous"value = "Indigenous" /><span>Indigenous</span></label></p>
-                    <p style="display: inline;"><label><input  class="with-gap" name="type" type="radio" id = "Hybrid" value = "Hybrid" ><span>Hybrid</span></label></p>
+                   <p style="display: inline;"><label><input class="with-gap" name="seedtype" type="radio" id = "Indigenous"value = "Indigenous" /><span>Indigenous</span></label></p>
+                    <p style="display: inline;"><label><input  class="with-gap" name="seedtype" type="radio" id = "Hybrid" value = "Hybrid" ><span>Hybrid</span></label></p>
                   </div>
                 </div>
 
@@ -258,12 +257,12 @@ select{display: block;padding: 0px;}
                                 </div></div>
                 
 
-                        <div class='row' >
+                           <div class='row' >
                             <div class='input-field col s12'>
                             <span style="float: left; color: black; height: 3rem;">Water source</span>
-                            <select name = "watersource>
+                            <select name = "resourcewater">
                             <option value="" selected>Choose Your Option</option>
-                            <option value="Pond">pond</option>
+                            <option value="Pond">Pond</option>
                             <option value="River">River</option>
                             <option value="Tube Well">Tube Well</option>
                             <option value="Well">Well</option>
@@ -277,8 +276,8 @@ select{display: block;padding: 0px;}
                            <div class='row' >
                             <div class='input-field col s12'>
                             <span style="float: left; color: black; height: 3rem;">Resources Leveraged for establishing the nutri-garden</span>
-                            <select name = "leveraged resource>
-                            <option value="" selected>Choose Your Option</option>
+                            <select name = "leveragedesource">
+                            <option value="" selected>Choose Your Option </option>
                             <option value="Self">Self</option>
                             <option value="Government Scheme">Government Scheme</option>
                             <option value="NGOs/CSOs">NGOs/CSOs</option>
@@ -289,8 +288,8 @@ select{display: block;padding: 0px;}
                            <div class='row' >
                             <div class='input-field col s12'>
                             <span style="float: left; color: black; height: 3rem;">If government scheme, then name it</span>
-                            <select name = "govtScheme>
-                            <option value="" selected>Choose Your Option</option>
+                            <select name = "govtScheme">
+                            <option value="" selected>Choose Your Option </option>
                             <option value="MGNREGA">MGNREGA</option>
                             <option value="ICDS">ICDS</option>
                             <option value="Education">Education</option>
@@ -303,17 +302,17 @@ select{display: block;padding: 0px;}
                       <div class='row'>
                         <div class='input-field col s12'>
                         <span style="float: left; color: black;">Is there any provision for storage of produce</span></br></br>
-                        <p style="display: inline;"><label><input class="with-gap" name="type" type="radio" id = "Indigenous"value = "provisionYes" /><span>Yes</span></label></p>
-                          <p style="display: inline;"><label><input  class="with-gap" name="type" type="radio" id = "Hybrid" value = "provisionNo" ><span>No</span></label></p>
+                        <p style="display: inline;"><label><input class="with-gap" name="prov" type="radio" id = "Indigenous"value = "provisionYes" /><span>Yes</span></label></p>
+                          <p style="display: inline;"><label><input  class="with-gap" name="prov" type="radio" id = "Hybrid" value = "provisionNo" ><span>No</span></label></p>
                         </div>
                       </div>
 
                       <div class='row'>
                         <div class='input-field col s12'>
                         <span style="float: left; color: black;">If Yes, then where</span></br></br>
-                        <p style="display: inline;"><label><input class="with-gap" name="type" type="radio" id = "Indigenous"value = "coldstorage" /><span>Cold Storage</span></label></p>
-                          <p style="display: inline;"><label><input  class="with-gap" name="type" type="radio" id = "Hybrid" value = "openstorage" ><span>Open Storage</span></label></p>
-                          <p style="display:inline;"><label><input class="with-gap" name="type" type="radio" id="Others" value="Others"><span>Others</span></label></p>
+                        <p style="display: inline;"><label><input class="with-gap" name="place" type="radio" id = "cold"value = "coldstorage" /><span>Cold Storage</span></label></p>
+                          <p style="display: inline;"><label><input  class="with-gap" name="place" type="radio" id = "open" value = "openstorage" ><span>Open Storage</span></label></p>
+                          <p style="display:inline;"><label><input class="with-gap" name="place" type="radio" id="Others" value="Others"><span>Others</span></label></p>
                         </div>
                       </div>       
             <br/>
@@ -329,33 +328,5 @@ select{display: block;padding: 0px;}
   
 	</div>
 </div>
-  
-
-
-
-
-       
-    </form>
-   
-<script>
-
-$(function() {
-   $("input[name='afvillage']").click(function() {
-     if ($("#chkyes").is(":checked")) {
-       $("#text").show();
-     } else {
-       $("#text").hide();
-     }
-   });
- });
- $(function() {
-   $("input[name='backyard']").click(function() {
-     if ($("#backyardno").is(":checked")) {
-       $("#backyardtext").show();
-     } else {
-       $("#backyardtext").hide();
-     }
-   });
- });
-</script>
+        </form>
 {% endblock %}

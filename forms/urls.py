@@ -3,4 +3,6 @@ from . import views
 urlpatterns = [
     path('basicinfo', views.basicForm, name='basicForm'),
     path('nginfo', views.NGForm, name='NGForm'),
+    path('factsheet', views.factsheet, name='factsheet'),
+
 ]
