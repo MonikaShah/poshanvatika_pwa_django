@@ -42,6 +42,7 @@ class NutrigardenInformationModel(models.Model):
 
 
 class factsheetInformationModel(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default = 1)
     location = models.CharField(max_length = 50)
     state = models.CharField(max_length = 50)
     district = models.CharField(max_length = 50)

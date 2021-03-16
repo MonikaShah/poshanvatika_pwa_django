@@ -41,6 +41,7 @@ def factsheet(request):
             instance.save()
             print("data is saved.")
             return redirect('/home')
+       
     else:
         form = factsheetInformationForm()
-    return render(request,'forms/factsheet.html',{})
+    return render(request,'forms/factsheet.html',{'form':form})
