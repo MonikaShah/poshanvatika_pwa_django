@@ -3,7 +3,8 @@ from django.contrib import admin
 # Register your models here.
 
 
-from .models import BasicInformationModel, NutrigardenInformationModel, factsheetInformationModel
+from .models import BasicInformationModel, NutrigardenInformationModel, factsheetInformationModel, factsheetDynamicIndicatorsModel, financialExpensesModel
 admin.site.register(BasicInformationModel)
 admin.site.register(NutrigardenInformationModel)
 admin.site.register(factsheetInformationModel)
+admin.site.register(factsheetDynamicIndicatorsModel)
