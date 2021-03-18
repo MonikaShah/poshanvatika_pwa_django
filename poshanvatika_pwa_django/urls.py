@@ -15,4 +15,5 @@ urlpatterns = [
     path('', include('home.urls')),
     path('', include('map.urls')),
     path('', include('forms.urls')),
+    path('', include('pwa.urls')),
 ] + wagtail_urlpatterns
