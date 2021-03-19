@@ -42,11 +42,14 @@ WAGTAIL_APPS = [
     'wagtail.search',
     'wagtail.admin',
     'wagtail.core',
-
     'modelcluster',
     'taggit',
     'resources',
 ]
+
+BOOTSTRAP4 = {
+    'include_jquery': True,
+}
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -58,6 +61,8 @@ INSTALLED_APPS = [
     'home',
     'map',
     'forms',
+    'bootstrap_datepicker_plus',
+    'bootstrap4'
 ] + WAGTAIL_APPS
 
 WAGTAIL_MIDDLEWARE = [
@@ -184,3 +189,5 @@ PWA_APP_STATUS_BAR_COLOR = 'default'
 # ]
 # PWA_APP_DIR = 'ltr'
 # PWA_APP_LANG = 'en-US'
+
+

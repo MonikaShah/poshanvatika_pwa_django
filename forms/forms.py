@@ -1,5 +1,7 @@
 from django import forms 
 from .models import BasicInformationModel,NutrigardenInformationModel, factsheetInformationModel, factsheetDynamicIndicatorsModel, financialExpensesModel
+from datetimepicker.widgets import DateTimePicker
+from bootstrap_datepicker_plus import DatePickerInput
 
 class BasicInformationForm(forms.ModelForm):
     class Meta:
@@ -54,12 +56,22 @@ class factsheetDynamicIndicatorsForm(forms.ModelForm):
             'prov' : ('Is there any provision for storage of produce'),
             'provPlace' : ('If Yes, then where')
         }
+        
 
 
-class financialExpensesForm(forms.ModelForm):
+class financialExpensesForm(forms.ModelForm): 
+    soilPrepDate=forms.DateField(input_formats='%m/%d/%Y',widget=forms.DateInput(attrs={'autocomplete':'off','class':'some_class','placeholder':'dd/mm/yyyy'}))
+    fertilizersDate=forms.DateField(input_formats='%m/%d/%Y',widget=forms.DateInput(attrs={'autocomplete':'off','class':'some_class','placeholder':'dd/mm/yyyy'}))
+    seedsDate=forms.DateField(input_formats='%m/%d/%Y',widget=forms.DateInput(attrs={'autocomplete':'off','class':'some_class','placeholder':'dd/mm/yyyy'}))
+    cultToolsDate=forms.DateField(input_formats='%m/%d/%Y',widget=forms.DateInput(attrs={'autocomplete':'off','class':'some_class','placeholder':'dd/mm/yyyy'}))
+    fenceDate=forms.DateField(input_formats='%m/%d/%Y',widget=forms.DateInput(attrs={'autocomplete':'off','class':'some_class','placeholder':'dd/mm/yyyy'}))
+    transportaionDate=forms.DateField(input_formats='%m/%d/%Y',widget=forms.DateInput(attrs={'autocomplete':'off','class':'some_class','placeholder':'dd/mm/yyyy'}))
+    laborDate=forms.DateField(input_formats='%m/%d/%Y',widget=forms.DateInput(attrs={'autocomplete':'off','class':'some_class','placeholder':'dd/mm/yyyy'}))
+    irrigationDate=forms.DateField(input_formats='%m/%d/%Y',widget=forms.DateInput(attrs={'autocomplete':'off','class':'some_class','placeholder':'dd/mm/yyyy'}))
+    miscellaneousDate=forms.DateField(input_formats='%m/%d/%Y',widget=forms.DateInput(attrs={'autocomplete':'off','class':'some_class','placeholder':'dd/mm/yyyy'})) 
     class Meta:
         model = financialExpensesModel
-        fields = ('soilPrep', 'fertilizers', 'seeds', 'cultTools', 'fence', 'transportation', 'labor', 'irrigation', 'miscellaneous')
+        fields = ('soilPrep', 'soilPrepDate', 'fertilizers', 'fertilizersDate', 'seeds', 'seedsDate', 'cultTools', 'cultToolsDate', 'fence', 'fenceDate', 'transportation', 'transportaionDate', 'labor', 'laborDate', 'irrigation', 'irrigationDate', 'miscellaneous', 'miscellaneousDate')
         labels = {
             'soilPrep' : ('Soil preparation (including seeding bed)'),
             'fertilizers' : ('Fertilizers'),
@@ -72,22 +84,18 @@ class financialExpensesForm(forms.ModelForm):
             'miscellaneous': ('Miscellaneous')
 
         }
+        widgets = {
+                    'soilPrepDate': DatePickerInput(format='%m/%d/%Y'), 
+                    'fertilizersDate': DatePickerInput(format='%m/%d/%Y'), 
+                    'seedsDate': DatePickerInput(format='%m/%d/%Y'), 
+                    'cultToolsDate': DatePickerInput(format='%m/%d/%Y'), 
+                    'fenceDate': DatePickerInput(format='%m/%d/%Y'), 
+                    'transportaionDate': DatePickerInput(format='%m/%d/%Y'), 
+                    'laborDate': DatePickerInput(format='%m/%d/%Y'), 
+                    'irrigationDate': DatePickerInput(format='%m/%d/%Y'), 
+                    'soimiscellaneousDatelPrepDate': DatePickerInput(format='%m/%d/%Y'), 
+                 }
 
 
-""" location = forms.CharField(label='Location of Nutri-garden/ POSHAN Vatika')
-    state = forms.CharField(label='State')
-    district = forms.CharField(label='District')
-    ICDSProj = forms. CharField(label= 'ICDS Project')
-    sector = forms.CharField(label='Sector')
-    village = forms.CharField(label='Village/Tola')
-    anganwadi = forms.CharField(label='Anganwadi Centre')"""
+
     
-    
-"""class factsheetInformationForm(forms.ModelForm):
-    Location = forms.CharField(label='Location')
-    State = forms.CharField(label='State')
-    Famsize = forms.ChoiceField(label='Family size', widget=forms.Select(choices = CHOICES))
-    class Meta:
-        model = factsheetInformationModel
-        fields='__all__'
-        fields = ('location','state','district', 'ICDSProj', 'sector', 'village', 'anganwadi', 'famsize','typeofShed','pattern','consumption', 'typeOf', 'cultTech', 'seedtype', 'seedSource', 'seedbnkloc', 'fertType', 'fertSour', 'vermigrade', 'pest', 'fence', 'irrig', 'water', 'resrcLvrgd', 'govt', 'prov', 'provPlace')"""
