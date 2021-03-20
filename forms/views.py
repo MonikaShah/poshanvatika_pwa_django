@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .forms import BasicInformationForm, NutrigardenInformationForm, factsheetInformationForm, factsheetDynamicIndicatorsForm, financialExpensesForm
+from .forms import BasicInformationForm, NutrigardenInformationForm, factsheetInformationForm, factsheetDynamicIndicatorsForm, financialExpensesForm, outputIndicatorsForm
 from django.shortcuts import redirect
 # Create your views here.
 def basicForm(request):
@@ -73,3 +73,18 @@ def financial(request):
     else:
         form = financialExpensesForm()
     return render(request,'forms/financial.html',{'form':form})
+
+
+def output_indicators(request):
+    if request.method == 'POST':
+        form = outputIndicatorsForm(request.POST)
+        if form.is_valid():
+            instance = form.save()
+            instance.user = request.user
+            instance.save()
+            print("data is saved.")
+            return redirect('/home')
+       
+    else:
+        form = outputIndicatorsForm()
+    return render(request,'forms/output_indicators.html',{'form':form})

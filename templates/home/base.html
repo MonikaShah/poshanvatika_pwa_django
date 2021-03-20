@@ -13,6 +13,7 @@
   {% progressive_web_app_meta %}
   <link rel="manifest" href="manifest.json">
   <!-- materialize icons, css & js -->
+  
   <link type="text/css" href="{% static 'home/css/materialize.min.css' %}" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link type="text/css" href="{% static 'home/css/style.css' %}" rel="stylesheet">
@@ -51,6 +52,7 @@
     <li><a href="{% url 'factsheet' %}" class="waves-effect">Poshan Vatika Fact Sheet</a></li>
     <li><a href="{% url 'factsheet_dynamic' %}" class="waves-effect">Poshan Vatika Dynamic Indicators </a></li>
     <li><a href="{% url 'financial' %}" class="waves-effect">Financial Expenses Form </a></li>
+    <li><a href="{% url 'output_indicators' %}" class="waves-effect">Output Indicators Form </a></li>
     <li>
       <div class="divider"></div>
     </li>
@@ -74,5 +76,4 @@
   <script src="{% static 'home/js/ajax_csrf.js' %}"></script>
   <script src="{% static 'home/js/ui.js' %}"></script>
 </body>
-
 </html>

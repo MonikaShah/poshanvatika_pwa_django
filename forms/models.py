@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from datetime import datetime
 
 nutrigardentype = [
             ('Organic', 'Organic'),
@@ -123,14 +124,32 @@ govtSchemeName = [('','Choose Your Option'),
 ('Panchayat', 'Panchayat'),
 ('Others', 'Others'),]
 
-provision = [('','Choose Your Option'),('yes','Yes'),('no','No'), ]
+yesOrno = [('','Yes/No'),('yes','Yes'),('no','No'), ]
 
 provisionPlace = [('','Choose Your Option'),
 ('Cold storage', 'Cold storage'),
 ('Open storage', 'Open storage'),
 ('Others', 'Others'),]
 
+month = [('','Select'),
+('January', 'January'),
+('February', 'February'),
+('March', 'March'),
+('April','April'),
+('May','May'),
+('June','June'),
+('July','July'),
+('August','August'),
+('September','September'),
+('October','October'),
+('November','November'),
+('December','December'),]
 
+soldwhere = [('','Select'),
+('Middleman','Middleman'),
+('Institution','Institution'),
+('direct','Direct'),
+('CSOs','CSOs'),]
 
 class BasicInformationModel(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default = 1)
@@ -194,26 +213,40 @@ class factsheetDynamicIndicatorsModel(models.Model):
     water = models.CharField(choices = waterSource, max_length = 100, blank=True,null = True, default='Choose Your Option')
     resrcLvrgd = models.CharField(choices = resourcesLeveraged, max_length = 100, blank=True,null = True, default='Choose Your Option')
     govt = models.CharField(choices = govtSchemeName, max_length = 100, blank=True,null = True, default='Choose Your Option')
-    prov = models.CharField(choices = provision, max_length = 100, blank=True,null = True, default='Choose Your Option')
+    prov = models.CharField(choices = yesOrno, max_length = 100, blank=True,null = True, default='Choose Your Option')
     provPlace = models.CharField(choices = provisionPlace, max_length = 100, blank=True,null = True, default='Choose Your Option')
 
 class financialExpensesModel(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default = 1)
     soilPrep = models.IntegerField(blank=True,null = True)
-    soilPrepDate= models.DateField(null=True, blank=True)
+    soilPrepDate= models.DateField(null=True, blank=True, default=datetime.now)
     fertilizers = models.IntegerField( blank=True,null = True)
-    fertilizersDate = models.DateField(null=True, blank=True)
+    fertilizersDate = models.DateField(null=True, blank=True, default=datetime.now)
     seeds = models.IntegerField( blank=True,null = True)
-    seedsDate = models.DateField(null=True, blank=True)
+    seedsDate = models.DateField(null=True, blank=True, default=datetime.now)
     cultTools = models.IntegerField(blank=True,null = True)
-    cultToolsDate = models.DateField(null=True, blank=True)
+    cultToolsDate = models.DateField(null=True, blank=True, default=datetime.now)
     fence = models.IntegerField(blank=True,null = True)
-    fenceDate = models.DateField(null=True, blank=True)
+    fenceDate = models.DateField(null=True, blank=True, default=datetime.now)
     transportation = models.IntegerField(blank=True,null = True)
-    transportaionDate = models.DateField(null=True, blank=True)
+    transportaionDate = models.DateField(null=True, blank=True, default=datetime.now)
     labor = models.IntegerField(blank=True,null = True)
-    laborDate = models.DateField(null=True, blank=True)
+    laborDate = models.DateField(null=True, blank=True, default=datetime.now)
     irrigation = models.IntegerField(blank=True,null = True)
-    irrigationDate = models.DateField(null=True, blank=True)
+    irrigationDate = models.DateField(null=True, blank=True, default=datetime.now)
     miscellaneous = models.IntegerField(blank=True,null = True)
-    miscellaneousDate = models.DateField(null=True, blank=True)
+    miscellaneousDate = models.DateField(null=True, blank=True, default=datetime.now)
+
+class outputIndicatorsModel(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default = 1)
+    plantType = models.CharField(max_length = 100, blank=True,null = True)
+    sowingDate = models.DateField(null=True, blank=True, default=datetime.now)
+    harvestDate = models.DateField(null=True, blank=True, default=datetime.now)
+    seedQuantity = models.IntegerField(blank=True,null = True)
+    harvestQuant = models.IntegerField(blank=True,null = True)
+    lostQuant = models.CharField(choices = yesOrno, max_length = 100, blank=True,null = True)
+    income = models.CharField(max_length = 100, blank=True,null = True)
+    whereSold = models.CharField(choices = soldwhere, max_length = 100, blank=True,null = True)
+    finishingMonth = models.CharField(choices = month, max_length = 100, blank=True,null = True)
+    soldQuant = models.IntegerField(blank=True,null = True)
+    consumedQuant = models.IntegerField(blank=True,null = True)

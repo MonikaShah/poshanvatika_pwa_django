@@ -1,6 +1,5 @@
 from django import forms 
-from .models import BasicInformationModel,NutrigardenInformationModel, factsheetInformationModel, factsheetDynamicIndicatorsModel, financialExpensesModel
-from datetimepicker.widgets import DateTimePicker
+from .models import BasicInformationModel,NutrigardenInformationModel, factsheetInformationModel, factsheetDynamicIndicatorsModel, financialExpensesModel, outputIndicatorsModel
 from bootstrap_datepicker_plus import DatePickerInput
 
 class BasicInformationForm(forms.ModelForm):
@@ -59,16 +58,7 @@ class factsheetDynamicIndicatorsForm(forms.ModelForm):
         
 
 
-class financialExpensesForm(forms.ModelForm): 
-    soilPrepDate=forms.DateField(input_formats='%m/%d/%Y',widget=forms.DateInput(attrs={'autocomplete':'off','class':'some_class','placeholder':'dd/mm/yyyy'}))
-    fertilizersDate=forms.DateField(input_formats='%m/%d/%Y',widget=forms.DateInput(attrs={'autocomplete':'off','class':'some_class','placeholder':'dd/mm/yyyy'}))
-    seedsDate=forms.DateField(input_formats='%m/%d/%Y',widget=forms.DateInput(attrs={'autocomplete':'off','class':'some_class','placeholder':'dd/mm/yyyy'}))
-    cultToolsDate=forms.DateField(input_formats='%m/%d/%Y',widget=forms.DateInput(attrs={'autocomplete':'off','class':'some_class','placeholder':'dd/mm/yyyy'}))
-    fenceDate=forms.DateField(input_formats='%m/%d/%Y',widget=forms.DateInput(attrs={'autocomplete':'off','class':'some_class','placeholder':'dd/mm/yyyy'}))
-    transportaionDate=forms.DateField(input_formats='%m/%d/%Y',widget=forms.DateInput(attrs={'autocomplete':'off','class':'some_class','placeholder':'dd/mm/yyyy'}))
-    laborDate=forms.DateField(input_formats='%m/%d/%Y',widget=forms.DateInput(attrs={'autocomplete':'off','class':'some_class','placeholder':'dd/mm/yyyy'}))
-    irrigationDate=forms.DateField(input_formats='%m/%d/%Y',widget=forms.DateInput(attrs={'autocomplete':'off','class':'some_class','placeholder':'dd/mm/yyyy'}))
-    miscellaneousDate=forms.DateField(input_formats='%m/%d/%Y',widget=forms.DateInput(attrs={'autocomplete':'off','class':'some_class','placeholder':'dd/mm/yyyy'})) 
+class financialExpensesForm(forms.ModelForm):  
     class Meta:
         model = financialExpensesModel
         fields = ('soilPrep', 'soilPrepDate', 'fertilizers', 'fertilizersDate', 'seeds', 'seedsDate', 'cultTools', 'cultToolsDate', 'fence', 'fenceDate', 'transportation', 'transportaionDate', 'labor', 'laborDate', 'irrigation', 'irrigationDate', 'miscellaneous', 'miscellaneousDate')
@@ -85,17 +75,37 @@ class financialExpensesForm(forms.ModelForm):
 
         }
         widgets = {
-                    'soilPrepDate': DatePickerInput(format='%m/%d/%Y'), 
-                    'fertilizersDate': DatePickerInput(format='%m/%d/%Y'), 
-                    'seedsDate': DatePickerInput(format='%m/%d/%Y'), 
-                    'cultToolsDate': DatePickerInput(format='%m/%d/%Y'), 
-                    'fenceDate': DatePickerInput(format='%m/%d/%Y'), 
-                    'transportaionDate': DatePickerInput(format='%m/%d/%Y'), 
-                    'laborDate': DatePickerInput(format='%m/%d/%Y'), 
-                    'irrigationDate': DatePickerInput(format='%m/%d/%Y'), 
-                    'soimiscellaneousDatelPrepDate': DatePickerInput(format='%m/%d/%Y'), 
+                    'soilPrepDate': DatePickerInput(), 
+                    'fertilizersDate': DatePickerInput(), 
+                    'seedsDate': DatePickerInput(), 
+                    'cultToolsDate': DatePickerInput(), 
+                    'fenceDate': DatePickerInput(), 
+                    'transportaionDate': DatePickerInput(), 
+                    'laborDate': DatePickerInput(), 
+                    'irrigationDate': DatePickerInput(), 
+                    'miscellaneousDate': DatePickerInput(), 
                  }
 
 
 
-    
+class outputIndicatorsForm(forms.ModelForm):
+    class Meta:
+        model = outputIndicatorsModel
+        fields = ('plantType', 'sowingDate', 'harvestDate', 'seedQuantity', 'harvestQuant', 'lostQuant', 'income', 'whereSold', 'finishingMonth', 'soldQuant', 'consumedQuant' )
+        labels = {
+            'plantType' : ('Vegetable/ Fruit/ herbs'),
+            'sowingDate' : ('Date of sowing(dd/mm/yy)'),
+            'harvestDate' : ('Date of harvest(dd/mm/yy)'),
+            'seedQuantity' : ('Quantity of seed sowed (in gm)'),
+            'harvestQuant' : ('Quantity harvested (in Kg)'),
+            'lostQuant' : ('If any quantity lost after harvest'),
+            'income' : ('Income from sale of seeds/surplus (in Rs)'),
+            'whereSold' : ('Sold where'),
+            'finishingMonth' : ('Month of finishing the produce'),
+            'soldQuant' : ('Quantity sold (in Kg)'),
+            'consumedQuant' : ('Quantity Consumed (in Kg)')
+        }
+        widgets = {
+            'sowingDate' : DatePickerInput(), 
+            'harvestDate' : DatePickerInput(), 
+        }
