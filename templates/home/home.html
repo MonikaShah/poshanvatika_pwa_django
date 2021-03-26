@@ -1,7 +1,7 @@
 {% extends 'home/base.html'%}
 {% load static%}
 {% block content %}
-{% if user.is_authenticated %}
+
   <!-- recipes -->
   <div class="recipes container grey-text text-darken-1">
     <img src="{% static 'home/images/main.jpeg'%}"
@@ -112,7 +112,7 @@
       </a>
     </div>
   </div>
-  {% endif %}
+ 
   {% endblock %}
 
   
