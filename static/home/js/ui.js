@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
     locationBtn.style.display = 'none';
     locationLoader.style.display = 'block';
     
-    capture_div.style.display = 'none';
+    // capture_div.style.display = 'none';
 
     navigator.geolocation.getCurrentPosition(position =>{
       locationBtn.style.display = 'inline-block';
