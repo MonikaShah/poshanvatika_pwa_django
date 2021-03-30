@@ -1,0 +1,66 @@
+{% extends 'home/base.html'%}{% load static%} {% block content %} 
+{% block css %}
+<style>
+
+h3{font-size: x-large; color:#FF8816;}
+#toast-container {
+    display: block;
+    position: fixed;
+    z-index: 10000
+}
+
+</style>
+  {% endblock css %}
+  
+    <form method="POST">
+      {% csrf_token %}
+      <div class="container" style="margin-top: 50px;">
+        <div class="row">
+        <div class="section"></div>
+       <main>
+        <center>
+         <div class="container">
+            <div  class="z-depth-3 y-depth-3 x-depth-3 grey green-text lighten-4 row" style="display: inline-block; padding: 30px 40px 0px 40px; border: 1px; margin-top: 100px solid #EEE; width: 70%;">
+            
+            
+              <h3><b>Signup Form </b></h3>
+          
+              {{ register_form.as_p }}   
+
+              <center>
+                <div class="form-field">
+                    <button class="btn-large waves-effect waves-dark add-btn">Signup</button>
+                  </div><br>
+            </center>
+            <p class="text-center">If you already have an account, <a href="/login">login</a> instead.</p>
+              </div>
+              
+                            
+              
+                <br/>
+               
+            </div>
+           </div>
+          </center>
+          </main>
+    
+      
+        </div>
+    </div>
+                </form>
+    </form>
+ 
+
+{% block javascript %}
+{% if messages %}
+{% for message in messages %}
+    
+{% if messages %}
+{% for message in messages %}
+  <script>M.toast({html: "{{message}}", classes: 'orange rounded', displayLength:2000});</script>
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endblock javascript %}
+{% endblock %}
