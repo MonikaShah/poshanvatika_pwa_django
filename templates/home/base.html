@@ -22,40 +22,71 @@
     integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
   {% block extra_css%}
   {% endblock %}
+<style>
+  .dropdown-content{
+   width: max-content !important;
+   height:auto !important;
+   
+}
+#dropdown li a{color: coral; text-transform: none; font-size: 14px;}
+  ul li a{
+    color: coral;
+    text-transform: none;
+    font-size: 16px;
+  }
+  div a{
+    font-size: 18px;
+  }
+</style>
+
 </head>
 
 <body class="grey lighten-4">
+
+  <!-- Dropdown Structure -->
+<ul id="dropdown" class="dropdown-content">
+  <li><a href=""">Offer of supply</a></li>
+  <li><a href="">Raise demand</a></li>
+  <li><a href="">user</a></li>
+</ul>
 
   <!-- top nav -->
   <nav class="z-depth-0">
     <div class="nav-wrapper container">
       <a href="/">Poshan<span>Vatika</span></a>
+      <ul class="right hide-on-med-and-down"> 
+      <li><a href="{% url 'about' %}" class="waves-effect">About</a></li>
+      <li><a href="" class="waves-effect">My Pohanvatika</a></li>
+      <li><a href="" class="waves-effect">Nutrition Beneficiaries</a></li>
+      <li> <a href="" class="dropdown-trigger" data-target="dropdown">Marketplace<i class="material-icons right">arrow_drop_down</i></a></li>
+      <li> <a href="" class="waves-effect">News</a></li>
+      <li><a href="{% url 'contact' %}" class="waves-effect">Contact<i class="material-icons  right">mail_outline</i></a></li> 
+      
       <span class="right grey-text text-darken-1">
         <i class="material-icons sidenav-trigger" data-target="side-menu">menu</i>
       </span>
+    </ul>
+ 
     </div>
   </nav>
+     
+  
+  <script>
+  var dropdowns = document.querySelectorAll('.dropdown-trigger')
+  for (var i = 0; i < dropdowns.length; i++){
+      M.Dropdown.init(dropdowns[i]);
+  }
+
+  </script>
+
 
   <!-- side nav -->
   <ul id="side-menu" class="sidenav side-menu">
     <li><a class="subheader">POSHANVATIKA</a></li>
     <li><a href="{% url 'map' %}" class="waves-effect">Map</a></li>
+    <li><a href="" class="waves-effect">Reports(coming soon)</a></li>
     <li><a href="/pages/resources" class="waves-effect">Resources</a></li>
-    <li><a href="{% url 'about' %}" class="waves-effect">About</a></li>
-
-
-    <li>
-      <div class="divider"></div>
-    </li>
-    <li><a href="{% url 'home'%}" class="waves-effect">Capture Image</a></li>
-    <li><a href="{% url 'basicForm'%}" class="waves-effect">Basic Information</a></li>
-    <li><a href="{% url 'NGForm'%}" class="waves-effect">Nutrition Garden Information</a></li>
-    <li><a href="{% url 'factsheet' %}" class="waves-effect">Poshan Vatika Fact Sheet</a></li>
-    <li><a href="{% url 'factsheet_dynamic' %}" class="waves-effect">Poshan Vatika Dynamic Indicators </a></li>
-    <li><a href="{% url 'financial' %}" class="waves-effect">Financial Expenses Form </a></li>
-    <li><a href="{% url 'output_indicators' %}" class="waves-effect">Output Indicators Form </a></li>
-
-    <li><a href="http://ee.communitygis.net/x/eEVHak7x" class="waves-effect">Online/Offline Forms</a></li>
+    <li><a href="" class="waves-effect">Feedback(coming soon)</a></li>
 
     <li>
       <div class="divider"></div>
@@ -68,12 +99,22 @@
     <li><a href="{% url 'login' %}" class="waves-effect">Login</a></li>
     <li><a href="{% url 'register' %}" class="waves-effect">Register</a></li>
     {% endif %}
+
     <li>
       <div class="divider"></div>
     </li>
-    <li><a href="{% url 'contact' %}" class="waves-effect">
-        <i class="material-icons">mail_outline</i>Contact</a>
-    </li>
+    <li><a class="subheader">Data Contribution and Forms</a></li>
+    <li><a href="{% url 'basicForm'%}" class="waves-effect">Basic Information</a></li>
+    <li><a href="http://ee.communitygis.net/x/eEVHak7x" class="waves-effect">Nutrigarden</a></li>
+    <li><a href="{% url 'home'%}" class="waves-effect">Capture Image</a></li>
+    <li><a href="https://ee.humanitarianresponse.info/x/WH2BwaU0" class="waves-effect">Prathmik mahiti(Marathi Form)</a></li>
+
+   <!-- <li><a href="{% url 'NGForm'%}" class="waves-effect">Nutrition Garden Information</a></li>
+    <li><a href="{% url 'factsheet' %}" class="waves-effect">Poshan Vatika Fact Sheet</a></li>
+    <li><a href="{% url 'factsheet_dynamic' %}" class="waves-effect">Poshan Vatika Dynamic Indicators </a></li>
+    <li><a href="{% url 'financial' %}" class="waves-effect">Financial Expenses Form </a></li>
+    <li><a href="{% url 'output_indicators' %}" class="waves-effect">Output Indicators Form </a></li>-->
+   
   </ul>
 
   {% block content %}
@@ -82,5 +123,8 @@
     integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
   <script src="{% static 'home/js/ajax_csrf.js' %}"></script>
   <script src="{% static 'home/js/ui.js' %}"></script>
+
+  
+
 </body>
 </html>
