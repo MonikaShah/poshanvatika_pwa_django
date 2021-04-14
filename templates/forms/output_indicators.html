@@ -6,49 +6,18 @@
 {% block content %}
 {% load static %} 
 <style>
-    table{ 
-            table-layout: fixed;
-             }
 select{display: block;padding: 0px;} 
-table thead td{
-font-weight: bold;
-}
 </style>
-    <form  method="post" enctype="multipart/form-data"></head>
+    <form  method="post" enctype="multipart/form-data">
       {% csrf_token %}
-      
+    <div class="container">
 	  	<div class="section"></div>
          <main>
-         
+         <div class="container">
          <div class="z-depth-3 y-depth-3 x-depth-3 grey  lighten-4 row" style="padding:20px;border: 1px;">
          <h3 class="heading" style="text-align: center;"><b>Output Indicators Form</b></h3>
          <table border="1">
-          <thead>
-            <tr><td>{{ form.plantType.label }}</td>
-            <td>{{ form.sowingDate.label }}</td>
-            <td>{{ form.harvestDate.label }}</td>
-            <td>{{ form.seedQuantity.label }}</td>
-            <td>{{ form.harvestQuant.label }}</td>
-            <td>{{ form.lostQuant.label }}</td>
-            <td>{{ form.income.label }}</td>
-            <td>{{ form.whereSold.label }}</td>
-            <td>{{ form.finishingMonth.label }}</td>
-            <td>{{ form.soldQuant.label }}</td>
-            <td>{{ form.consumedQuant.label }}</td></tr>
-          </thead> 
-          <tbody> 
-            <tr><td>{{ form.plantType }}</td>
-           <td>{{ form.sowingDate }}</td>  
-           <td>{{ form.harvestDate }}</td>  
-           <td>{{ form.seedQuantity }}</td>  
-           <td>{{ form.harvestQuant }}</td>  
-           <td>{{ form.lostQuant }}</td>  
-           <td>{{ form.income }}</td>  
-           <td>{{ form.whereSold }}</td>  
-           <td>{{ form.finishingMonth }}</td>
-           <td>{{ form.soldQuant }}</td>
-           <td>{{ form.consumedQuant }}</td></tr>
-          </tbody> 
+           {{  form.as_table }}
         </br> </table><br>
           <div class="form-field" style="margin-bottom: 10px ;text-align:center;">
               <button class="login-btn btn-large waves-effect waves-dark">Submit</button>
