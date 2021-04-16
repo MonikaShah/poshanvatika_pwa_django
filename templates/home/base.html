@@ -28,7 +28,7 @@
    height:auto !important;
    
 }
-#dropdown li a{color: coral; text-transform: none; font-size: 14px;}
+#dropdown1 li a, #dropdown li a{color: coral; text-transform: none; font-size: 14px;}
   ul li a{
     color: coral;
     text-transform: none;
@@ -49,19 +49,24 @@
   <li><a href="">Raise demand</a></li>
   <li><a href="">user</a></li>
 </ul>
+<ul id="dropdown1" class="dropdown-content">
+  <li><a href=""">English</a></li>
+  <li><a href="">Hindi(coming soon)</a></li>
+  <li><a href="">Marathi(coming soon)</a></li>
+</ul>
 
   <!-- top nav -->
   <nav class="z-depth-0" style="background-color: #ffd9b3;" >
     <div class="nav-wrapper container" >
-      <a href="/">Poshan<span>Vatika</span></a>
+      <a href="/"><span>PoshanVatika</span></a>
       <ul class="right hide-on-med-and-down"> 
       <li><a href="{% url 'about' %}" class="waves-effect">About</a></li>
       <li><a href="{% url 'myPoshan' %}" class="waves-effect">My Pohanvatika</a></li>
       <li><a href="" class="waves-effect">Nutrition Beneficiaries</a></li>
       <li> <a href="" class="dropdown-trigger" data-target="dropdown">Marketplace<i class="material-icons right">arrow_drop_down</i></a></li>
-      <li> <a href="" class="waves-effect">News</a></li>
+      <li> <a href= "{% url 'news' %}" class="waves-effect">News</a></li>
       <li><a href="{% url 'contact' %}" class="waves-effect">Contact<i class="material-icons  right">mail_outline</i></a></li> 
-      
+    
       <span class="right grey-text text-darken-1" style="padding-left: 100px;">
         <i class="material-icons sidenav-trigger" data-target="side-menu">menu</i>
       </span>
@@ -72,18 +77,18 @@
      
   
   <script>
-  var dropdowns = document.querySelectorAll('.dropdown-trigger')
-  for (var i = 0; i < dropdowns.length; i++){
-      M.Dropdown.init(dropdowns[i]);
-  }
-
-  </script>
+    var dropdowns = document.querySelectorAll('.dropdown-trigger')
+    for (var i = 0; i < dropdowns.length; i++){
+        M.Dropdown.init(dropdowns[i]);
+    }
+  
+    </script>
 
 
   <!-- side nav -->
-  <ul id="side-menu" class="sidenav side-menu">
+  <ul id="side-menu" class="sidenav side-menu" style="width: 350px;">
     <li><a class="subheader">POSHANVATIKA</a></li>
-    <li><a href="{% url 'new_map' %}" class="waves-effect">Map</a></li>
+    <li><a href="{% url 'heir_map' %}" class="waves-effect">Map</a></li>
     <li><a href="" class="waves-effect">Reports(coming soon)</a></li>
     <li><a href="/pages/resources" class="waves-effect">Resources</a></li>
     <li><a href="" class="waves-effect">Feedback(coming soon)</a></li>
@@ -104,7 +109,7 @@
       <div class="divider"></div>
     </li>
     <li ><a class="subheader" >DATA CONTRIBUTION AND FORMS</a></li>
-    <li><a href="{% url 'basicForm'%}" class="waves-effect">Prathmik Mahiti(Basic Information)</a></li>
+    <li><a href="{% url 'basicForm'%}" class="waves-effect">Prathmik Mahiti(Basic info)</a></li>
     <li><a href="http://ee.communitygis.net/x/eEVHak7x" class="waves-effect">Nutrigarden(Detailed Factsheet)</a></li>
     <li><a href="{% url 'home'%}" class="waves-effect">Capture Image</a></li>
     <li><a href="http://ee.communitygis.net/x/RWF4D9SR" class="waves-effect">Vistrit Mahiti(Marathi Form)</a></li>

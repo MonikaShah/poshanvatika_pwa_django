@@ -121,18 +121,11 @@ table, th, td
     <div>
         <button onclick="getBoundaryru(this)">Submit</button>
     </div> -->
-    <br>
-    <div class="tooltips" id="view">
+   
 
-        <select class='form-control' id="view_s">
-              <option value="All"> Select View </option> 
-              <!-- <option value="All India View">All India View</option> -->
-              <option value="Navigated Area View">Navigated Area View</option>
-             </select>
-    </div>
     <br>
     <!--Creating div for navigated area view-->
-   <div id="navigatedarea" style="display:none;">
+   <div id="navigatedarea">
     <!--these two dropdowns are dependent-->
      <div class="tooltips" title="Please select the State">
        <select class='form-control' id="indstate" name="indstate">
@@ -600,6 +593,8 @@ fetch(layer_url)
         response.status);
         return;
     }
+
+   
 
     // Examine the text in the response
     response.json().then(function(geojsonData) {

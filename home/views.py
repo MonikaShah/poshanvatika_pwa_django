@@ -58,6 +58,10 @@ def about(request):
 def myPoshan(request):
     return render(request,"home/myPoshan.html",{})
 
+def news(request):
+    return render(request,"home/news.html",{})
+
+
 def login_request(request):
 	if request.method == "POST":
 		form = AuthenticationForm(request, data=request.POST)

@@ -8,5 +8,7 @@ urlpatterns = [
     path('login/', views.login_request, name='login'),
     path('logout/',views.logout, name='logout'),
     path('register/', views.register_request, name='register'),
-     path('myPoshan/', views.myPoshan, name='myPoshan')
+    path('myPoshan/', views.myPoshan, name='myPoshan'),
+    path('news/', views.news, name='news')
+
 ]
