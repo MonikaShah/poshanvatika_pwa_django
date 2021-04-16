@@ -55,6 +55,8 @@ def contact(request):
 def about(request):
     return render(request,"home/about.html",{})
 
+def myPoshan(request):
+    return render(request,"home/myPoshan.html",{})
 
 def login_request(request):
 	if request.method == "POST":
