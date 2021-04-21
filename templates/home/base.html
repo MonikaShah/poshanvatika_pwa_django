@@ -29,8 +29,20 @@
    
 }
 #dropdown1 li a, #dropdown li a{color: coral; text-transform: none; font-size: 14px;}
-  ul li a{
+  #topnav li a{
     color: coral;
+    text-transform: none;
+    font-size: 16px;
+  }
+  #topnav li a:hover{
+    color: white;
+    background-color: #ee8761;
+    text-transform: none;
+    font-size: 16px;
+  }
+  #topnav li a:active{
+    color: white;
+    background-color: #ee8761;
     text-transform: none;
     font-size: 16px;
   }
@@ -45,12 +57,12 @@
 
   <!-- Dropdown Structure -->
 <ul id="dropdown" class="dropdown-content">
-  <li><a href=""">Offer of supply</a></li>
+  <li><a href="">Offer of supply</a></li>
   <li><a href="">Raise demand</a></li>
   <li><a href="">user</a></li>
 </ul>
 <ul id="dropdown1" class="dropdown-content">
-  <li><a href=""">English</a></li>
+  <li><a href="">English</a></li>
   <li><a href="">Hindi(coming soon)</a></li>
   <li><a href="">Marathi(coming soon)</a></li>
 </ul>
@@ -58,8 +70,8 @@
   <!-- top nav -->
   <nav class="z-depth-0" style="background-color: #ffd9b3;" >
     <div class="nav-wrapper container" >
-      <a href="/"><span>PoshanVatika</span></a>
-      <ul class="right hide-on-med-and-down"> 
+      <a href="/"><span style="color: coral;">PoshanVatika</span></a>
+      <ul id="topnav" class="right hide-on-med-and-down"> 
       <li><a href="{% url 'about' %}" class="waves-effect">About</a></li>
       <li><a href="{% url 'myPoshan' %}" class="waves-effect">My Pohanvatika</a></li>
       <li><a href="" class="waves-effect">Nutrition Beneficiaries</a></li>

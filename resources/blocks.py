@@ -70,3 +70,22 @@ class ArticleCardBlock(blocks.StructBlock):
         template="resources/article_card.html"
         icon="media"
         label="Article Card"
+
+
+class WeblinkCardBlock(blocks.StructBlock):
+    
+    title = blocks.CharBlock(required = True, help_text  = 'Add Title')
+    cards = blocks.ListBlock(
+        blocks.StructBlock(
+            [   
+                ("title", blocks.CharBlock(required = True, help_text  = 'Title')),
+                ("link", EmbedBlock(label=("Link"))),
+            ]
+            
+       )
+    )
+    
+    class Meta:
+        template="resources/web_card.html"
+        icon="media"
+        label="Weblink Card"

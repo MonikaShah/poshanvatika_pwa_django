@@ -1,7 +1,7 @@
 {% extends 'home/base.html'%}
 {% load socialaccount %}
 
-{% load static%}
+{% load static %}
 {% block content %}
 
 <form method="post" enctype="multipart/form-data">
@@ -10,12 +10,21 @@
         <div class="row">
         <div class="container">
             <div  class="z-depth-3 y-depth-3 x-depth-3 grey  lighten-4 row" style="padding:20px;border: 1px;">
-                <h3 class="heading" style="text-align: center;"><b>Poshan Vatika </b></h3>
+                <h3 class="heading" style="text-align: center; color: #F98A4B;"><b>Login </b></h3>
                 {{ login_form.as_p }}
                 <div class="form-field" style="margin-bottom: 10px; text-align:center;">
                     <button class="login-btn btn-large waves-effect waves-dark" style="width: 180px;">Login</button>               
                 </div>
-                
+               <!--  <div class="form-field" style="margin-bottom: 10px ;text-align:center; padding-top:10px;">
+                    <a class="oauth-container btn darken-4 white black-text" href="{% provider_login_url 'google' %}" style="text-transform:none; height : 50px; padding-top:8px; ">
+                        <div class="left" style="align-items: center;">
+                            <img width="20px" style="margin-top:7px; margin-right:8px" alt="Google sign-in" 
+                                src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
+                        </div>
+                        Login with Google
+                    </a>   
+            </div>-->
+
         </div>
     </div>
   </div>
