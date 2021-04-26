@@ -1,12 +1,13 @@
 {% extends 'home/base.html'%}{% load static%} {% block content %} 
 {% block css %}
 <style>
+  body
 
-h3{font-size: x-large; color:#FF8816;}
+h3{font-size: x-large; color:#4CAF50;;}
 #toast-container {
     display: block;
     position: fixed;
-    z-index: 10000
+    z-index: 10000;
 }
 
 </style>
@@ -24,15 +25,15 @@ h3{font-size: x-large; color:#FF8816;}
             
             
               <h3><b>Signup Form </b></h3>
-          
+              <div style="text-align: left;">
               {{ register_form.as_p }}   
-
+            </div>
               <center>
                 <div class="form-field">
-                    <button class="btn-large waves-effect waves-dark add-btn">Signup</button>
+                    <button class="btn-large waves-effect waves-dark add-btn" style="background-color: #4CAF50;">Signup</button>
                   </div><br>
             </center>
-            <p class="text-center">If you already have an account, <a href="/login" style="font-size: 14;">login</a> instead.</p>
+            <p class="text-center">If you already have an account, <a href="/login" style="font-size: 14; color:#0645AD;">login</a> instead.</p>
               </div>
               
                             
@@ -57,7 +58,7 @@ h3{font-size: x-large; color:#FF8816;}
     
 {% if messages %}
 {% for message in messages %}
-  <script>M.toast({html: "{{message}}", classes: 'orange rounded', displayLength:2000});</script>
+  <script>M.toast({html: "{{message}}", classes: 'green rounded', displayLength:2000});</script>
 {% endfor %}
 {% endif %}
 {% endfor %}

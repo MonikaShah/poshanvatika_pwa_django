@@ -4,31 +4,11 @@
 
 #side-bar {
     background-color: #ffffff;
-    /* text-decoration-color: red; */
-}
-/* unvisited link */
-a:link {
-color: coral;
 }
 
-/* visited link */
-a:visited {
-color: coral;
-}
-
-/* mouse over link */
-a:hover {
-color: coral;
-}
-
-a:active {
-color: coral;
-}
 #menu__link{
     color: aqua;  
 }
-
-
 
 .col-xs-12, .col-xs-6, .col-xs-4 {
     padding:3px;
