@@ -83,6 +83,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ] + WAGTAIL_MIDDLEWARE
 
 ROOT_URLCONF = 'poshanvatika_pwa_django.urls'
@@ -218,4 +219,16 @@ SOCIALACCOUNT_PROVIDERS = {
         }
     }
 }
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    # Other context processors included here
+    'responsive.context_processors.device_info',
+)
+# Name, Max Width (inclusive)
+DEFAULT_BREAKPOINTS = {
+    'phone': 480,
+    'tablet': 767,
+    'desktop': None,
+}
+
 
