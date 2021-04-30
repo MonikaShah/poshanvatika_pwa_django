@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import UploadPicture
+from .models import UploadPicture, UploadWellPicture
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.contrib.auth.models import User
@@ -7,6 +7,8 @@ from django.contrib.auth.models import User
 
 class UploadPictureForm(ModelForm):
     picture = forms.ImageField(label='')
+    name = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'Enter Your name','class': 'upload_field'}))
+    nutri_nm = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'Enter Name Of Your Nutri garden','class': 'upload_field'}))
     area = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'Enter Area Name','class': 'upload_field'}))
     village = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'Enter village Name','class': 'upload_field'}))
     district = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'Enter district Name','class': 'upload_field'}))
@@ -14,6 +16,21 @@ class UploadPictureForm(ModelForm):
     pincode = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'Enter pincode','class': 'upload_field'}))
     class Meta:
             model = UploadPicture
+            fields = '__all__'
+
+class UploadWellPictureForm(ModelForm):
+    picture = forms.ImageField(label='')
+    name = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'Enter Your name','class': 'upload_field'}))
+    well_nm = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'Enter Name Of the Well (if any)','class': 'upload_field'}))
+    radius = forms.IntegerField(label='', widget=forms.TextInput(attrs={'placeholder': 'Enter radius of the well','class': 'upload_field'}))
+    depth = forms.IntegerField(label='', widget=forms.TextInput(attrs={'placeholder': 'Enter depth of the well','class': 'upload_field'}))
+    level = forms.IntegerField(label='', widget=forms.TextInput(attrs={'placeholder': 'Enter water levels of the well','class': 'upload_field'}))
+    village = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'Enter village Name','class': 'upload_field'}))
+    district = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'Enter district Name','class': 'upload_field'}))
+    state = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'Enter state Name','class': 'upload_field'}))
+    pincode = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'Enter pincode','class': 'upload_field'}))
+    class Meta:
+            model = UploadWellPicture
             fields = '__all__'
 
 class NewUserForm(UserCreationForm):

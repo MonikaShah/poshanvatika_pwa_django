@@ -15,7 +15,7 @@ from django.contrib.auth.models import User,auth
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.contrib.auth import authenticate
-from .forms import UploadPictureForm
+from .forms import UploadPictureForm, UploadWellPictureForm
 # Create your views here.
 def home(request):
     form = UploadPictureForm()
@@ -47,6 +47,19 @@ def home(request):
         
 
     return render(request,"home/home.html",{'form':form})
+
+def well(request):
+    form = UploadWellPictureForm()
+    global datauri
+    if request.is_ajax():
+        datauri = request.POST['picture']
+    
+
+    if request.method == 'POST' and not request.is_ajax():
+        form = UploadWellPictureForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+    return render(request,"home/well_images.html",{'form':form})
 
 
 def contact(request):

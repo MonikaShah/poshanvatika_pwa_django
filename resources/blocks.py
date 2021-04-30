@@ -42,9 +42,7 @@ class VideoCardBlock(blocks.StructBlock):
             ]
             
        )
-    )
-    
-   
+    )   
     class Meta:
         template="resources/video_card.html"
         icon="media"
@@ -79,7 +77,7 @@ class WeblinkCardBlock(blocks.StructBlock):
         blocks.StructBlock(
             [   
                 ("title", blocks.CharBlock(required = True, help_text  = 'Title')),
-                ("link", EmbedBlock(label=("Link"))),
+                ("link", blocks.RichTextBlock(required=True,help_text = 'Link'))
             ]
             
        )
