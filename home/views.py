@@ -48,18 +48,31 @@ def home(request):
 
     return render(request,"home/home.html",{'form':form})
 
-def well(request):
-    form = UploadWellPictureForm()
-    global datauri
-    if request.is_ajax():
-        datauri = request.POST['picture']
+# def well(request):
+#     form = UploadWellPictureForm()
+#     global datauri
+#     if request.is_ajax():
+#         datauri = request.POST['picture']
     
 
-    if request.method == 'POST' and not request.is_ajax():
-        form = UploadWellPictureForm(request.POST, request.FILES)
+#     if request.method == 'POST' and not request.is_ajax():
+#         form = UploadWellPictureForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             form.save()
+#     return render(request,"home/well_images.html",{'form':form})
+
+def well(request):
+    if request.method == 'POST':
+        form = UploadWellPictureForm(request.POST)
         if form.is_valid():
-            form.save()
-    return render(request,"home/well_images.html",{'form':form})
+            instance = form.save()
+            instance.user = request.user
+            instance.save()
+            print("data is saved.")
+            return redirect('/home')
+    else:
+        form = UploadWellPictureForm()
+    return render(request,'home/well_images.html',{'form': form})
 
 
 def contact(request):
