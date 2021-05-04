@@ -1,5 +1,5 @@
 {% load static %}
-{% for card in self.cards%}
+{% for card in self.cards %}
 
 
 <div class="row" style="width: 400px;">
@@ -10,8 +10,7 @@
         </div>
         <div class="card-content">
           <span class="card-title">{{ card.title }}</span>
-
-          <p>{{ card.title }}</p>
+          <p>{{ card.description }}</p>
         </div>
         <div class="card-action">
           <a href="#">{{ card.article }}</a>

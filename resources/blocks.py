@@ -75,11 +75,13 @@ class WebBlock(blocks.StructBlock):
     Title = blocks.CharBlock(required = True, help_text  = 'Add Title')
     Description = blocks.TextBlock(required = True, help_text = 'Add Description')
     Article = blocks.RichTextBlock(required=True)
-class Meta:
+
+    class Meta:
 
         template = 'resources/web_card.html' 
         icon = 'edit'
-        label = 'Web'
+        label = 'weblink'
+
 
 class WeblinkCardBlock(blocks.StructBlock):
     
@@ -88,12 +90,14 @@ class WeblinkCardBlock(blocks.StructBlock):
         blocks.StructBlock(
             [   
                 ("title", blocks.CharBlock(required = True, help_text  = 'Title')),
-                ("link", blocks.RichTextBlock(required=True,help_text = 'Link'))
+                ("description", blocks.TextBlock(required = True, help_text = 'Description')),
+                ("article", blocks.RichTextBlock(required=True,help_text = 'link'))
             ]
             
        )
     )
     
+   
     class Meta:
         template="resources/web_card.html"
         icon="media"
