@@ -12,7 +12,7 @@ class ArticleBlock(blocks.StructBlock):
 
     class Meta:
 
-        template = 'resources/articles.html' 
+        template = 'resources/article_card.html' 
         icon = 'edit'
         label = 'Article'
 
@@ -69,6 +69,17 @@ class ArticleCardBlock(blocks.StructBlock):
         icon="media"
         label="Article Card"
 
+
+class WebBlock(blocks.StructBlock):
+    
+    Title = blocks.CharBlock(required = True, help_text  = 'Add Title')
+    Description = blocks.TextBlock(required = True, help_text = 'Add Description')
+    Article = blocks.RichTextBlock(required=True)
+class Meta:
+
+        template = 'resources/web_card.html' 
+        icon = 'edit'
+        label = 'Web'
 
 class WeblinkCardBlock(blocks.StructBlock):
     
