@@ -13,7 +13,7 @@ class PictureLocation(models.Model):
     lat = models.CharField(max_length=10)
     lng = models.CharField(max_length=10)
 
-class UploadPicture(models.Model):
+class UploadPictureModel(models.Model):
     picture = models.FileField(upload_to='uploadPics/', blank=True, null=True)
     name = models.CharField(max_length=30, default='')
     nutri_nm = models.CharField(max_length=100, default='')
@@ -34,7 +34,7 @@ class WellPictureLocation(models.Model):
     lat = models.CharField(max_length=10)
     lng = models.CharField(max_length=10)
 
-class UploadWellPicture(models.Model):
+class UploadWellPictureModel(models.Model):
     picture = models.FileField(upload_to='uploadPics/', blank=True, null=True)
     name = models.CharField(max_length=30)
     well_nm = models.CharField(max_length=100)

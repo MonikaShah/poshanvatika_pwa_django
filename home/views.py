@@ -17,36 +17,18 @@ from django.shortcuts import redirect
 from django.contrib.auth import authenticate
 from .forms import UploadPictureForm, UploadWellPictureForm
 # Create your views here.
-def home(request):
-    form = UploadPictureForm()
-    global datauri
-    if request.is_ajax():
-        datauri = request.POST['picture']
+# def home(request):
+#     form = UploadPictureForm()
+#     global datauri
+#     if request.is_ajax():
+#         datauri = request.POST['picture']
     
 
-    if request.method == 'POST' and not request.is_ajax():
-        form = UploadPictureForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-        # lat = request.POST.get('lat')
-        # lng = request.POST.get('lng')
-
-        # try:
-        #     imgstr = re.search(r'base64,(.*)', datauri).group(1)
-        #     data = ContentFile(base64.b64decode(imgstr))
-        #     myfile = "profile-"+time.strftime("%Y%m%d-%H%M%S")+".png"
-        #     fs = FileSystemStorage()
-        #     filename = fs.save(myfile, data)
-        #     picLocation = PictureLocation.objects.create(user=request.user,picture_name=filename,lat=lat,lng=lng)
-        #     picLocation.save()
-        #     datauri = False
-        #     del datauri
-        # except NameError:
-        #     print("Image is not captured")
-       
-        
-
-    return render(request,"home/home.html",{'form':form})
+#     if request.method == 'POST' and not request.is_ajax():
+#         form = UploadPictureForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             form.save()
+#     return render(request,"home/home.html",{'form':form})
 
 # def well(request):
 #     form = UploadWellPictureForm()
@@ -73,6 +55,19 @@ def well(request):
     else:
         form = UploadWellPictureForm()
     return render(request,'home/well_images.html',{'form': form})
+
+def home(request):
+    if request.method == 'POST':
+        form = UploadPictureForm(request.POST)
+        if form.is_valid():
+            instance = form.save()
+            instance.user = request.user
+            instance.save()
+            print("data is saved.")
+            return redirect('/home')
+    else:
+        form = UploadPictureForm()
+    return render(request,"home/home.html",{'form':form})
 
 
 def contact(request):
