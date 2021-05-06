@@ -1,0 +1,28 @@
+{% extends 'home/base.html'%}
+{% load static%}
+{% block content %}
+
+<head>  <link type="text/css" href="{% static 'home/css/style.css' %}" rel="stylesheet">
+
+</head>
+
+  <!-- add  side nav -->
+  <div id="side-form" class="center">
+    <div>
+      <form class="container section" enctype="multipart/form-data" method="post">
+        {% csrf_token %}
+          {{form.as_p}}
+          <button class="btn-small" type="submit" name="action" style=" background-color: #4CAF50;">Add</button>
+      </form>
+
+    </div>
+
+
+    <div class="center">
+      <a class="btn-floating btn-small btn-large close-btn">
+        <i class="material-icons" style=" background-color: #4CAF50;">close</i>
+      </a>
+    </div>
+  </div>
+ 
+  {% endblock %}

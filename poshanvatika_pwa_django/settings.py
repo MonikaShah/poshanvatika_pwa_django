@@ -126,7 +126,7 @@ WSGI_APPLICATION = 'poshanvatika_pwa_django.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'poshan',
+        'NAME': 'poshan1',
         'USER' : 'postgres',
         'PASSWORD' : 'postgres1713000',
         'HOST' : 'localhost',
@@ -179,8 +179,10 @@ STATICFILES_DIRS = (
 
 STATIC_ROOT = BASE_DIR/ 'staticfiles'
 
-MEDIA_ROOT = BASE_DIR/ 'media'
 MEDIA_URL = '/media/'
+
+MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
+
 
 WAGTAIL_SITE_NAME = 'poshanvatika.communitygis.com'
 PWA_SERVICE_WORKER_PATH = BASE_DIR/ 'static/serviceworker.js'

@@ -15,7 +15,7 @@ from django.contrib.auth.models import User,auth
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.contrib.auth import authenticate
-from .forms import UploadPictureForm, UploadWellPictureForm
+from .forms import UploadPictureForm, UploadWellPictureForm, WellPictureLocationForm, PictureLocationForm
 # Create your views here.
 # def home(request):
 #     form = UploadPictureForm()
@@ -43,31 +43,57 @@ from .forms import UploadPictureForm, UploadWellPictureForm
 #             form.save()
 #     return render(request,"home/well_images.html",{'form':form})
 
-def well(request):
+def captwellpic(request):
     if request.method == 'POST':
-        form = UploadWellPictureForm(request.POST)
+        form = WellPictureLocationForm(request.POST, request.FILES)
         if form.is_valid():
             instance = form.save()
             instance.user = request.user
             instance.save()
             print("data is saved.")
-            return redirect('/home')
+            return redirect('/captvatikapic')
+    else:
+        form = WellPictureLocationForm()
+    return render(request,'home/captureWellPic.html',{})
+
+def uploadwellpic(request):
+    if request.method == 'POST':
+        form = UploadWellPictureForm(request.POST, request.FILES)
+        if form.is_valid():
+            instance = form.save()
+            instance.user = request.user
+            instance.save()
+            print("data is saved.")
+            return redirect('/captvatikapic')
     else:
         form = UploadWellPictureForm()
-    return render(request,'home/well_images.html',{'form': form})
+    return render(request,'home/uploadWellPic.html',{'form': form})
 
-def home(request):
+def captvatikapic(request):
     if request.method == 'POST':
-        form = UploadPictureForm(request.POST)
+        form = PictureLocationForm(request.POST, request.FILES)
         if form.is_valid():
             instance = form.save()
             instance.user = request.user
             instance.save()
             print("data is saved.")
-            return redirect('/home')
+            return redirect('/captvatikapic')
+    else:
+        form = PictureLocationForm()
+    return render(request,"home/captureVatikaPic.html",{})
+
+def uploadvatikapic(request):
+    if request.method == 'POST':
+        form = UploadPictureForm(request.POST, request.FILES)
+        if form.is_valid():
+            instance = form.save()
+            instance.user = request.user
+            instance.save()
+            print("data is saved.")
+            return redirect('/captvatikapic')
     else:
         form = UploadPictureForm()
-    return render(request,"home/home.html",{'form':form})
+    return render(request,"home/uploadVatikaPic.html",{'form': form})
 
 
 def contact(request):

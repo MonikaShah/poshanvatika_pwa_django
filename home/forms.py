@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import UploadPictureModel, UploadWellPictureModel
+from .models import UploadPictureModel, UploadWellPictureModel, WellPictureLocationModel, PictureLocation
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.contrib.auth.models import User
@@ -18,11 +18,20 @@ from django.contrib.auth.models import User
 #             model = UploadPicture
 #             fields = '__all__'
 
+class PictureLocationForm(forms.ModelForm):
+    class Meta:
+        model = PictureLocation
+        fields = ('picture_name','name','nutrinm','lat','lng')
 
 class UploadPictureForm(forms.ModelForm):
     class Meta:
         model = UploadPictureModel
         fields = ('picture','name','nutri_nm','area','village','district','state','pincode')
+
+class WellPictureLocationForm(forms.ModelForm):
+    class Meta:
+        model= WellPictureLocationModel
+        fields = ('picture_name','name','wellnm','radius','depth','level','lat','lng')
 
 class UploadWellPictureForm(forms.ModelForm):
     class Meta:
