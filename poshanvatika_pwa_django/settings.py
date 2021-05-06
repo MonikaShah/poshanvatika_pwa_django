@@ -126,7 +126,7 @@ WSGI_APPLICATION = 'poshanvatika_pwa_django.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'poshan1',
+        'NAME': 'poshan',
         'USER' : 'postgres',
         'PASSWORD' : 'postgres1713000',
         'HOST' : 'localhost',
