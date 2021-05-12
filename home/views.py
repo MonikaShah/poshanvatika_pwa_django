@@ -16,6 +16,7 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.contrib.auth import authenticate
 from .forms import UploadPictureForm, UploadWellPictureForm, WellPictureLocationForm, PictureLocationForm
+from .models import UploadWellPictureModel, WellPictureLocationModel
 # Create your views here.
 # def home(request):
 #     form = UploadPictureForm()
@@ -43,6 +44,21 @@ from .forms import UploadPictureForm, UploadWellPictureForm, WellPictureLocation
 #             form.save()
 #     return render(request,"home/well_images.html",{'form':form})
 
+# def viewWells(request):
+#     datas= UploadWellPictureModel.objects.all()
+#     print(datas[0])
+#     # datas1= Tracksheet.objects.all().order_by('-lane_name')
+#     #wardetail= DutyEntry.objects.all()
+#     # data= User.objects.all()
+#     return render(request,'home/viewWells.html',{'datas':datas})
+
+def viewWells(request):
+    datas = UploadWellPictureModel.objects.all()
+    # captwells = WellPictureLocationModel.objects
+    context = {'datas': datas}
+    return render(request, 'home/viewWells.html', context )
+    #return render(request, 'map/map.html', context)
+
 def captwellpic(request):
     if request.method == 'POST':
         form = WellPictureLocationForm(request.POST, request.FILES)
@@ -51,7 +67,7 @@ def captwellpic(request):
             instance.user = request.user
             instance.save()
             print("data is saved.")
-            return redirect('/captvatikapic')
+            return redirect('/captwellpic')
     else:
         form = WellPictureLocationForm()
     return render(request,'home/captureWellPic.html',{})
@@ -64,10 +80,10 @@ def uploadwellpic(request):
             instance.user = request.user
             instance.save()
             print("data is saved.")
-            return redirect('/captvatikapic')
+            return redirect('/captwellpic')
     else:
         form = UploadWellPictureForm()
-    return render(request,'home/uploadWellPic.html',{'form': form})
+    return render(request,'home/uploadWellPic.html',{})
 
 def captvatikapic(request):
     if request.method == 'POST':

@@ -14,7 +14,9 @@ urlpatterns = [
     path('captvatikapic/', views.captvatikapic, name='captvatikapic'),
     path('uploadvatikapic/', views.uploadvatikapic, name='uploadvatikapic'),
     path('captwellpic/', views.captwellpic, name='captwellpic'),
-    path('uploadwellpic/', views.uploadwellpic, name='uploadwellpic')
+    path('uploadwellpic/', views.uploadwellpic, name='uploadwellpic'),
+    path('viewWells/', views.viewWells, name='viewWells')
+
 
 
 

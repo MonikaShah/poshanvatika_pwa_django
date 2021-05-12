@@ -71,7 +71,7 @@
 </ul>
 
   <!-- top nav -->
-  <nav class="green" style="position: sticky; top: 0;">
+  <nav class="green" style="position: sticky; top: 0; z-index: auto;">
     <div class="nav-wrapper container" >
       <a href="/" class="brand-logo" style="color: white;  font-weight: bold; font-size: 22px; text-align: left;">PoshanVatika</a>
             <a href="#" data-target="mobile-nav" class="sidenav-trigger">
@@ -95,7 +95,7 @@
   </nav>
     
   <!--mobile view left nav-->
-  <ul class="sidenav" id="mobile-nav" style="z-index: 99999;">
+  <ul class="sidenav" id="mobile-nav" style="z-index: 9999999;">
     <li><a class="subheader">POSHANVATIKA</a></li>
     <li><a href="{% url 'about' %}" class="waves-effect">About</a></li>
     <li><a href="{% url 'myPoshan' %}" class="waves-effect">My Pohanvatikas</a></li>
@@ -130,6 +130,8 @@
     <li><a href="{% url 'captvatikapic'%}" class="waves-effect">Capture Image</a></li>
     <li><a href="http://ee.communitygis.net/x/RWF4D9SR" class="waves-effect">Vistrit Mahiti(Marathi Form)</a></li>
     <li><a href="{% url 'captwellpic'%}" class="waves-effect">Wells</a></li>
+    <li><a href="{% url 'viewWells'%}" class="waves-effect">View Wells</a></li>
+
 
 </ul>
   
@@ -147,7 +149,7 @@
 
 
   <!-- side nav -->
-  <ul id="side-menu" class="sidenav side-menu" style="width: 350px; z-index: 999999;">
+  <ul id="side-menu" class="sidenav side-menu" style="width: 350px; z-index: 99999999;">
     <li><a class="subheader">POSHANVATIKA</a></li>
     <li><a href="{% url 'heir_map' %}" class="waves-effect">Map</a></li>
     <li><a href="" class="waves-effect">Reports(coming soon)</a></li>
@@ -175,6 +177,8 @@
     <li><a href="{% url 'captvatikapic'%}" class="waves-effect">Capture Image</a></li>
     <li><a href="http://ee.communitygis.net/x/RWF4D9SR" class="waves-effect">Vistrit Mahiti(Marathi Form)</a></li>
     <li><a href="{% url 'captwellpic'%}" class="waves-effect">Wells</a></li>
+    <li><a href="{% url 'viewWells'%}" class="waves-effect">View Wells</a></li>
+
 
    <!-- <li><a href="{% url 'NGForm'%}" class="waves-effect">Nutrition Garden Information</a></li>
     <li><a href="{% url 'factsheet' %}" class="waves-effect">Poshan Vatika Fact Sheet</a></li>

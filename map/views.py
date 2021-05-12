@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from home.models import PictureLocation
 from django.core import serializers
-
+from home.forms import UploadWellPictureForm
 # Create your views here.
 def map(request):
   qs = PictureLocation.objects.all()

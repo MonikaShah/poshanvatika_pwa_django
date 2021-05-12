@@ -74,15 +74,15 @@
           </div>
           <div class="input-field">
             <input placeholder="Enter the radius of the well" id="radius" type="text" name="radius">
-            <label for="title">Radius</label>
+            <label for="title">Radius(in metres)</label>
           </div>
           <div class="input-field">
             <input placeholder="Enter the depth of the well" id="depth" type="text" name="depth">
-            <label for="title">Depth</label>
+            <label for="title">Depth(in metres)</label>
           </div>
           <div class="input-field">
             <input placeholder="Enter the water level of the well" id="level" type="text" name="level">
-            <label for="title">Water level</label>
+            <label for="title">Water level(in metres)</label>
           </div>
           <div class="input-field">
             <input placeholder="Enter Latitude" id="lat" type="text" name="lat">
@@ -122,7 +122,10 @@
     <div style="display:none ">
       <form class="container section" enctype="multipart/form-data"method="post">
         {% csrf_token %}
-          {{form.as_p}}
+          {{form.as_p}} 
+          
+    
+            
           <button class="btn-small" type="submit" name="action" style=" background-color: #4CAF50;">Add</button>
       </form>
 

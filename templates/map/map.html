@@ -217,15 +217,15 @@
         })
     });
 
-//Compendium
-/*  var cmpIcon = L.icon({
-            iconUrl: "{% static 'map/images/compendium.png' %}",
-            iconSize:     [20, 30], // size of the icon
+//wells
+    var wellIcon = L.icon({
+            iconUrl: "{% static 'map/images/well.png' %}",
+            iconSize:     [30, 40], // size of the icon
             //shadowSize:   [50, 64], // size of the shadow
             iconAnchor:   [25,10], // point of the icon which will correspond to marker's location
             // shadowAnchor: [4, 62],  // the same for the shadow
             popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
-        });*/
+        });
     
         
     const onEachFeatureForPoint1 = (feature, layer) =>{
@@ -288,14 +288,54 @@
         })
     });
 
-
-
-
-
-
-
-
 </script>
+
+
+
+
+{% for i in datas %}
+
+  <script>
+
+var table2 = 
+        
+        `<table class="striped centered" style="background-color:beige; font-size:12px;">
+        <thead>
+          <tr>
+              <th>Well name</th>
+              <th>{{ i.wellnm }}</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>Radius</td>
+            <td>{{ i.radius }} mtr</td>
+          </tr>
+
+          <tr>
+            <td>Depth</td>
+            <td>{{ i.depth }} mtr</td>
+          </tr>
+
+          <tr>
+            <td>Level</td>
+            <td>{{ i.level }} mtr</td>
+          </tr>
+        </tbody>
+      </table>
+      </br>`
+      
+       var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:wellIcon}).addTo(mymap).bindPopup(table2);
+   </script>
+
+
+                  {% endfor %}
+         
+    
+
+
+
 <script>
 
 document.addEventListener('DOMContentLoaded', () => {

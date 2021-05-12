@@ -2,7 +2,6 @@ from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User
 
-
 # Create your models here.
 
 class PictureLocation(models.Model):
@@ -45,4 +44,7 @@ class UploadWellPictureModel(models.Model):
     district = models.CharField(max_length=30)
     state = models.CharField(max_length=30)
     pincode = models.CharField(max_length=10)
+    lat = models.CharField(max_length=10)
+    lng = models.CharField(max_length=10)
+
     

@@ -36,7 +36,7 @@ class WellPictureLocationForm(forms.ModelForm):
 class UploadWellPictureForm(forms.ModelForm):
     class Meta:
         model = UploadWellPictureModel
-        fields = ('picture','name','well_nm','radius','depth','level','village','district','state','pincode')
+        fields = ('picture','name','well_nm','radius','depth','level','village','district','state','pincode', 'lat', 'lng')
 # class UploadWellPictureForm(ModelForm):
 #     picture = forms.ImageField(label='')
 #     name = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'Enter Your name','class': 'upload_field'}))
