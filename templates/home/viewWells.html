@@ -146,44 +146,61 @@ var table =
         
         `<table class="w3-table" id="popup" style="font-size:12px; align:center;" >
           <tbody>
+        {% if i.picture %}
           <tr>
-            <tr><a href={{ i.picture.url }}><img src={{ i.picture.url }} alt="No image uploaded" style="height:100px; width:170px; border:2px solid #555;"/></a>
+            <tr><img src={{ i.picture.url }} alt="No image uploaded" style="height:100px; width:170px; border:2px solid #555;"/>
           </tr>
+          {% endif %}
 
+          {% if i.well_nm %}
           <tr>
               <th>Well name</th>
               <th>{{ i.well_nm }}</th>
           </tr>
-       
+          {% endif %}
+
+          {% if i.radius %}
           <tr>
             <td>Radius</td>
             <td>{{ i.radius }} mtr</td>
           </tr>
+          {% endif %}
 
+          {% if i.depth %}
           <tr>
             <td>Depth</td>
             <td>{{ i.depth }} mtr</td>
           </tr>
+          {% endif %}
 
+          {% if i.level %}
           <tr>
             <td>Level</td>
             <td>{{ i.level }} mtr</td>
           </tr>
+          {% endif %}
 
+          {% if i.village %}
           <tr>
             <td>Village</td>
             <td>{{ i.village }}</td>
           </tr>
+          {% endif %}
 
+          {% if i.district %}
           <tr>
             <td>District</td>
             <td>{{ i.district }}</td>
           </tr>
+          {% endif %}
 
+          {% if i.state %}
           <tr>
             <td>State</td>
             <td>{{ i.state }}</td>
           </tr>
+          {% endif %}
+
         </tbody>
       </table>
       </br>`

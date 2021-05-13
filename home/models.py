@@ -35,16 +35,16 @@ class WellPictureLocationModel(models.Model):
 
 class UploadWellPictureModel(models.Model):
     picture = models.ImageField(upload_to='WellPics/', blank=True, null=True)
-    name = models.CharField(max_length=30)
-    well_nm = models.CharField(max_length=100)
-    radius = models.IntegerField()
-    depth = models.IntegerField()
-    level = models.IntegerField()
-    village = models.CharField(max_length=30)
-    district = models.CharField(max_length=30)
-    state = models.CharField(max_length=30)
-    pincode = models.CharField(max_length=10)
-    lat = models.CharField(max_length=10)
+    name = models.CharField(max_length=30, blank=True, null=True)
+    well_nm = models.CharField(max_length=100, blank=True, null=True)
+    radius = models.IntegerField(blank=True, null=True)
+    depth = models.IntegerField(blank=True, null=True)
+    level = models.IntegerField(blank=True, null=True)
+    village = models.CharField(max_length=50, blank=True, null=True)
+    district = models.CharField(max_length=30, blank=True, null=True)
+    state = models.CharField(max_length=30, blank=True, null=True)
+    pincode = models.CharField(max_length=10, blank=True, null=True)
+    lat = models.CharField(max_length=10, blank=True, null=True)
     lng = models.CharField(max_length=10)
 
     
