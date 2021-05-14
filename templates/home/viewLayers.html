@@ -129,7 +129,7 @@
 } */
    </style>
    <script>
-     var layerGroup = L.layerGroup();
+     var wellslayerGroup = L.layerGroup();
 
    </script>
     
@@ -205,7 +205,7 @@ var table =
       'className' : 'another-popup' // classname for another popup
     }
        var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:wellIcon}).bindPopup(table, popupOptions);
-       layerGroup.addLayer(marker);
+       wellslayerGroup.addLayer(marker);
    </script>
 
 
@@ -225,6 +225,11 @@ var table =
      
          
     </script>
+    <style>
+      .another-popup .leaflet-popup-content-wrapper .leaflet-popup-content{
+         width: 200px;
+         height:320px;
+      }</style>
     <script>
       var poshanlayerGroup = L.layerGroup();
  
@@ -306,7 +311,7 @@ var table =
         "Districts":indiaDistrict,
         "Maharashtra Highways":mahaHighways,
         "Maharashtra Schools":mahaSchools,
-        "Wells":layerGroup,
+        "Wells":wellslayerGroup,
         "PoshanVatikas": poshanlayerGroup
 	};
 

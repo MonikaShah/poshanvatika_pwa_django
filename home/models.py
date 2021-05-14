@@ -8,7 +8,7 @@ class UploadPictureModel(models.Model):
     picture = models.ImageField(upload_to='PoshanVatikaPics/', blank=True, null=True)
     name = models.CharField(max_length=30, default='')
     nutri_nm = models.CharField(max_length=100, default='')
-    area = models.CharField(max_length=30)
+    area = models.IntegerField()
     village = models.CharField(max_length=50, blank=True, null=True)
     district = models.CharField(max_length=30, blank=True, null=True)
     state = models.CharField(max_length=30, blank=True, null=True)
