@@ -3,10 +3,18 @@
 {% block content %}
 
 <head>  <link type="text/css" href="{% static 'home/css/style.css' %}" rel="stylesheet">
-
+  <style>
+    #form{
+      width:40%;
+    }
+    #form label{
+      color: black;
+      font-size: 18px;
+    }
+  </style>
 </head>
   <!-- recipes -->
-  <div class="recipes container grey-text text-darken-1">
+  <div class="recipes container text-darken-1">
     <img src="{% static 'home/images/well.jpg'%}"
            alt="Poshan vatika"
            class="main-image">
@@ -51,12 +59,14 @@
       </div>
     </div>
     <div class="capture-div" style='display:none'>
-      <form class="container section" method="post">
+      <form id = "form" class="container section" method="post">
         {% csrf_token %}
         <h6 >Add Wells Information</h6>
         <div class="divider"></div>
           <video id="player" autoplay></video>
           <canvas id='canvas' width="320px" height="240px" name="myfile" ></canvas>
+          <input type="file" id="img" name="picture_name" accept="image/*" style="display: none;">
+
           <div class="input-field center">
             <a id="capture-btn" class="waves-effect waves-light btn-small" style=" background-color: #4CAF50;">Capture</a>
           </div>
@@ -65,11 +75,7 @@
             <small>Allow Camera access to app</small>
           </div>
           <div class="input-field">
-            <input placeholder="Enter your name" id="name" type="text" name="name">
-            <label for="title">Name</label>
-          </div>          
-          <div class="input-field">
-            <input placeholder="Enter the name of the well(if any)" id="wellnm" type="text" name="wellnm">
+            <input placeholder="Enter the name of the well(if any)" id="wellnm" type="text" name="well_nm">
             <label for="title">Name of the well</label>
           </div>
           <div class="input-field">
@@ -83,6 +89,22 @@
           <div class="input-field">
             <input placeholder="Enter the water level of the well" id="level" type="text" name="level">
             <label for="title">Water level(in metres)</label>
+          </div>
+          <div class="input-field">
+            <input placeholder="Enter village name" id="Village" type="text" name="village">
+            <label for="title">Village</label>
+          </div>
+          <div class="input-field">
+            <input placeholder="Enter the district" id="district" type="text" name="district">
+            <label for="title">District</label>
+          </div>
+          <div class="input-field">
+            <input placeholder="Enter the state" id="state" type="text" name="state">
+            <label for="title">State</label>
+          </div>
+          <div class="input-field">
+            <input placeholder="Enter the pincode" id="pincode" type="text" name="pincode">
+            <label for="title">Pincode</label>
           </div>
           <div class="input-field">
             <input placeholder="Enter Latitude" id="lat" type="text" name="lat">

@@ -4,7 +4,6 @@ import re
 # from django.core.files import 
 from django.core.files.base import ContentFile
 from django.core.files.storage import FileSystemStorage
-from .models import PictureLocation
 import base64
 import time
 
@@ -15,53 +14,22 @@ from django.contrib.auth.models import User,auth
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.contrib.auth import authenticate
-from .forms import UploadPictureForm, UploadWellPictureForm, WellPictureLocationForm, PictureLocationForm
-from .models import UploadWellPictureModel, WellPictureLocationModel
+from .forms import UploadPictureForm, UploadWellPictureForm
+from .models import UploadWellPictureModel, UploadPictureModel
 # Create your views here.
-# def home(request):
-#     form = UploadPictureForm()
-#     global datauri
-#     if request.is_ajax():
-#         datauri = request.POST['picture']
-    
 
-#     if request.method == 'POST' and not request.is_ajax():
-#         form = UploadPictureForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             form.save()
-#     return render(request,"home/home.html",{'form':form})
-
-# def well(request):
-#     form = UploadWellPictureForm()
-#     global datauri
-#     if request.is_ajax():
-#         datauri = request.POST['picture']
-    
-
-#     if request.method == 'POST' and not request.is_ajax():
-#         form = UploadWellPictureForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             form.save()
-#     return render(request,"home/well_images.html",{'form':form})
-
-# def viewWells(request):
-#     datas= UploadWellPictureModel.objects.all()
-#     print(datas[0])
-#     # datas1= Tracksheet.objects.all().order_by('-lane_name')
-#     #wardetail= DutyEntry.objects.all()
-#     # data= User.objects.all()
-#     return render(request,'home/viewWells.html',{'datas':datas})
-
-def viewWells(request):
-    datas = UploadWellPictureModel.objects.all()
+def viewLayers(request):
+    wells = UploadWellPictureModel.objects.all()
+    vatikas = UploadPictureModel.objects.all()
     # captwells = WellPictureLocationModel.objects
-    context = {'datas': datas}
-    return render(request, 'home/viewWells.html', context )
+    context = {'wells': wells, 'vatikas': vatikas}
+    return render(request, 'home/viewLayers.html', context )
     #return render(request, 'map/map.html', context)
+
 
 def captwellpic(request):
     if request.method == 'POST':
-        form = WellPictureLocationForm(request.POST, request.FILES)
+        form = UploadWellPictureForm(request.POST, request.FILES)
         if form.is_valid():
             instance = form.save()
             instance.user = request.user
@@ -69,7 +37,7 @@ def captwellpic(request):
             print("data is saved.")
             return redirect('/captwellpic')
     else:
-        form = WellPictureLocationForm()
+        form = UploadWellPictureForm()
     return render(request,'home/captureWellPic.html',{})
 
 def uploadwellpic(request):
@@ -87,7 +55,7 @@ def uploadwellpic(request):
 
 def captvatikapic(request):
     if request.method == 'POST':
-        form = PictureLocationForm(request.POST, request.FILES)
+        form = UploadPictureForm(request.POST, request.FILES)
         if form.is_valid():
             instance = form.save()
             instance.user = request.user
@@ -95,7 +63,7 @@ def captvatikapic(request):
             print("data is saved.")
             return redirect('/captvatikapic')
     else:
-        form = PictureLocationForm()
+        form = UploadPictureForm()
     return render(request,"home/captureVatikaPic.html",{})
 
 def uploadvatikapic(request):

@@ -3,16 +3,91 @@
 {% block content %}
 
 <head>  <link type="text/css" href="{% static 'home/css/style.css' %}" rel="stylesheet">
-
+  <style>
+    #form{
+      width:40%;
+    }
+    #form label{
+      color: black;
+      font-size: 18px;
+    }
+  </style>
 </head>
 
   <!-- add  side nav -->
   <div id="side-form" class="center">
     <div>
-      <form class="container section" enctype="multipart/form-data" method="post">
+      <form id="form" class="container section" enctype="multipart/form-data" method="post">
         {% csrf_token %}
-          {{form.as_p}}
-          <button class="btn-small" type="submit" name="action" style=" background-color: #4CAF50;">Submit</button>
+        <label for="img" id="selectimg" style="font-size:14px; padding-right:20px;">Browse image from your device:</label>
+        <input type="file"  accept="image/*" name="picture" id="file"  onchange="loadFile(event)" >
+        <p><img id="output" width="300"/></p>
+
+                  <script>
+                  var loadFile = function(event) {
+                    var image = document.getElementById('output');
+                    image.src = URL.createObjectURL(event.target.files[0]);
+                    document.getElementById("selectimg").style.display="none";
+                  };
+                  </script>
+        <div class="input-field">
+          <input placeholder="Enter your name" id="name" type="text" name="name">
+          <label for="title">Name</label>
+        </div>          
+        <div class="input-field">
+          <input placeholder="Enter the name of your Nutrigarden" id="nutri_nm" type="text" name="nutri_nm">
+          <label for="title">Name of the nutrigarden</label>
+        </div>
+        <div class="input-field">
+          <input placeholder="Area of the nutrigarden" id="area" type="text" name="area">
+          <label for="title">Area(in sq. meters)</label>
+        </div>  
+        <div class="input-field">
+          <input placeholder="Village where nutrigarden is located" id="village" type="text" name="village">
+          <label for="title">Village</label>
+        </div>  
+        <div class="input-field">
+          <input placeholder="Enter the district name" id="district" type="text" name="district">
+          <label for="title">District</label>
+        </div>  
+        <div class="input-field">
+          <input placeholder="Enter state name" id="state" type="text" name="state">
+          <label for="title">State</label>
+        </div>  
+        <div class="input-field">
+          <input placeholder="Enter your pincode" id="pincode" type="text" name="pincode">
+          <label for="title">Pincode</label>
+        </div>  
+        <div class="input-field">
+          <input placeholder="Enter Latitude" id="lat" type="text" name="lat">
+          <label for="title">Latitude</label>
+        </div>
+        <div class="input-field">
+          <input placeholder="Enter  Longitude" id="lng" type="text" name="lng">
+          <label for="title">Longitude</label>
+        </div>
+        <div class="input-section center">
+          <a id="location-btn" class="waves-effect waves-light btn-small" style=" background-color: #4CAF50;">Get Location</a>
+  
+  
+            <div class="preloader-wrapper small active" id="location-loader">
+              <div class="spinner-layer spinner-green-only">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div><div class="gap-patch">
+                  <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                  <div class="circle"></div>
+                </div>
+              </div>
+            </div>
+  
+          </div>
+  
+          
+          <div class="input-field center">
+            <button class="btn-small" type="submit" name="action" style=" background-color: #4CAF50;">Submit</button>
+          </div>
       </form>
 
     </div>

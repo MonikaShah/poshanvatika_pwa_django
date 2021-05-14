@@ -2,6 +2,15 @@
 
 
   /* recipe styles */
+
+   #form{
+      width:40%;
+    }
+    #form label{
+      color: black;
+      font-size: 18px;
+    }
+  
   .recipes{
     margin-top: 20px;
   }

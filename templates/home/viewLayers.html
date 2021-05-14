@@ -88,14 +88,7 @@
         }
     );
 
-	var overlays = {
-        "States":indiaState,
-        "Districts":indiaDistrict,
-        "Maharashtra Highways":mahaHighways,
-        "Maharashtra Schools":mahaSchools
-	};
-
-	L.control.layers(baseLayers, overlays).addTo(mymap);
+	
 
 //wells
     var wellIcon = L.icon({
@@ -115,7 +108,7 @@
           height:400px;
         }
 
-       /* .another-popup .leaflet-popup-content-wrapper {
+  /* .another-popup .leaflet-popup-content-wrapper {
   background: beige;
   color: #eee;
   border-radius: 5%;
@@ -135,10 +128,12 @@
   box-shadow: none;
 } */
    </style>
+   <script>
+     var layerGroup = L.layerGroup();
+
+   </script>
     
-{% for i in datas %}
-
-
+{% for i in wells %}
 
   <script>
      
@@ -209,17 +204,113 @@ var table =
       'maxWidth': '500',
       'className' : 'another-popup' // classname for another popup
     }
-       var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:wellIcon}).addTo(mymap).bindPopup(table, popupOptions);
+       var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:wellIcon}).bindPopup(table, popupOptions);
+       layerGroup.addLayer(marker);
    </script>
 
 
-                  {% endfor %}
+     {% endfor %}
          
-    
+
+<script>
+     //poshan
+     var pvIcon = L.icon({
+            iconUrl: "{% static 'map/images/pw_logo.png' %}",
+            iconSize:     [40, 40], // size of the icon
+            //shadowSize:   [50, 64], // size of the shadow
+            iconAnchor:   [25,10], // point of the icon which will correspond to marker's location
+            // shadowAnchor: [4, 62],  // the same for the shadow
+            popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+        });
+     
+         
+    </script>
+    <script>
+      var poshanlayerGroup = L.layerGroup();
+ 
+    </script>
+     
+ {% for i in vatikas %}
+ 
+   <script>
+      
+ var table1 = 
+         
+         `<table class="w3-table" id="popup" style="font-size:12px; align:center;" >
+           <tbody>
+         {% if i.picture %}
+           <tr>
+             <tr><img src={{ i.picture.url }} alt="No image uploaded" style="height:100px; width:170px; border:2px solid #555;"/>
+           </tr>
+           {% endif %}
+ 
+           {% if i.nutri_nm %}
+           <tr>
+               <th>Nutrigarden name</th>
+               <th>{{ i.nutri_nm }}</th>
+           </tr>
+           {% endif %}
+ 
+           {% if i.area %}
+           <tr>
+             <td>Area</td>
+             <td>{{ i.area }} sq mtrs</td>
+           </tr>
+           {% endif %}
+ 
+           {% if i.village %}
+           <tr>
+             <td>Village</td>
+             <td>{{ i.village }}</td>
+           </tr>
+           {% endif %}
+ 
+           {% if i.district %}
+           <tr>
+             <td>District</td>
+             <td>{{ i.district }}</td>
+           </tr>
+           {% endif %}
+ 
+           {% if i.state %}
+           <tr>
+             <td>State</td>
+             <td>{{ i.state }}</td>
+           </tr>
+           {% endif %}
+ 
+         </tbody>
+       </table>
+       </br>`
+       var popupOptions =
+     {
+       'maxWidth': '500',
+       'className' : 'another-popup' // classname for another popup
+     }
+        var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:pvIcon}).addTo(mymap).bindPopup(table1, popupOptions);
+        poshanlayerGroup.addLayer(marker);
+    </script>
+ 
+ 
+      {% endfor %}
+          
+ 
+ 
+
 
 
 
 <script>
+  var overlays = {
+        "States":indiaState,
+        "Districts":indiaDistrict,
+        "Maharashtra Highways":mahaHighways,
+        "Maharashtra Schools":mahaSchools,
+        "Wells":layerGroup,
+        "PoshanVatikas": poshanlayerGroup
+	};
+
+	L.control.layers(baseLayers, overlays).addTo(mymap);
 
 document.addEventListener('DOMContentLoaded', () => {
     var elems = document.querySelectorAll('.modal');
