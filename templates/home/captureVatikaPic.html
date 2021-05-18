@@ -63,7 +63,7 @@
             <small>Allow Camera access to app</small>
           </div>
           <div class="input-field">
-            <input placeholder="Enter your name" id="name" type="text" name="name">
+            <input placeholder="Enter your name" id="name" type="text" name="name" required>
             <label for="title">Name</label>
           </div>          
           <div class="input-field">
@@ -71,37 +71,36 @@
             <label for="title">Name of the nutrigarden</label>
           </div>
           <div class="input-field">
-            <input placeholder="Area of the nutrigarden" id="area" type="text" name="area">
+            <input placeholder="Area of the nutrigarden" id="area" type="text" name="area" required>
             <label for="title">Area(in sq. meters)</label>
           </div>  
           <div class="input-field">
-            <input placeholder="Village where nutrigarden is located" id="village" type="text" name="village">
+            <input placeholder="Village where nutrigarden is located" id="village" type="text" name="village" required>
             <label for="title">Village</label>
           </div>  
           <div class="input-field">
-            <input placeholder="Enter the district name" id="district" type="text" name="district">
+            <input placeholder="Enter the district name" id="district" type="text" name="district" required>
             <label for="title">District</label>
           </div>  
           <div class="input-field">
-            <input placeholder="Enter state name" id="state" type="text" name="state">
+            <input placeholder="Enter state name" id="state" type="text" name="state" required>
             <label for="title">State</label>
           </div>  
           <div class="input-field">
-            <input placeholder="Enter your pincode" id="pincode" type="text" name="pincode">
+            <input placeholder="Enter your pincode" id="pincode" type="text" name="pincode" required>
             <label for="title">Pincode</label>
           </div>  
           <div class="input-field">
-            <input placeholder="Enter Latitude" id="lat" type="text" name="lat">
+            <input placeholder="Allow location access to capture your location" id="lat" type="text" name="lat" readonly="readonly" required>
             <label for="title">Latitude</label>
           </div>
           <div class="input-field">
-            <input placeholder="Enter  Longitude" id="lng" type="text" name="lng">
+            <input placeholder="Allow location access to capture your location" id="lng" type="text" name="lng" readonly="readonly" required>
             <label for="title">Longitude</label>
           </div>
   
           <div class="input-section center">
-          <a id="location-btn" class="waves-effect waves-light btn-small" style=" background-color: #4CAF50;">Get Location</a>
-  
+          <a id="location-btn" class="waves-effect waves-light btn-small" style=" background-color: #4CAF50; visibility: hidden;">Get Location</a>
   
             <div class="preloader-wrapper small active" id="location-loader">
               <div class="spinner-layer spinner-green-only">
@@ -122,17 +121,21 @@
             <button class="btn-small" type="submit" name="action" style=" background-color: #4CAF50;">Submit</button>
           </div>
       </form>
+      <script>
+        window.onload = function(){
+  document.getElementById('location-btn').click();
+}
+      </script>
     </div>
 
     
-    <div style="display:none ">
+    <!-- <div style="display:none ">
       <form class="container section" enctype="multipart/form-data"method="post">
         {% csrf_token %}
           {{form.as_p}}
           <button class="btn-small" type="submit" name="action" style=" background-color: #4CAF50;">Add</button>
       </form>
-
-    </div>
+    </div> -->
 
 
     <div class="center">
