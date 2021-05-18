@@ -25,7 +25,7 @@ SECRET_KEY = 'xyre8e*04pgg&_mktm4y_uy%(j!vxfj!_(=*pzov9+d8ur2ken'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['poshanvatika.communitygis.net','127.0.0.1','localhost','myposhanvatika.in']
+ALLOWED_HOSTS = ['poshanvatika.communitygis.net','127.0.0.1','localhost', 'myposhanvatika.in', 'www.myposhanvatika.in']
 
 
 # Application definition
@@ -184,7 +184,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
 
 
-WAGTAIL_SITE_NAME = 'poshanvatika.communitygis.com'
+WAGTAIL_SITE_NAME = 'myposhanvatika.in'
 PWA_SERVICE_WORKER_PATH = BASE_DIR/ 'static/serviceworker.js'
 
 PWA_APP_NAME = 'Poshan Vatika'
