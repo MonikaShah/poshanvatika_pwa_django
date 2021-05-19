@@ -1,20 +1,19 @@
 from django.forms import ModelForm
-from .models import UploadPicture
+from .models import UploadPictureModel, UploadWellPictureModel
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.contrib.auth.models import User
 
-
-class UploadPictureForm(ModelForm):
-    picture = forms.ImageField(label='')
-    area = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'Enter Area Name','class': 'upload_field'}))
-    village = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'Enter village Name','class': 'upload_field'}))
-    district = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'Enter district Name','class': 'upload_field'}))
-    state = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'Enter state Name','class': 'upload_field'}))
-    pincode = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'Enter pincode','class': 'upload_field'}))
+class UploadPictureForm(forms.ModelForm):
     class Meta:
-            model = UploadPicture
-            fields = '__all__'
+        model = UploadPictureModel
+        fields = ('picture','name','nutri_nm','area','village','district','state','pincode','lat','lng')
+
+class UploadWellPictureForm(forms.ModelForm):
+    class Meta:
+        model = UploadWellPictureModel
+        fields = ('picture','name','well_nm','radius','depth','level','village','district','state','pincode', 'lat', 'lng')
+
 
 class NewUserForm(UserCreationForm):
     email = forms.EmailField(required=True)

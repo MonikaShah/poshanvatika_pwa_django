@@ -17,6 +17,7 @@ class ResourcesPage(Page):
         [
             ("videocards",blocks.VideoCardBlock()),
             ("articlecards",blocks.ArticleCardBlock()),
+            ("weblinkcards",blocks.WeblinkCardBlock()),
 
         ],
         null = True,

@@ -1,34 +1,20 @@
 /* colours */
-:root{
-    --primary: #FFE9D2;
-    --secondary: #FFE1C4;
-    --title: #FF8816;
-  }
 
-  .heading{
-    color: var(--title);
-  }
-  
-  /* layout styles */
-  nav{
-    background: var(--primary);
-    border-bottom: 10px solid var(--secondary);
-  }
-  nav a{
-    text-transform: uppercase;
-    color: var(--title);
-  }
-  nav a span{
-    font-weight: bold;
-  }
-  nav .sidenav-trigger{
-    margin: 0;
-  }
-  
+
   /* recipe styles */
+
+   #form{
+      width:40%;
+    }
+    #form label{
+      color: black;
+      font-size: 18px;
+    }
+  
   .recipes{
     margin-top: 20px;
   }
+  
   .card-panel.recipe{
     border-radius: 8px;
     padding: 10px;

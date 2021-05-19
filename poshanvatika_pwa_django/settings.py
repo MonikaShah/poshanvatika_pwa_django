@@ -25,8 +25,7 @@ SECRET_KEY = 'xyre8e*04pgg&_mktm4y_uy%(j!vxfj!_(=*pzov9+d8ur2ken'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['poshanvatika.communitygis.net','127.0.0.1','localhost']
-
+ALLOWED_HOSTS = ['poshanvatika.communitygis.net','127.0.0.1','localhost', 'myposhanvatika.in', 'www.myposhanvatika.in']
 
 # Application definition
 
@@ -83,6 +82,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ] + WAGTAIL_MIDDLEWARE
 
 ROOT_URLCONF = 'poshanvatika_pwa_django.urls'
@@ -115,10 +115,21 @@ WSGI_APPLICATION = 'poshanvatika_pwa_django.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'poshan',
+        'USER' : 'postgres',
+        'PASSWORD' : 'postgres1713000',
+        'HOST' : 'localhost',
+        'PORT' : '5432',
     }
 }
 
@@ -167,10 +178,12 @@ STATICFILES_DIRS = (
 
 STATIC_ROOT = BASE_DIR/ 'staticfiles'
 
-MEDIA_ROOT = BASE_DIR/ 'media'
 MEDIA_URL = '/media/'
 
-WAGTAIL_SITE_NAME = 'poshanvatika.communitygis.com'
+MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
+
+
+WAGTAIL_SITE_NAME = 'myposhanvatika.in'
 PWA_SERVICE_WORKER_PATH = BASE_DIR/ 'static/serviceworker.js'
 
 PWA_APP_NAME = 'Poshan Vatika'
@@ -219,3 +232,13 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    # Other context processors included here
+    'responsive.context_processors.device_info',
+)
+# Name, Max Width (inclusive)
+DEFAULT_BREAKPOINTS = {
+    'phone': 480,
+    'tablet': 767,
+    'desktop': None,
+}

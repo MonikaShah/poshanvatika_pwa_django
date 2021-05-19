@@ -50,7 +50,9 @@ document.addEventListener('DOMContentLoaded', function() {
     },(err) =>{
       locationBtn.style.display = 'inline-block';
       locationLoader.style.display = 'none';
-      alert('Couldn\'t fetch location, please enter manually!');
+  
+    alert('Please allow location access to proceed!');
+
       fetchedLocation = {lat: 0, lng: 0};
     },{timeout:7000})
   })

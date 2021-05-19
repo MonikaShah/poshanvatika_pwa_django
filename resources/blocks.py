@@ -12,7 +12,7 @@ class ArticleBlock(blocks.StructBlock):
 
     class Meta:
 
-        template = 'resources/articles.html' 
+        template = 'resources/article_card.html' 
         icon = 'edit'
         label = 'Article'
 
@@ -42,9 +42,7 @@ class VideoCardBlock(blocks.StructBlock):
             ]
             
        )
-    )
-    
-   
+    )   
     class Meta:
         template="resources/video_card.html"
         icon="media"
@@ -70,3 +68,37 @@ class ArticleCardBlock(blocks.StructBlock):
         template="resources/article_card.html"
         icon="media"
         label="Article Card"
+
+
+class WebBlock(blocks.StructBlock):
+    
+    Title = blocks.CharBlock(required = True, help_text  = 'Add Title')
+    Description = blocks.TextBlock(required = True, help_text = 'Add Description')
+    Article = blocks.RichTextBlock(required=True)
+
+    class Meta:
+
+        template = 'resources/web_card.html' 
+        icon = 'edit'
+        label = 'weblink'
+
+
+class WeblinkCardBlock(blocks.StructBlock):
+    
+    title = blocks.CharBlock(required = True, help_text  = 'Add Title')
+    cards = blocks.ListBlock(
+        blocks.StructBlock(
+            [   
+                ("title", blocks.CharBlock(required = True, help_text  = 'Title')),
+                ("description", blocks.TextBlock(required = True, help_text = 'Description')),
+                ("article", blocks.RichTextBlock(required=True,help_text = 'link'))
+            ]
+            
+       )
+    )
+    
+   
+    class Meta:
+        template="resources/web_card.html"
+        icon="media"
+        label="Weblink Card"
