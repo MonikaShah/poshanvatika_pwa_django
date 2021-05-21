@@ -22,7 +22,7 @@
       <form id ='form' class="container section" enctype="multipart/form-data" method="post">
         {% csrf_token %}
         <label for="img" id="selectimg" style="font-size:14px; padding-right:20px;">Browse image from your device:</label>
-        <input type="file"  accept="image/*" name="picture" id="file"  onchange="loadFile(event)" >
+        <input type="file"  accept="image/*" name="picture" id="file"  onchange="loadFile(event)" required>
         <p><img id="output" width="300"/></p>
 
                   <script>

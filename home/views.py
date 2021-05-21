@@ -18,7 +18,9 @@ from django.contrib.auth import authenticate
 from .forms import UploadPictureForm, UploadWellPictureForm
 from .models import UploadWellPictureModel, UploadPictureModel
 # Create your views here.
-
+from django.template.defaultfilters import filesizeformat
+from django.utils.translation import ugettext_lazy as _
+from django.conf import settings
 #for rendering the data from database
 def viewLayers(request):
     wells = UploadWellPictureModel.objects.all()
@@ -65,6 +67,7 @@ def captwellpic(request):
     else:
         form = UploadWellPictureForm()
     return render(request,'home/captureWellPic.html',{})
+
 
 def uploadwellpic(request):
     if request.method == 'POST':
