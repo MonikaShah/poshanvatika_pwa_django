@@ -22,6 +22,12 @@ from django.template.defaultfilters import filesizeformat
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings
 #for rendering the data from database
+
+# #compress image
+# from io import BytesIO
+# from PIL import Image
+# from django.core.files.uploadedfile import InMemoryUploadedFile
+
 def viewLayers(request):
     wells = UploadWellPictureModel.objects.all()
     vatikas = UploadPictureModel.objects.all()
@@ -68,6 +74,26 @@ def captwellpic(request):
         form = UploadWellPictureForm()
     return render(request,'home/captureWellPic.html',{})
 
+# def uploadwellpic(request):
+#     data = dict()
+#     if "GET" == request.method:
+#         return render(request,'home/uploadWellPic.html',{})
+    
+#     # process POST request
+#     files = request.FILES  # multivalued dict
+#     image = files.get("picture")
+    
+#     # compress the image here and then save it
+#     i = Image.open(image)
+#     thumb_io = BytesIO()
+#     i.save(thumb_io, format='JPEG', quality=80)
+#     inmemory_uploaded_file = InMemoryUploadedFile(thumb_io, None, 'foo.jpeg', 
+#                                               'image/jpeg', thumb_io.tell(), None)
+
+#     instance = UploadWellPictureModel()
+#     instance.image = inmemory_uploaded_file
+#     instance.save()
+#     return render(request,'home/uploadWellPic.html',{})
 
 def uploadwellpic(request):
     if request.method == 'POST':
