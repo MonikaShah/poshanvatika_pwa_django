@@ -116,6 +116,18 @@
     </div>
   </div>
  
-  {% endblock %}
+  {% block javascript %}
+{% if messages %}
+{% for message in messages %}
+    
+{% if messages %}
+{% for message in messages %}
+  <script>M.toast({html: "{{message}}", classes: 'green rounded', displayLength:2000});</script>
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endblock javascript %}
+{% endblock %}
 
   

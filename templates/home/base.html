@@ -81,8 +81,8 @@
       <ul id="topnav" class="right hide-on-med-and-down" style="align-items: center;"> 
       <li><a href="{% url 'about' %}" class="waves-effect">About</a></li>
       <li><a href="{% url 'myPoshan' %}" class="waves-effect">My Poshanvatikas</a></li>
-      <li><a href="" class="waves-effect">Nutrition Beneficiaries</a></li>
-      <li> <a href="" class="dropdown-trigger" data-target="dropdown">Marketplace<i class="material-icons right">arrow_drop_down</i></a></li>
+      <li><a href="{% url 'news' %}" class="waves-effect">Nutrition Beneficiaries</a></li>
+      <li> <a href="{% url 'news' %}" class="dropdown-trigger" data-target="dropdown">Marketplace<i class="material-icons right">arrow_drop_down</i></a></li>
       <li> <a href= "{% url 'news' %}" class="waves-effect">News</a></li>
       <li><a href="{% url 'contact' %}" class="waves-effect">Contact<i class="material-icons  right">mail_outline</i></a></li> 
     
@@ -98,15 +98,15 @@
     <li><a class="subheader">POSHANVATIKA</a></li>
     <li><a href="{% url 'about' %}" class="waves-effect">About</a></li>
     <li><a href="{% url 'myPoshan' %}" class="waves-effect">My Pohanvatikas</a></li>
-    <li><a href="" class="waves-effect">Nutrition Beneficiaries</a></li>
-    <li> <a href="" class="waves-effect">Marketplace<i class="material-icons right">arrow_drop_down</i></a></li>
+    <li><a href="{% url 'news' %}" class="waves-effect">Nutrition Beneficiaries</a></li>
+    <li> <a href="{% url 'news' %}" class="waves-effect">Marketplace<i class="material-icons right">arrow_drop_down</i></a></li>
     <li> <a href= "{% url 'news' %}" class="waves-effect">News</a></li>
     <li><a href="{% url 'contact' %}" class="waves-effect">Contact<i class="material-icons  right">mail_outline</i></a></li> 
     <li><a class="subheader">POSHANVATIKA</a></li>
     <li><a href="{% url 'heir_map' %}" class="waves-effect">Map</a></li>
-    <li><a href="" class="waves-effect">Reports(coming soon)</a></li>
+    <li><a href="{% url 'news' %}" class="waves-effect">Reports(coming soon)</a></li>
     <li><a href="/pages/resources" class="waves-effect">Resources</a></li>
-    <li><a href="" class="waves-effect">Feedback(coming soon)</a></li>
+    <li><a href="{% url 'news' %}" class="waves-effect">Feedback(coming soon)</a></li>
 
     <li>
       <div class="divider"></div>
@@ -124,7 +124,7 @@
       <div class="divider"></div>
     </li>
     <li ><a class="subheader" >DATA CONTRIBUTION AND FORMS</a></li>
-    <li><a href="{% url 'basicForm'%}" class="waves-effect">Prathmik Mahiti(Basic info)</a></li>
+    <li><a href="{% url 'basicinfo'%}" class="waves-effect">Prathmik Mahiti(Basic info)</a></li>
     <li><a href="http://ee.communitygis.net/x/eEVHak7x" class="waves-effect">Nutrigarden(Detailed Factsheet)</a></li>
     <li><a href="{% url 'captvatikapic'%}" class="waves-effect">Capture Image</a></li>
     <li><a href="http://ee.communitygis.net/x/RWF4D9SR" class="waves-effect">Vistrit Mahiti(Marathi Form)</a></li>
@@ -151,9 +151,9 @@
   <ul id="side-menu" class="sidenav side-menu" style="width: 350px; z-index: 99999999;">
     <li><a class="subheader">POSHANVATIKA</a></li>
     <li><a href="{% url 'heir_map' %}" class="waves-effect">Map</a></li>
-    <li><a href="" class="waves-effect">Reports(coming soon)</a></li>
+    <li><a href="{% url 'news' %}" class="waves-effect">Reports(coming soon)</a></li>
     <li><a href="/pages/resources" class="waves-effect">Resources</a></li>
-    <li><a href="" class="waves-effect">Feedback(coming soon)</a></li>
+    <li><a href="{% url 'news' %}" class="waves-effect">Feedback(coming soon)</a></li>
 
     <li>
       <div class="divider"></div>
@@ -171,7 +171,7 @@
       <div class="divider"></div>
     </li>
     <li ><a class="subheader" >DATA CONTRIBUTION AND FORMS</a></li>
-    <li><a href="{% url 'basicForm'%}" class="waves-effect">Prathmik Mahiti(Basic info)</a></li>
+    <li><a href="{% url 'basicinfo'%}" class="waves-effect">Prathmik Mahiti(Basic info)</a></li>
     <li><a href="http://ee.communitygis.net/x/eEVHak7x" class="waves-effect">Nutrigarden(Detailed Factsheet)</a></li>
     <li><a href="{% url 'captvatikapic'%}" class="waves-effect">Capture Image</a></li>
     <li><a href="http://ee.communitygis.net/x/RWF4D9SR" class="waves-effect">Vistrit Mahiti(Marathi Form)</a></li>
@@ -179,11 +179,7 @@
     <li><a href="{% url 'viewLayers'%}" class="waves-effect">View Wells and PoshanVatikas</a></li>
 
 
-   <!-- <li><a href="{% url 'NGForm'%}" class="waves-effect">Nutrition Garden Information</a></li>
-    <li><a href="{% url 'factsheet' %}" class="waves-effect">Poshan Vatika Fact Sheet</a></li>
-    <li><a href="{% url 'factsheet_dynamic' %}" class="waves-effect">Poshan Vatika Dynamic Indicators </a></li>
-    <li><a href="{% url 'financial' %}" class="waves-effect">Financial Expenses Form </a></li>
-    <li><a href="{% url 'output_indicators' %}" class="waves-effect">Output Indicators Form </a></li>-->
+   
    
   </ul>
 
