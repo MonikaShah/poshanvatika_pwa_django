@@ -37,8 +37,9 @@ class UploadPictureModel(models.Model):
         super(UploadPictureModel, self).save(*args, **kwargs)
     def compressImage(self,picture):
         imageTemproary = Image.open(picture)
+        imageTemproary = imageTemproary.convert('RGB')
         outputIoStream = BytesIO()
-        imageTemproaryResized = imageTemproary.resize( (1020,573) ) 
+        imageTemproary = imageTemproary.resize( (1020,573) ) 
         imageTemproary.save(outputIoStream , format='JPEG', quality=60)
         outputIoStream.seek(0)
         picture = InMemoryUploadedFile(outputIoStream,'ImageField', "%s.jpg" % picture.name.split('.')[0], 'image/jpeg', sys.getsizeof(outputIoStream), None)
@@ -64,8 +65,9 @@ class UploadWellPictureModel(models.Model):
         super(UploadWellPictureModel, self).save(*args, **kwargs)
     def compressImage(self,picture):
         imageTemproary = Image.open(picture)
+        imageTemproary = imageTemproary.convert('RGB')
         outputIoStream = BytesIO()
-        imageTemproaryResized = imageTemproary.resize( (1020,573) ) 
+        imageTemproary = imageTemproary.resize( (1020,573) ) 
         imageTemproary.save(outputIoStream , format='JPEG', quality=60)
         outputIoStream.seek(0)
         picture = InMemoryUploadedFile(outputIoStream,'ImageField', "%s.jpg" % picture.name.split('.')[0], 'image/jpeg', sys.getsizeof(outputIoStream), None)
