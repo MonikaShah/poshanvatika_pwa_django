@@ -21,7 +21,7 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 #         raise ValidationError("Max size of file is %s MB" % limit_mb)
 
 class UploadPictureModel(models.Model):
-    picture = models.ImageField(upload_to='PoshanVatikaPics/', blank=True, null=True)
+    picture = models.ImageField(upload_to='PoshanVatikaPics/', blank=True, null=True, default='PoshanVatikaPics/noImage.jpg')
     name = models.CharField(max_length=100, default='')
     nutri_nm = models.CharField(max_length=100, default='')
     area = models.IntegerField()
@@ -46,7 +46,7 @@ class UploadPictureModel(models.Model):
 
 
 class UploadWellPictureModel(models.Model):
-    picture = models.ImageField( upload_to='WellPics/', blank=True, null=True)
+    picture = models.ImageField( upload_to='WellPics/', blank=True, null=True, default='WellPics/noImage.jpg')
     name = models.CharField(max_length=100, blank=True, null=True)
     well_nm = models.CharField(max_length=100, blank=True, null=True)
     radius = models.IntegerField(blank=True, null=True)
