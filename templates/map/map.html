@@ -229,13 +229,18 @@
     
         
     const onEachFeatureForPoint1 = (feature, layer) =>{
-        var str3 = " <img class = 'popupimage1' src='/static/map/cmp_images/".concat(feature.properties.img1);
+        let img_name = feature.properties.img1.split(".")[0] + ".jpg";
+        var str3 = " <img class = 'popupimage1' src='/static/map/cmp_images/".concat(img_name);
         var str4 = str3.concat("' alt='image not found'></br>");
         if(feature.properties.img2!=''){
+        // let img_name1 = feature.properties.img2.split(".")[0] + ".jpg";
+
         var str5 = " <img class = 'popupimage2' src='/static/map/cmp_images/".concat(feature.properties.img2);
         var str6 = str5.concat("' alt='image not found'></br>");}
         else{str6=""}
         if(feature.properties.img3!=''){
+        // let img_name2 = feature.properties.img3.split(".")[0] + ".jpg";
+
         var str7 = " <img class = 'popupimage3' src='/static/map/cmp_images/".concat(feature.properties.img3);
         var str8 = str5.concat("' alt='image not found'> </br>");}
         else{str8=""}
