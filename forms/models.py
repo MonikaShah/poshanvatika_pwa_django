@@ -162,6 +162,8 @@ class BasicInformationModel(models.Model):
     covervillage = models.IntegerField()
     averagehousehold = models.IntegerField()
     shg = models.IntegerField()
+    lat = models.CharField(max_length=15, default='')
+    lng = models.CharField(max_length=15, default='')
 
 
 # class NutrigardenInformationModel(models.Model):

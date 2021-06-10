@@ -1,5 +1,9 @@
 {% extends 'home/base.html'%}
+{% load static%}
 {% block content %}
+<head>
+  <link type="text/css" href="{% static 'home/css/style.css' %}" rel="stylesheet">
+</head>
 <form method="post" enctype="multipart/form-data">
 {% csrf_token %}
 <div class="container">
@@ -73,9 +77,37 @@
           </div>
          
         </div>
-            <div class="form-field" style="margin-bottom: 10px ;text-align:center;">
-                <button class="login-btn btn-large waves-effect waves-dark" style="background-color: #4CAF50;">Submit</button>
+        <div class='row' >
+        <div class='input-field col s12'>
+          <span style="float: left; color: black;">Latitude : </span>
+        <input id="lat" type="text" name="lat" readonly="readonly" required>
+        </div>
+        </div>
+
+        <div class='row' >
+        <div class='input-field col s12'>
+          <span style="float: left; color: black;">Longitude : </span>
+          <input id="lng" type="text" name="lng" readonly="readonly" required>
+        </div>
+      </div>
+
+        <a id="location-btn" class="waves-effect waves-light btn-small" style=" background-color: #4CAF50; visibility: hidden;">Get Location</a>
+  
+            <div class="preloader-wrapper small active" id="location-loader">
+              <div class="spinner-layer spinner-green-only">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div><div class="gap-patch">
+                  <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                  <div class="circle"></div>
+                </div>
+              </div>
             </div>
+
+<div class="input-field center">
+  <button class="btn-small" type="submit" name="action" style=" background-color: #4CAF50;">Submit</button>
+</div>
     </div>
    </div>
   </main>
@@ -84,6 +116,11 @@
 </div>
 </div>   
 </form>
+<script>
+  window.onload = function(){
+document.getElementById('location-btn').click();
+}
+</script>
 
 <script>
 
@@ -107,3 +144,39 @@
    });
   </script>
 {% endblock%}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
