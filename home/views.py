@@ -1,6 +1,6 @@
 from django.core.exceptions import TooManyFieldsSent
 from django.shortcuts import render
-from .forms import NewUserForm
+from .forms import CreateUserForm
 import re
 # from django.core.files import 
 from django.core.files.base import ContentFile
@@ -14,12 +14,20 @@ from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from django.contrib.auth.models import User,auth
 from django.contrib import messages
 from django.shortcuts import redirect
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login, logout
 from .forms import UploadPictureForm, UploadWellPictureForm
 from .models import UploadWellPictureModel, UploadPictureModel
 # Create your views here.
+from django.template.defaultfilters import filesizeformat
+from django.utils.translation import ugettext_lazy as _
+from django.conf import settings
+#for rendering the data from database 
 
-#for rendering the data from database
+# #compress image
+# from io import BytesIO
+# from PIL import Image
+# from django.core.files.uploadedfile import InMemoryUploadedFile
+
 def viewLayers(request):
     wells = UploadWellPictureModel.objects.all()
     vatikas = UploadPictureModel.objects.all()
@@ -57,7 +65,6 @@ def captwellpic(request):
             filename = fs.save(myfile, data)
             picLocation = UploadWellPictureModel.objects.create(picture=filename, name=name, well_nm=well_nm, radius=radius, depth=depth, level=level, village=village, district=district, state=state,pincode=pincode, lat=lat, lng=lng)
             picLocation.save()
-            datauri = False
             datauri= False
             del datauri
         except NameError:
@@ -66,6 +73,27 @@ def captwellpic(request):
         form = UploadWellPictureForm()
     return render(request,'home/captureWellPic.html',{})
 
+# def uploadwellpic(request):
+#     data = dict()
+#     if "GET" == request.method:
+#         return render(request,'home/uploadWellPic.html',{})
+    
+#     # process POST request
+#     files = request.FILES  # multivalued dict
+#     image = files.get("picture")
+    
+#     # compress the image here and then save it
+#     i = Image.open(image)
+#     thumb_io = BytesIO()
+#     i.save(thumb_io, format='JPEG', quality=80)
+#     inmemory_uploaded_file = InMemoryUploadedFile(thumb_io, None, 'foo.jpeg', 
+#                                               'image/jpeg', thumb_io.tell(), None)
+
+#     instance = UploadWellPictureModel()
+#     instance.image = inmemory_uploaded_file
+#     instance.save()
+#     return render(request,'home/uploadWellPic.html',{})
+
 def uploadwellpic(request):
     if request.method == 'POST':
         form = UploadWellPictureForm(request.POST, request.FILES)
@@ -73,6 +101,7 @@ def uploadwellpic(request):
             instance = form.save()
             instance.user = request.user
             instance.save()
+            messages.success(request, "Registration successful." )
             print("data is saved.")
             return redirect('/captwellpic')
     else:
@@ -107,7 +136,6 @@ def captvatikapic(request):
             picLocation = UploadPictureModel.objects.create(picture=filename, name=name, nutri_nm=nutri_nm, area=area, village=village, district=district, state=state,pincode=pincode, lat=lat, lng=lng)
             picLocation.save()
             datauri = False
-            datauri= False
             del datauri
         except NameError:
             print("Image is not captured")
@@ -166,17 +194,16 @@ def logout(request):
     auth.logout(request)
     messages.info(request, "Logged out successfully!")
     return redirect('/')
-    
 
 
 def register_request(request):
-	if request.method == "POST":
-		form = NewUserForm(request.POST)
-		if form.is_valid():
-			user = form.save()
-			login(request, user, backend='django.contrib.auth.backends.ModelBackend')
-			messages.success(request, "Registration successful." )
-			return redirect("/")
-		messages.error(request, "Unsuccessful registration. Invalid information.")
-	form = NewUserForm
-	return render (request=request, template_name="home/register.html", context={"register_form":form})
+    form = CreateUserForm()
+    if request.method == 'POST':
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            user = form.cleaned_data.get('username')
+            messages.success(request, "Account was created for " + user)
+            return redirect('login')
+    context = {'form':form}
+    return render(request, "home/register.html", context)

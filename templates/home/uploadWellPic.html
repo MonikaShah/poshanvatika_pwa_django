@@ -22,7 +22,7 @@
       <form id ='form' class="container section" enctype="multipart/form-data" method="post">
         {% csrf_token %}
         <label for="img" id="selectimg" style="font-size:14px; padding-right:20px;">Browse image from your device:</label>
-        <input type="file"  accept="image/*" name="picture" id="file"  onchange="loadFile(event)" >
+        <input type="file"  accept="image/*" name="picture" id="file"  onchange="loadFile(event)" required>
         <p><img id="output" width="300"/></p>
 
                   <script>
@@ -66,15 +66,15 @@
           <label for="title">State</label>
         </div>
         <div class="input-field">
-          <input placeholder="Enter the pincode" id="pincode" type="number" name="pincode" required>
+          <input placeholder="Enter the pincode" id="pincode" type="text" name="pincode" required>
           <label for="title">Pincode</label>
         </div>
         <div class="input-field">
-          <input placeholder="Allow location access to capture your location" id="lat" type="number" name="lat" readonly="readonly" required>
+          <input placeholder="Allow location access to capture your location" id="lat" type="text" name="lat" readonly="readonly" required>
           <label for="title">Latitude</label>
         </div>
         <div class="input-field">
-          <input placeholder="Allow location access to capture your location" id="lng" type="number" name="lng" readonly="readonly" required>
+          <input placeholder="Allow location access to capture your location" id="lng" type="text" name="lng" readonly="readonly" required>
           <label for="title">Longitude</label>
         </div>
 
@@ -116,6 +116,18 @@
     </div>
   </div>
  
-  {% endblock %}
+  {% block javascript %}
+{% if messages %}
+{% for message in messages %}
+    
+{% if messages %}
+{% for message in messages %}
+  <script>M.toast({html: "{{message}}", classes: 'green rounded', displayLength:2000});</script>
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endblock javascript %}
+{% endblock %}
 
   

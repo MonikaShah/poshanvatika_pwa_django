@@ -1,3 +1,4 @@
+from django.db.models import fields
 from django.forms import ModelForm
 from .models import UploadPictureModel, UploadWellPictureModel
 from django.contrib.auth.forms import UserCreationForm
@@ -15,19 +16,26 @@ class UploadWellPictureForm(forms.ModelForm):
         fields = ('picture','name','well_nm','radius','depth','level','village','district','state','pincode', 'lat', 'lng')
 
 
-class NewUserForm(UserCreationForm):
-    email = forms.EmailField(required=True)
-    def __init__(self, *args, **kwargs):
-        super(UserCreationForm, self).__init__(*args, **kwargs)
-        for fieldname in ['username', 'password1', 'password2']:
-            self.fields[fieldname].help_text = None      
-    
+class CreateUserForm(UserCreationForm):
     class Meta:
-        model=User
-        fields = ('username', 'email', 'password1', 'password2')
-        def save(self, commit=True):
-            user = super(NewUserForm, self).save(commit=False)
-            user.email = self.cleaned_data['email']
-            if commit:
-                user.save()
-            return user
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
+
+
+        
+# class NewUserForm(UserCreationForm):
+#     email = forms.EmailField(required=True)
+#     def __init__(self, *args, **kwargs):
+#         super(UserCreationForm, self).__init__(*args, **kwargs)
+#         for fieldname in ['username', 'password1', 'password2']:
+#             self.fields[fieldname].help_text = None      
+    
+#     class Meta:
+#         model=User
+#         fields = ('username', 'email', 'password1', 'password2')
+#         def save(self, commit=True):
+#             user = super(NewUserForm, self).save(commit=False)
+#             user.email = self.cleaned_data['email']
+#             if commit:
+#                 user.save()
+#             return user

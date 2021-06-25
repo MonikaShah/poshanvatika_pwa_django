@@ -12,9 +12,12 @@
             <div  class="z-depth-3 y-depth-3 x-depth-3 grey  lighten-4 row" style="padding:20px; border: 1px; width: 700px; height: 400px;">
                 <h3 class="heading" style="text-align: center; font-size:28px; color: #4CAF50;"><b>Login </b></h3>
                 {{ login_form.as_p }}
+                
                 <div class="form-field" style="margin-bottom: 10px; text-align:center;">
                     <button class="login-btn btn-large waves-effect waves-dark" style="width: 180px; background-color: #4CAF50;">Login</button>               
                 </div>
+                
+                <p class="text-center" style="text-align: center;">New user? <a href="/register" style="font-size: 14; color:#0645AD;"> Create your account</a></p>
                <!--  <div class="form-field" style="margin-bottom: 10px ;text-align:center; padding-top:10px;">
                     <a class="oauth-container btn darken-4 white black-text" href="{% provider_login_url 'google' %}" style="text-transform:none; height : 50px; padding-top:8px; ">
                         <div class="left" style="align-items: center;">
@@ -30,4 +33,12 @@
   </div>
   </div>
 </form>
+{% block javascript %}    
+{% if messages %}
+{% for message in messages %}
+  <script>M.toast({html: "{{message}}", classes: 'green rounded', displayLength:2000});</script>
+{% endfor %}
+{% endif %}
+
+{% endblock javascript %}
 {% endblock%}
