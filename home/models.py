@@ -73,3 +73,21 @@ class UploadWellPictureModel(models.Model):
         picture = InMemoryUploadedFile(outputIoStream,'ImageField', "%s.jpg" % picture.name.split('.')[0], 'image/jpeg', sys.getsizeof(outputIoStream), None)
         return picture
 
+
+class PoshanFormInformation(models.Model):
+    organization_name = models.CharField(max_length=100)
+    district_village_taluka_name = models.CharField(max_length=100)
+    pin_code = models.IntegerField(blank=True, null=True)
+    lat = models.CharField(max_length=15)
+    lng = models.CharField(max_length=15)
+    type_of_nutri = models.CharField(max_length=50)
+    name_of_ngo = models.CharField(max_length=100)
+    area_nutri_garden = models.CharField(max_length=100)
+    seasonal_veg_name = models.CharField(max_length=100)
+    perennial_veg_name = models.CharField(max_length=100)
+    fruits_name = models.CharField(max_length=100)
+    month_earnings = models.IntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'poshan_form_information'

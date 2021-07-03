@@ -16,7 +16,7 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login, logout
 from .forms import UploadPictureForm, UploadWellPictureForm
-from .models import UploadWellPictureModel, UploadPictureModel
+from .models import UploadWellPictureModel, UploadPictureModel,PoshanFormInformation
 # Create your views here.
 from django.template.defaultfilters import filesizeformat
 from django.utils.translation import ugettext_lazy as _
@@ -31,8 +31,11 @@ from django.conf import settings
 def viewLayers(request):
     wells = UploadWellPictureModel.objects.all()
     vatikas = UploadPictureModel.objects.all()
+    vatikas1 = PoshanFormInformation.objects.all()
     # captwells = WellPictureLocationModel.objects
-    context = {'wells': wells, 'vatikas': vatikas}
+    mylist = zip(vatikas, vatikas1)
+    context = {'wells': wells, 'vatikas1': vatikas1, 'vatikas':vatikas}
+    # context = {'wells': wells, 'mylist':mylist}
     return render(request, 'home/viewLayers.html', context )
     #return render(request, 'map/map.html', context)
 

@@ -228,7 +228,7 @@ table, th, td
 
     if(maleg === 'bifo'){
     
-    mmxlayer = new L.tileLayer.wms('https://geonode.communitygis.net/geoserver/geonode/ows', {
+    mmxlayer = new L.tileLayer.wms('https://geoserver2.communitygis.net/geoserver/geonode/ows', {
 
     layers: 'geonode:inst_bifocals_4may2020',
     format: 'image/png',
@@ -239,7 +239,7 @@ table, th, td
     mmxlayer.addTo(mymap);
     addWMSLegend(mmxlayer.options.layers);
 
-    LAYER = "https://geonode.communitygis.net/geoserver/geonode/wms?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetFeatureInfo&LAYERS="+mmxlayer.options.layers+"&QUERY_LAYERS="+mmxlayer.options.layers;
+    LAYER = "https://geoserver2.communitygis.net/geoserver/geonode/wms?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetFeatureInfo&LAYERS="+mmxlayer.options.layers+"&QUERY_LAYERS="+mmxlayer.options.layers;
     LayerList.push(mmxlayer);
 
 
@@ -371,7 +371,7 @@ var districtZoom = [7,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,
 
 var LayerList = [];
 
-const domain = ['https://geonode.communitygis.net/','http://localhost/'];
+const domain = ['https://geoserver2.communitygis.net/','http://localhost/'];
 
 var rootUrl = domain[0] + 'geoserver/geonode/ows';
 
@@ -593,30 +593,30 @@ function hideTable() {
                 }
               }
 
-              var table = document.createElement("table");
+            //   var table = document.createElement("table");
 
-              var tr = table.insertRow(-1);
+            //   var tr = table.insertRow(-1);
 
-              for (var i = 0; i < col.length; i++) {
-                var th = document.createElement("th");
-                th.innerHTML = col[i];
-                tr.appendChild(th);
-              }
+            //   for (var i = 0; i < col.length; i++) {
+            //     var th = document.createElement("th");
+            //     th.innerHTML = col[i];
+            //     tr.appendChild(th);
+            //   }
 
-              for (var i = 0; i < propsJSON.length; i++) {
-                tr = table.insertRow(-1);
+            //   for (var i = 0; i < propsJSON.length; i++) {
+            //     tr = table.insertRow(-1);
 
-                for (var j = 0; j < col.length; j++) {
-                  var tabCell = tr.insertCell(-1);
-                  tabCell.innerHTML = propsJSON[i][col[j]];
-                }
-              }
+            //     for (var j = 0; j < col.length; j++) {
+            //       var tabCell = tr.insertCell(-1);
+            //       tabCell.innerHTML = propsJSON[i][col[j]];
+            //     }
+            //   }
 
-              div.appendChild(table);
+            //   div.appendChild(table);
 
-              // div.innerHTML += table;
-              url = "";
-              downloadThisTable = table;
+            //   // div.innerHTML += table;
+            //   url = "";
+            //   downloadThisTable = table;
             });
           })
           .catch(function (err) {
@@ -966,7 +966,7 @@ let listState = {
                                     var distLayerLatLong = listDistrict[aspiD];
                                     //clear_layer();
                                     //console.log('kk',distLayerLatLong);
-                                    var wms_layer = L.tileLayer.wms('https://geonode.communitygis.net/geoserver/wms', {
+                                    var wms_layer = L.tileLayer.wms('https://geoserver2.communitygis.net/geoserver/wms', {
                                         layers: 'geonode:maha_taluka_13March2021',
                                         format: 'image/png',
                                         transparent: 'true',
@@ -994,7 +994,7 @@ let listState = {
                                     //console.log(indstate);
                                     var stLayerLatLong = listState[indstate];
 
-                                    var wms_layer = L.tileLayer.wms('https://geonode.communitygis.net/geoserver/wms', {
+                                    var wms_layer = L.tileLayer.wms('https://geoserver2.communitygis.net/geoserver/wms', {
                                         layers: 'geonode:states_in_india',
                                         format: 'image/png',
                                         transparent: 'true',
@@ -1002,9 +1002,10 @@ let listState = {
                                         cql_filter: "state='" + stLayerLatLong[0] + "'",
                                         style: ""
                                     });
-                                    clear_layer();
-                                    
+                                    clear_layer();                                    
                                     clear_distlayer();
+                                    clear_tallayer();
+                                    clear_pinlayer();
                                     // clearpoint_layer();
                                     wms_layer.addTo(mymap);
                                     mymap.setView([stLayerLatLong[1], stLayerLatLong[2] - 2], 7);
@@ -1016,10 +1017,6 @@ let listState = {
 
 
                                 function putWMSLayerdist() {
-                                    
-                                    // clear_distlayer();
-                                    clear_tallayer();
-                                    // clear_pinlayer();
                                     var dist = document.getElementById('district').value;
                                     var state = document.getElementById('indstate').value;
                                     var layers = 'geonode:india_pincodes_12june';
@@ -1030,7 +1027,7 @@ let listState = {
                                     if (state == "Chhattisgarh") {
                                         layers = 'geonode:all_india_districts_11june2020';
                                     }
-                                    var wms_layer = L.tileLayer.wms('https://geonode.communitygis.net/geoserver/wms', {
+                                    var wms_layer = L.tileLayer.wms('https://geoserver2.communitygis.net/geoserver/wms', {
                                         layers: layers,
                                         format: 'image/png',
                                         transparent: 'true',
@@ -1039,11 +1036,9 @@ let listState = {
                                         // cql_filter: "district='" + distLayerLatLong[0] + "'",
                                         style: ""
                                     });
-                                    clear_layer(); 
+                                    // clear_layer(); 
                                     clear_distlayer();   
-                                    clear_tallayer();
-                                    
-                                    
+                                    clear_tallayer();                              
                                     clear_pinlayer();
                                     
                                     //console.log(wms_layer);
@@ -1053,8 +1048,6 @@ let listState = {
                                     // mymap.setView([distLayerLatLong[1],distLayerLatLong[2]],8);
                                     distLayerList.push(wms_layer);
                                     // addWMSLegend(layer);
-                                    
-
                                 }
 
 
@@ -1064,7 +1057,7 @@ let listState = {
                                     var dist = document.getElementById('district').value;
                                     var taluka = document.getElementById('block_s').value;
 
-                                    var wms_layer = L.tileLayer.wms('https://geonode.communitygis.net/geoserver/wms', {
+                                    var wms_layer = L.tileLayer.wms('https://geoserver2.communitygis.net/geoserver/wms', {
                                         layers: "geonode:maha_taluka_13march2021",
                                         cql_filter: "taluka_nam='" + taluka + "'",
                                         cql_filter: `taluka_nam='${taluka}' AND distname='${dist}'`,
@@ -1075,7 +1068,7 @@ let listState = {
                                     // clear_layer();                                    
                                     
                                     clear_tallayer();
-                                    // clear_pinlayer();
+                                    clear_pinlayer();
                                     // console.log(wms_layer);
                                     wms_layer.addTo(mymap);
                                     setView('geonode:maha_taluka_13march2021', taluka);
@@ -1094,25 +1087,23 @@ let listState = {
                                     var taluka = document.getElementById('block_s');
                                     var pincode = document.getElementById('pincode').value;
 
-                                    var wms_layer = L.tileLayer.wms('https://geonode.communitygis.net/geoserver/wms', {
+                                    var wms_layer = L.tileLayer.wms('https://geoserver2.communitygis.net/geoserver/wms', {
                                         layers: "geonode:india_pincodes_12june",
                                         cql_filter: "pincode='" + pincode + "'",
                                         cql_filter: `pincode='${pincode}' AND district='${district}'`,
                                         format: 'image/png',
                                         transparent: 'true',
                                         
+                                        
                                     });
                                     // clear_layer();
-                                    // clear_tallayer();
-                                    // clear_distlayer();
-                                    // clear_pinlayer();
+                                    clear_tallayer();
+                                    clear_distlayer();
+                                    clear_pinlayer();
                                     wms_layer.addTo(mymap);
                                     // setView('geonode:india_pincodes_12june', pincode);
 
                                     pinLayerList.push(wms_layer);
-
-
-
 
 
                                 }
@@ -1127,7 +1118,7 @@ let listState = {
                                         mymap.removeLayer(area);
                                     }
                                     // let rootUrl = '{{site_url}}geoserver/geonode/ows';
-                                    let rootUrl = 'https://geonode.communitygis.net/geoserver/geonode/ows';
+                                    let rootUrl = 'https://geoserver2.communitygis.net/geoserver/geonode/ows';
                                     let options = {
                                         service: 'WFS',
                                         version: '1.0.0',
@@ -1178,7 +1169,7 @@ let listState = {
 
                                 //this function is for state boundary
                                 function putWMS(layer) {
-                                    var wms_layer = L.tileLayer.wms('https://geonode.communitygis.net/geoserver/wms', {
+                                    var wms_layer = L.tileLayer.wms('https://geoserver2.communitygis.net/geoserver/wms', {
                                         layers: layer,
                                         format: 'image/png',
                                         transparent: 'true',
@@ -1191,7 +1182,7 @@ let listState = {
                                     }
                                     //console.log(wms_legend); 
                                     addWMSLegend(layer);
-                                    TRIBLAYER = "https://geonode.communitygis.net/geoserver/geonode/wms?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetFeatureInfo&LAYERS=" + wms_layer.options.layers + "&QUERY_LAYERS=" + wms_layer.options.layers;
+                                    TRIBLAYER = "https://geoserver2.communitygis.net/geoserver/geonode/wms?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetFeatureInfo&LAYERS=" + wms_layer.options.layers + "&QUERY_LAYERS=" + wms_layer.options.layers;
 
 
                                 }
@@ -1322,6 +1313,9 @@ let listState = {
                                             
                                         }
                                         $('#districtd3').val("");
+                                        $('#block_s').val("");
+                                        $('#pincode').val("");
+                                        
                                     });
 
                                     $('#district').on("change", function(d) {
@@ -1362,7 +1356,7 @@ let listState = {
                                     });
 
                                     $('#block_s').on("change", function(d){
-                                        clear_layer();
+                                        // clear_layer();
                                         var val3 = document.getElementById("indstate").value;
                                         //console.log(val1);
                                         var val4 = d3.select(this).property("value");
