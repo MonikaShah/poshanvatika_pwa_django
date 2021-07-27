@@ -1,8 +1,26 @@
 {% extends 'map/base.html' %}
+{% include 'map/base_map.html'%}
 {% load static %}
 {% block content %}
+{% block extra_resources%}
+<head>
+    <link type="text/css" href="{% static 'home/css/materialize.min.css' %}" rel="stylesheet">
+    <script type="text/javascript" src="{% static 'home/js/materialize.min.js' %}"></script>
+  
+</head>
 <style>
-    .info {
+
+
+#pv label {
+    display: block;
+    text-align: left;
+    margin: 10px;
+}
+#pv {
+    display: none;
+}
+
+     .info {
     padding: 6px 8px;
     font: 14px/16px Arial, Helvetica, sans-serif;
     background: white;
@@ -57,7 +75,42 @@ table, th, td
     }
 
 
+    .popupimage {
+    height: 200px;
+    width: 300px;
+    overflow: hidden;
+    border-radius: 50px;
+}
+
+.popupimage1, .popupimage2, .popupimage3 {
+    height: 1250px;
+    width: 1000px;
+    overflow: hidden;
+    border-radius: 20px;
+}
+
+#content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+#content1{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+#demo-modal1{
+  max-height: 950px;
+  width:1025px;
+  background-color: transparent;
+}    
+
 </style>
+{% endblock %}
+
+
 
 <div id="side-bar" style="background-color: rgba(0, 0, 0, 0.2);">                <!-- Main container -->
 
@@ -191,31 +244,60 @@ table, th, td
           
    
          </select> 
+        </div>
+
+    &nbsp;&nbsp;
+    <div class="tooltips" title="Please select the PV" id="pv">
+                
+          <label><input type="checkbox" value="poshan" onchange="getPoshan(this)"><span style="color:black;"><b> Show Poshan Vatika </b></span></label>
+                           
     </div>
+
+
     &nbsp;&nbsp;&nbsp;&nbsp;
     <div class="tooltips" title="Please select the District">
         <select class='form-control' id = "district">
           <option value=""> Select District</option>
          </select>
-    </div> 
-
+    </div>
+    
+    
     <div class="tooltips" style="display:none;" title="Please select the Maharashtra's Blocks" id="block">
         &nbsp;&nbsp;
             <select class='form-control' id="block_s">
               <option value=""> Select Taluka </option>
              </select>
       </div>
+
       &nbsp;&nbsp;&nbsp;&nbsp;
       <div class="tooltips" title="Please select the Pincode">
         <select class='form-control' id="pincode">
 <option value=""> Select Pincode</option>
-
+</select>
 </div>
-    <div style="text-align: center"> 
+
+<div style="text-align: center"> 
         <button style="display: inline-block ;position: relative;top: 100px" id="closebutton" name="closebutton" class="btn btn-secondary"><span class="fa fa-power-off"></span></button> 
     </div>
 
 
+  <!-- Modal Structure -->
+  <div id="demo-modal" class="modal bottom-sheet"> 
+    <div id="content" class="modal-content"> 
+    </div> 
+    <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+      </div>
+</div> 
+
+<div id="demo-modal1" class="modal bottom-sheet"> 
+  <div class="modal-header" style="text-align: right;">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat" style="color: white; text-align: right; font-weight: bold; font-size: 20px;">X</a>
+  </div>
+  <div id="content1" class="modal-content"> 
+  </div> 
+  
+</div> 
    
 
   <!--  <script>
@@ -394,6 +476,7 @@ var wmshealthLayerList = [];
 var distLayerList = [];
 var pinLayerList = [];
 var talLayerList = [];
+var list = [];
 
 function clearAllLayers(){
     for (var i = myDistrictLayerList.length - 1; i >= 0; i--) {
@@ -452,13 +535,14 @@ function zoomToFeature(e) {
 //     });
 // }
 function highlightFeature(e) {
+    clear_distlayer();
     var layer = e.target;
 
     layer.setStyle({
         weight: 5,
         color: '#FFFF00',
         dashArray: '',
-        fillOpacity: 0.7
+        // fillOpacity: 0.7
         
     });
     info.update(layer.feature.properties);
@@ -625,7 +709,7 @@ function hideTable() {
         return div;
       };
 
-      attribute_table.addTo(mymap);
+    //   attribute_table.addTo(mymap);
       // }
     });
 
@@ -648,15 +732,15 @@ function hideTable() {
 //                       '#FFEDA0';
 // }
 
-function style1(feature) {
-      return {
-        fillColor: "blue",
-        weight: 4,
-        opacity: 1,
-        color: "blue",
-        fillOpacity: 0.35,
-      };
-    }
+// function style1(feature) {
+//       return {
+//         fillColor: "blue",
+//         weight: 4,
+//         opacity: 1,
+//         color: "blue",
+//         fillOpacity: 0.35,
+//       };
+//     }
 
 // function style(feature) {
 //     if(feature.properties.distname){
@@ -731,7 +815,7 @@ fetch(layer_url)
         mymap.setView([lat, long], 11);
         geojson = L.geoJson(geojsonData.features, {
         style : style,
-        onEachFeature: onEachFeature
+        // onEachFeature: onEachFeature
     }).addTo(mymap);
     LayerList.push(geojson);
     console.log(geoJson);
@@ -761,12 +845,14 @@ $('.select').click(function() {
 
 $(document).ready(function() {
 
-//  $('#indstate').on('change', function() {
-//    if (this.value == 'Chhattisgarh'){
-//        $("#block").hide();
-//    }
+ $('#indstate').on('change', function() {
+    $("#pv").show();
+    // $("#hospital").show();
+ });
 
-// });
+//  $('#district').on('change',function(){
+//      $("#pv").show();
+//  });
 //console.log("hi",indstate);
 
 $('#district').on('change', function() {
@@ -788,11 +874,14 @@ $('#district').on('change', function() {
                                         } else if (indstate == "Chhattisgarh") {
 
                                             $("#block").hide();
+                                            // $("#pv").show();
 
                                         } else {
                                             $("#mumwards").hide();
                                             $("#mumsubwards").hide();
+                                            $("#pv").show();
                                             $("#block").show();
+                                            
 
                                         }
                                     });
@@ -806,7 +895,9 @@ $('#view_s').on('change', function() {
 
 
         // $("#indiaview").hide();
+        
         $("#navigatedarea").show();
+        // $("#pv").show();
         
         clear_layer();
         // clearpoint_layer();
@@ -990,6 +1081,9 @@ let listState = {
                                 }
 
                                     function putWMSLayerst() {
+                                    clear_distlayer();
+                                    clear_tallayer();
+                                    clear_pinlayer();    
                                     indstate = document.getElementById('indstate').value;
                                     //console.log(indstate);
                                     var stLayerLatLong = listState[indstate];
@@ -1002,24 +1096,28 @@ let listState = {
                                         cql_filter: "state='" + stLayerLatLong[0] + "'",
                                         style: ""
                                     });
-                                    clear_layer();                                    
+                                    clear_layer();
+                                    
                                     clear_distlayer();
-                                    clear_tallayer();
-                                    clear_pinlayer();
                                     // clearpoint_layer();
                                     wms_layer.addTo(mymap);
                                     mymap.setView([stLayerLatLong[1], stLayerLatLong[2] - 2], 7);
                                     LayerList.push(wms_layer);
                                     // addWMSLegend(layer);
-
+                                    console.log(LayerList);
 
                                 }
 
 
                                 function putWMSLayerdist() {
+                                    // clear_layer();
+                                    clear_distlayer();
+                                    clear_tallayer();
+                                    clear_pinlayer();
                                     var dist = document.getElementById('district').value;
                                     var state = document.getElementById('indstate').value;
-                                    var layers = 'geonode:india_pincodes_12june';
+                                    // var layers = 'geonode:india_pincodes_12june';
+                                    var layers = 'geonode:all_india_districts_11june2020';
                                     //console.log(indstate);
                                     // var distLayerLatLong= listDistrict[dist];
                                     if (dist == 'Mumbai City' || dist == 'Mumbai Suburban')
@@ -1037,8 +1135,10 @@ let listState = {
                                         style: ""
                                     });
                                     // clear_layer(); 
-                                    clear_distlayer();   
-                                    clear_tallayer();                              
+                                    // clear_distlayer();   
+                                    clear_tallayer();
+                                    
+                                    
                                     clear_pinlayer();
                                     
                                     //console.log(wms_layer);
@@ -1046,20 +1146,25 @@ let listState = {
                                     //clearpoint_layer();
                                     wms_layer.addTo(mymap);
                                     // mymap.setView([distLayerLatLong[1],distLayerLatLong[2]],8);
+                                    // mymap.setView(layers,dist);
+                                    // setView1('geonode:india_pincodes_12june',dist);
+                                    setView1('geonode:all_india_districts_11june2020',dist);
                                     distLayerList.push(wms_layer);
                                     // addWMSLegend(layer);
+                                    console.log(distLayerList);
+
                                 }
 
 
                                 function putWMSLayertaluka() {
-                                    
+                                    clear_pinlayer();
                                     
                                     var dist = document.getElementById('district').value;
                                     var taluka = document.getElementById('block_s').value;
 
                                     var wms_layer = L.tileLayer.wms('https://geoserver2.communitygis.net/geoserver/wms', {
                                         layers: "geonode:maha_taluka_13march2021",
-                                        cql_filter: "taluka_nam='" + taluka + "'",
+                                        // cql_filter: "taluka_nam='" + taluka + "'",
                                         cql_filter: `taluka_nam='${taluka}' AND distname='${dist}'`,
                                         format: 'image/png',
                                         transparent: 'true',
@@ -1067,15 +1172,15 @@ let listState = {
                                     });
                                     // clear_layer();                                    
                                     
-                                    clear_tallayer();
-                                    clear_pinlayer();
+                                    // clear_tallayer();
+                                    // clear_pinlayer();
                                     // console.log(wms_layer);
                                     wms_layer.addTo(mymap);
                                     setView('geonode:maha_taluka_13march2021', taluka);
 
                                     talLayerList.push(wms_layer);
                                     // console.log(taluka);    
-
+                                    console.log(talLayerList);
 
                                 }
 
@@ -1093,13 +1198,13 @@ let listState = {
                                         cql_filter: `pincode='${pincode}' AND district='${district}'`,
                                         format: 'image/png',
                                         transparent: 'true',
-                                        
+                                        highlightFeature: 'true',
                                         
                                     });
                                     // clear_layer();
-                                    clear_tallayer();
-                                    clear_distlayer();
-                                    clear_pinlayer();
+                                    // clear_tallayer();
+                                    // clear_distlayer();
+                                    // clear_pinlayer();
                                     wms_layer.addTo(mymap);
                                     // setView('geonode:india_pincodes_12june', pincode);
 
@@ -1111,9 +1216,10 @@ let listState = {
 
 
                                 // let area = null;
-
+                                //this setView is for taluka
                                 function setView(layerName, selectedBoundary) {
                                     // alert(layerName);
+                                    var district = document.getElementById('district').value;
                                     if (area) {
                                         mymap.removeLayer(area);
                                     }
@@ -1126,16 +1232,12 @@ let listState = {
                                         outputFormat: 'application/json',
                                         typeName: layerName,
                                         cql_filter: `taluka_nam='${selectedBoundary}'`,
+                                        // cql_filter: `taluka_nam='${selectedBoundary}' AND distname='${district}'`,
                                         propertyName: 'the_geom,distname,taluka_nam,atc',
                                     };
                                     let parameters = L.Util.extend(options);
                                     layer_url = rootUrl + L.Util.getParamString(parameters)
-
-                                    
-
-
-
-
+                                
                                     // console.log(layer_url);
                                     fetch(layer_url).then(
                                         function(response) {
@@ -1150,10 +1252,63 @@ let listState = {
                                                 lng = area.getBounds()._northEast.lng
                                                 mymap.setView([lat, lng - 0.4], 10);
                                                 geojson = L.geoJson(geojsonData.features, {
+                                                // style : style1,
+                                                onEachFeature: onEachFeature
+                                                }).addTo(mymap);
+                                                // LayerList.push(geojson);
+                                                talLayerList.push(geojson);
+                                                mymap.spin(false);
+                                            });
+                                        }).catch(function(err) {
+                                        console.log('Fetch Error :-S', err);
+                                        
+                                    });
+                                    // console.log(layer_url);
+                                    
+                                }
+
+
+
+                                
+                                function setView1(layerName, selectedBoundary) {
+                                    // alert(layerName);
+                                    if (area) {
+                                        mymap.removeLayer(area);
+                                    }
+                                    // let rootUrl = '{{site_url}}geoserver/geonode/ows';
+                                    let rootUrl = 'https://geoserver2.communitygis.net/geoserver/geonode/ows';
+                                    let options = {
+                                        service: 'WFS',
+                                        version: '1.0.0',
+                                        request: 'GetFeature',
+                                        outputFormat: 'application/json',
+                                        typeName: layerName,
+                                        cql_filter: `district='${selectedBoundary}'`,
+                                        // propertyName: 'the_geom,distname,taluka_nam,atc',
+                                    };
+                                    let parameters = L.Util.extend(options);
+                                    layer_url = rootUrl + L.Util.getParamString(parameters)
+                                
+                                    // console.log(layer_url);
+                                    fetch(layer_url).then(
+                                        function(response) {
+                                            if (response.status !== 200) {
+                                                console.log('Looks like there was a problem. Status Code: ' +
+                                                    response.status);
+                                                return;
+                                            }
+                                            response.json().then(function(geojsonData) {
+                                                area = L.geoJson(geojsonData.features).addTo(mymap)
+                                                lat = area.getBounds()._northEast.lat
+                                                lng = area.getBounds()._northEast.lng
+                                                mymap.setView([lat, lng - 0.4], 8);
+                                                geojson = L.geoJson(geojsonData.features, {
                                                 style : style1,
                                                 onEachFeature: onEachFeature
                                                 }).addTo(mymap);
-                                                LayerList.push(geojson);
+                                                // LayerList.push(geojson);
+                                                distLayerList.push(geojson);
+                                                
                                                 mymap.spin(false);
                                             });
                                         }).catch(function(err) {
@@ -1218,6 +1373,110 @@ let listState = {
     document.execCommand("copy");
     document.body.removeChild(dummy);
 }
+
+var pvIcon = L.icon({
+            iconUrl: "{% static 'map/images/pw_logo.png' %}",
+            iconSize:     [40, 40], // size of the icon
+            //shadowSize:   [50, 64], // size of the shadow
+            iconAnchor:   [25,10], // point of the icon which will correspond to marker's location
+            // shadowAnchor: [4, 62],  // the same for the shadow
+            popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+        });
+const url1 = 'https://gist.githubusercontent.com/AnimeshN/bf517d5fd3cf387a73e49404037f1c4d/raw/15ae046fc379c62f63934b86b9dda97d8165d4d6/organization_wise_compendium.json'
+const url2 = 'https://gist.githubusercontent.com/RenukaNaik/9d72e300eba069ccc637219290f7f398/raw/124d761d55d1686ffb753a7c51bf5763a0aa8305/poshan.json'
+function getPoshan(clickedCheckBox){
+    let value = clickedCheckBox.value;
+    var state = document.getElementById('indstate').value;
+    console.log(state);
+    console.log(value);
+    if ($(clickedCheckBox).is(':checked')) {
+        console.log("show vatika");
+        fetch(url2).then(res => {
+        res.json().then(
+            
+            function(geojsonData) {
+                compendium = L.geoJson(geojsonData.features, {
+                pointToLayer: function(feature, latlng) {
+                    if (feature.properties.State ===state ){
+                        return L.marker(latlng, {icon:pvIcon});
+                    }
+                        // return L.marker(latlng, {icon:pvIcon});
+                },
+                onEachFeature: onEachFeatureForPoint1,
+            }).addTo(mymap);
+            list.push(compendium);
+            console.log(list);
+        })
+    });
+
+    } else {
+                console.log("not");
+    
+    // mymap.removeLayer(list);
+                // mymap.remove(L.marker(latlng, {icon:pvIcon}));
+                // remove(L.marker(latlng, {icon:pvIcon}));
+            }
+}
+
+     
+const onEachFeatureForPoint1 = (feature, layer) =>{
+        let img_name = feature.properties.img1.split(".")[0] + ".jpg";
+        var str3 = " <img class = 'popupimage1' src='/static/map/cmp_images/".concat(img_name);
+        var str4 = str3.concat("' alt='image not found'></br>");
+        if(feature.properties.img2!=''){
+        // let img_name1 = feature.properties.img2.split(".")[0] + ".jpg";
+
+        var str5 = " <img class = 'popupimage2' src='/static/map/cmp_images/".concat(feature.properties.img2);
+        var str6 = str5.concat("' alt='image not found'></br>");}
+        else{str6=""}
+        if(feature.properties.img3!=''){
+        // let img_name2 = feature.properties.img3.split(".")[0] + ".jpg";
+
+        var str7 = " <img class = 'popupimage3' src='/static/map/cmp_images/".concat(feature.properties.img3);
+        var str8 = str5.concat("' alt='image not found'> </br>");}
+        else{str8=""}
+
+                        // layer.bindPopup(str2);
+
+        const table1 = `
+        
+        </br></br><table class='striped centered' style="background-color:beige;">
+        <thead>
+          <tr>
+              <th>Place</th>
+              <th>${feature.properties.Name}</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>Organization Name</td>
+            <td>${feature.properties.Organisati}</td>
+          </tr>
+
+        </tbody>
+      </table> </br>
+      `
+    
+        layer.on("click",e => {
+          if(str6 ==''&& str8 ==''){
+            document.getElementById("content1").innerHTML = table1 + str4;}
+            else if(str8==''){
+            document.getElementById("content1").innerHTML = table1 + str4 + str6 ;}
+            else{
+              document.getElementById("content1").innerHTML = table1 + str4 + str6 + str8;}
+            var elem1 = document.getElementById('demo-modal1');
+            console.log(elem1);
+            var instance1 = M.Modal.getInstance(elem1);
+            console.log(instance1);
+            instance1.open();
+
+        })
+    }
+
+
+
+
   //code for dependent dropdown start    
   function filterCSV(csv, key, value) 
                                 {
@@ -1388,6 +1647,14 @@ let listState = {
 </script>
 
 
+<script>
 
+    document.addEventListener('DOMContentLoaded', () => {
+        var elems = document.querySelectorAll('.modal');
+        var instances = M.Modal.init(elems, {opacity:.3});
+    });
+    
+    </script>
+    
 
 {% endblock %}
