@@ -32,9 +32,10 @@ def viewLayers(request):
     wells = UploadWellPictureModel.objects.all()
     vatikas = UploadPictureModel.objects.all()
     vatikas1 = PoshanFormInformation.objects.all()
-    # captwells = WellPictureLocationModel.objects
-    mylist = zip(vatikas, vatikas1)
-    context = {'wells': wells, 'vatikas1': vatikas1, 'vatikas':vatikas}
+    selfcons = PoshanFormInformation.objects.filter(level_nutri_garden='for_self_consumption',nutri_garden_scale ='Only for vegetables and fruits, Backyard Poultry');
+    sellsurp = PoshanFormInformation.objects.filter(level_nutri_garden='selling_surplus')
+    
+    context = {'wells': wells, 'vatikas1': vatikas1, 'vatikas':vatikas,'selfcons':selfcons,'sellsurp':sellsurp}
     # context = {'wells': wells, 'mylist':mylist}
     return render(request, 'home/viewLayers.html', context )
     #return render(request, 'map/map.html', context)

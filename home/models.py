@@ -87,6 +87,8 @@ class PoshanFormInformation(models.Model):
     perennial_veg_name = models.CharField(max_length=100)
     fruits_name = models.CharField(max_length=100)
     month_earnings = models.IntegerField(blank=True, null=True)
+    level_nutri_garden = models.CharField(max_length=100)
+    nutri_garden_scale=models.CharField(max_length=100)
 
     class Meta:
         managed = False
