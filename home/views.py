@@ -120,8 +120,8 @@ def captvatikapic(request):
     
     if request.method == 'POST' and not request.is_ajax():
         form = UploadPictureForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
+        # if form.is_valid():
+        #     form.save()
         name = request.POST.get('name')
         nutri_nm = request.POST.get('nutri_nm')
         area = request.POST.get('area')
@@ -173,7 +173,8 @@ def myPoshan(request):
 
 def news(request):
     return render(request,"home/news.html",{})
-
+def howto(request):
+    return render(request,"home/How-to.html",{})
 
 def login_request(request):
 	if request.method == "POST":
@@ -184,7 +185,7 @@ def login_request(request):
 			user = authenticate(username=username, password=password)
 			if user is not None:
 				login(request, user)
-				messages.info(request, f"You are now logged in as {username}.")
+				messages.info(request, "You are now logged in as {username}.")
 				return redirect("/")
 			else:
 				messages.error(request,"Invalid username or password.")
