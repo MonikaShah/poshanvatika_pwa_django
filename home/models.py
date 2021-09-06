@@ -44,7 +44,8 @@ class UploadPictureModel(models.Model):
         outputIoStream.seek(0)
         picture = InMemoryUploadedFile(outputIoStream,'ImageField', "%s.jpg" % picture.name.split('.')[0], 'image/jpeg', sys.getsizeof(outputIoStream), None)
         return picture
-
+    def __str__(self):
+        return self.nutri_nm
 
 class UploadWellPictureModel(models.Model):
     picture = models.ImageField( upload_to='WellPics/', blank=True, null=True, default='WellPics/noImage.jpg')
@@ -93,3 +94,5 @@ class PoshanFormInformation(models.Model):
     class Meta:
         managed = False
         db_table = 'poshan_form_information'
+    def __str__(self):
+        return self.organization_name
