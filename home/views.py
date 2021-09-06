@@ -28,17 +28,22 @@ from django.conf import settings
 # from PIL import Image
 # from django.core.files.uploadedfile import InMemoryUploadedFile
 
-def viewLayers(request):
-    wells = UploadWellPictureModel.objects.all()
+def viewVatikas(request):
+    # wells = UploadWellPictureModel.objects.all()
     vatikas = UploadPictureModel.objects.all()
     vatikas1 = PoshanFormInformation.objects.all()
     selfcons = PoshanFormInformation.objects.filter(level_nutri_garden='for_self_consumption',nutri_garden_scale ='Only for vegetables and fruits, Backyard Poultry');
     sellsurp = PoshanFormInformation.objects.filter(level_nutri_garden='selling_surplus')
     
-    context = {'wells': wells, 'vatikas1': vatikas1, 'vatikas':vatikas,'selfcons':selfcons,'sellsurp':sellsurp}
+    context = {'vatikas1': vatikas1, 'vatikas':vatikas,'selfcons':selfcons,'sellsurp':sellsurp}
     # context = {'wells': wells, 'mylist':mylist}
-    return render(request, 'home/viewLayers.html', context )
+    return render(request, 'home/viewVatikas.html', context )
     #return render(request, 'map/map.html', context)
+
+def viewWells(request):
+    wells = UploadWellPictureModel.objects.all()
+    context = {'wells': wells}
+    return render(request, 'home/viewWells.html',context)
 
 def captwellpic(request):
     form = UploadWellPictureForm()

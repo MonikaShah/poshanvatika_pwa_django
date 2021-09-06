@@ -16,7 +16,8 @@ urlpatterns = [
     path('uploadvatikapic/', views.uploadvatikapic, name='uploadvatikapic'),
     path('captwellpic/', views.captwellpic, name='captwellpic'),
     path('uploadwellpic/', views.uploadwellpic, name='uploadwellpic'),
-    path('viewLayers/', views.viewLayers, name='viewLayers')
+    path('viewVatikas/', views.viewVatikas, name='viewVatikas'),
+    path('viewWells/',views.viewWells, name='viewWells')
 
 
 
