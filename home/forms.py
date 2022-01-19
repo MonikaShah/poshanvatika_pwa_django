@@ -1,15 +1,20 @@
 from django.db.models import fields
 from django.forms import ModelForm
-from .models import UploadPictureModel, UploadWellPictureModel
+from .models import UploadPictureModel, UploadWellPictureModel,BasicPoshanModel
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.contrib.auth.models import User
 
+class BasicPoshanForm(forms.ModelForm):
+    class Meta:
+        model = BasicPoshanModel
+        fields = '__all__'
+
 class UploadPictureForm(forms.ModelForm):
     class Meta:
         model = UploadPictureModel
-        fields = ('picture','name','nutri_nm','area','village','district','state','pincode','lat','lng')
-
+        # fields = ('picture','name','nutri_nm','area','village','district','state','pincode','lat','lng')
+        fields = '__all__'
 class UploadWellPictureForm(forms.ModelForm):
     class Meta:
         model = UploadWellPictureModel
