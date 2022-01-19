@@ -159,38 +159,38 @@
            </tr>
            {% endif %}
  
-           {% if i.nutri_nm %}
+           {% if i.organization %}
            <tr>
-               <th>Nutrigarden name</th>
-               <th>{{ i.nutri_nm }}</th>
+               <th>Organization name</th>
+               <th>{{ i.organization}}</th>
            </tr>
            {% endif %}
            
-           {% if i.area %}
+           {% if i.district %}
            <tr>
              <td>Area</td>
-             <td>{{ i.area }} sq mtrs</td>
-           </tr>
-           {% endif %}
- 
-           {% if i.village %}
-           <tr>
-             <td>Village</td>
-             <td>{{ i.village }}</td>
+             <td>{{ i.one_to_fourthousand_sq}} sq mtrs</td>
            </tr>
            {% endif %}
  
            {% if i.district %}
            <tr>
-             <td>District</td>
+             <td>District/Village</td>
              <td>{{ i.district }}</td>
            </tr>
            {% endif %}
  
-           {% if i.state %}
+           {% if i.income %}
            <tr>
-             <td>State</td>
-             <td>{{ i.state }}</td>
+             <td>Monthly</td>
+             <td>{{ i.income }}</td>
+           </tr>
+           {% endif %}
+ 
+           {% if i.irrigation %}
+           <tr>
+             <td>Irrigation</td>
+             <td>{{ i.irrigation }}</td>
            </tr>
            {% endif %}
  
@@ -429,12 +429,13 @@
 <script>
   var selfconvatikaslayerGroup = L.layerGroup();
 </script>
-{% for i in selfcons %}
+{% comment %} {% for i in selfcons %}
 <script>
 var table = 
         
         `<table class="w3-table" id="popup" style="font-size:12px; align:center;" >
           <tbody>
+            {% if i.organization_name %}
             {% if i.organization_name %}
          <tr>
           <th>Organization name</th>
@@ -482,7 +483,7 @@ var table =
 
 <script>
   var sellsurpluslayerGroup = L.layerGroup();
-</script>
+</script> {% endcomment %}
 {% for i in sellsurp %}
 <script>
 var table = 
