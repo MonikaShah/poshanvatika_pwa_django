@@ -184,7 +184,6 @@ class PoshanFormInformation(models.Model):
     school_scale = models.CharField(max_length = 250, default='no', blank=True, null = True)
     school_practice= models.CharField(max_length = 250, default='no', blank=True, null = True)
     id = models.CharField(max_length = 250, default='no', blank=True, null =False,primary_key=True)
-    _id = models.CharField(max_length = 250, default='no', blank=True, null = True)
     add_photo= models.CharField(max_length = 250, default='no', blank=True, null = True)
     
     
