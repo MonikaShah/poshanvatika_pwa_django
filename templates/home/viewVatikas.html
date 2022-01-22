@@ -429,13 +429,13 @@
 <script>
   var selfconvatikaslayerGroup = L.layerGroup();
 </script>
-{% comment %} {% for i in selfcons %}
+{% for i in selfcons %}
 <script>
 var table = 
         
         `<table class="w3-table" id="popup" style="font-size:12px; align:center;" >
           <tbody>
-            {% if i.organization_name %}
+           
             {% if i.organization_name %}
          <tr>
           <th>Organization name</th>
@@ -478,12 +478,12 @@ var table =
     }
        var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:icon2c}).bindPopup(table, popupOptions);
        selfconvatikaslayerGroup.addLayer(marker);
-   </script>
+</script>
 {% endfor %}
 
 <script>
   var sellsurpluslayerGroup = L.layerGroup();
-</script> {% endcomment %}
+</script>
 {% for i in sellsurp %}
 <script>
 var table = 
