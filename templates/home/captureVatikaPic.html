@@ -102,6 +102,11 @@
           {% endcomment %}
           <div class='row'>
             <div class='input-field col s12'>
+             <span >Name: </span>
+             <input type="text" class="fieldlabels" placeholder=" Name" name="Name" id="Name" required>  
+            </div>
+          <div class='row'>
+            <div class='input-field col s12'>
              <span style="float: left; color: black;" >Name of individual / organization / school under which Nutri-Garden is cultivated  : </span>
              <input type="text" class="fieldlabels" placeholder=" Organization Name" name="organization" id="organization" required>
               
@@ -109,10 +114,21 @@
           </div>
           <div class='row' >
             <div class='input-field col s12'>
-              <span style="float: left; color: black;">Name of Village, Taluka, District, State : </span>
+              <span style="float: left; color: black;">Name of Village: </span>
+              <input type="text" class="fieldlabels" placeholder=" District Name" name="district" id="district " required> 
+            </div> 
+          </div>
+          <div class='row' >
+            <div class='input-field col s12'>
+              <span style="float: left; color: black;">Name of  District: </span>
               <input type="text" class="fieldlabels" placeholder=" District Name" name="district" id="district " required> 
             </div>
-           
+          </div>
+          <div class='row' >
+            <div class='input-field col s12'>
+              <span style="float: left; color: black;">Name of State : </span>
+              <input type="text" class="fieldlabels" placeholder=" State Name" name="state" id="State " required> 
+            </div>
           </div>
           <div class='row' >
             <div class='input-field col s12'>
@@ -139,7 +155,7 @@
               {% comment %} <span>Type of Nutri-Garden:</span><br> {% endcomment %}
               <span style="float: left; color: black;">Type of Nutri-Garden:</span><br>
               <p><label><input class="with-gap" name="self_made" type="checkbox" id = "self_made"value = "Individual level-self made" /><span>Individual level-self made</span></label></p><br>
-              <p><label><input  class="with-gap" name="local_ngo" type="checkbox" id = "local_ngo" value = "Individual level-got help from local NGO" ><span>Individual level-got help from local NGO</span></label></p><br>
+              <p><label><input  class="with-gap" name="local_ngo" type="checkbox" id = "local_ngo" value = "Individual level-got help from local NGO" /><span>Individual level-got help from local NGO</span></label></p><br>
               <p><label><input class="with-gap" name="external_support" type="checkbox" id = "external_support"value = "without external support" /><span>Community level- without external support</span></label></p><br>
               <p><label><input class="with-gap" name="govt_support" type="checkbox" id = "govt_support"value = "through Government support" /><span>Individual level-through Government support</span></label></p><br>
               <p><label><input class="with-gap" name="community_level" type="checkbox" id = "community_level"value = "with support from external agency" /><span>Community level - with support from external agency</span></label></p><br>

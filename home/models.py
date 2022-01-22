@@ -10,6 +10,8 @@ from django.db import models
 from PIL import Image
 from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
+from matplotlib.pyplot import summer
+from numpy import average
 
 # Create your models here.
 
@@ -22,12 +24,12 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 
 class UploadPictureModel(models.Model):
     # picture = models.ImageField(upload_to='PoshanVatikaPics/', blank=True, null=True, default='PoshanVatikaPics/noImage.jpg')
-    # name = models.CharField(max_length=100, default='')
+    name = models.CharField(max_length=100, default='')
     # nutri_nm = models.CharField(max_length=100, default='')
     # area = models.IntegerField()
-    # village = models.CharField(max_length=100, blank=True, null=True)
+    village = models.CharField(max_length=100, blank=True, null=True)
     # district = models.CharField(max_length=100, blank=True, null=True)
-    # state = models.CharField(max_length=100, blank=True, null=True)
+    state = models.CharField(max_length=100, blank=True, null=True)
     # pincode = models.CharField(max_length=8, blank=True, null=True)
     # lat = models.CharField(max_length=15)
     # lng = models.CharField(max_length=15)
@@ -102,6 +104,8 @@ class UploadPictureModel(models.Model):
         return picture
     def __str__(self):
         return self.nutri_nm
+    class Meta:
+       managed = True
 
 class UploadWellPictureModel(models.Model):
     picture = models.ImageField( upload_to='WellPics/', blank=True, null=True, default='WellPics/noImage.jpg')
@@ -132,26 +136,65 @@ class UploadWellPictureModel(models.Model):
 
 
 class PoshanFormInformation(models.Model):
-    organization_name = models.CharField(max_length=100)
-    district_village_taluka_name = models.CharField(max_length=100)
-    pin_code = models.IntegerField(blank=True, null=True)
-    lat = models.CharField(max_length=15)
-    lng = models.CharField(max_length=15)
-    type_of_nutri = models.CharField(max_length=50)
-    name_of_ngo = models.CharField(max_length=100)
-    area_nutri_garden = models.CharField(max_length=100)
-    seasonal_veg_name = models.CharField(max_length=100)
-    perennial_veg_name = models.CharField(max_length=100)
-    fruits_name = models.CharField(max_length=100)
-    month_earnings = models.IntegerField(blank=True, null=True)
-    level_nutri_garden = models.CharField(max_length=100)
-    nutri_garden_scale=models.CharField(max_length=100)
+    organization_name = models.CharField(max_length=100,default='',blank=True, null = True)
+    district_village_taluka_name = models.CharField(max_length=100,default='',blank=True, null = True)
+    pin_code = models.IntegerField(blank=True, null=True,default='')
+    lat = models.CharField(max_length=15,default='',blank=True, null = True)
+    lng = models.CharField(max_length=15,default='',blank=True, null = True)
+    type_of_nutri = models.CharField(max_length=355,default='',blank=True, null = True)
+    name_of_ngo = models.CharField(max_length=100,default='',blank=True, null = True)
+    level_nutri_garden = models.CharField(max_length=100,default='',blank=True, null = True)
+    nutri_garden_scale=models.CharField(max_length=100,default='',blank=True, null = True)
+    area_nutri_garden = models.CharField(max_length=100,default='',blank=True, null = True)
+    ngo_year = models.CharField(max_length=100,default='',blank=True, null = True)
+    type_seeds=models.CharField(max_length=100,default='',blank=True, null = True)
+    seasonal_veg_name = models.CharField(max_length=500,default='',blank=True, null = True)
+    perennial_veg_name = models.CharField(max_length=500,default='',blank=True, null = True)
+    fruits_name = models.CharField(max_length=500,default='',blank=True, null = True)
+    average=models.CharField(max_length = 250, default='',blank=True, null = True)
+    jan=models.CharField(max_length = 250, default='',blank=True, null = True)
+    feb= models.CharField(max_length = 250, default='no', blank=True, null = True)
+    march= models.CharField(max_length = 250, default='no', blank=True, null = True)
+    april= models.CharField(max_length = 250, default='no', blank=True, null = True)
+    may=models.CharField(max_length = 250, default='no', blank=True, null = True)
+    june = models.CharField(max_length = 50, default='no', blank=True, null = True)
+    july= models.CharField(max_length = 250, default='', blank=True, null = True)
+    august= models.CharField(max_length = 250, default='no', blank=True, null = True)
+    septmber= models.CharField(max_length = 250, default='no', blank=True, null = True)
+    october= models.CharField(max_length = 250, default='no', blank=True, null = True)
+    november=models.CharField(max_length = 250, default='no', blank=True, null = True)
+    december = models.CharField(max_length = 250, default='no', blank=True, null = True)
+    adult= models.CharField(max_length = 250, default='no', blank=True, null = True)
+    children=models.CharField(max_length = 250, default='no', blank=True, null = True)
+    month_earnings=models.CharField(max_length = 250, default='', blank=True, null = True)
+    month_expense=models.CharField(max_length = 250, default='', blank=True, null = True)
+    cultivation_type=models.CharField(max_length = 250, default='', blank=True, null = True)
+    rainy_season=models.CharField(max_length = 250, default='', blank=True, null = True)
+    raniy_winter_transition = models.CharField(max_length = 250, default='no', blank=True, null = True)
+    summer= models.CharField(max_length = 250, default='no', blank=True, null = True)
+    summer_rainy_transition= models.CharField(max_length = 250, default='no', blank=True, null = True)
+    winter= models.CharField(max_length = 250, default='no', blank=True, null = True)
+    winter_summer_transition= models.CharField(max_length = 250, default='no', blank=True, null = True)
+    surplus_nutri_garden= models.CharField(max_length = 250, default='no', blank=True, null = True)
+    water_source = models.CharField(max_length = 250, default='no', blank=True, null = True)
+    cultivation = models.CharField(max_length = 250, default='no', blank=True, null = True)
+    school_name = models.CharField(max_length = 250, default='no', blank=True, null = True)
+    weekly_class = models.CharField(max_length = 250, default='no', blank=True, null = True)
+    weekly_time = models.CharField(max_length = 250, default='no', blank=True, null = True)
+    school_scale = models.CharField(max_length = 250, default='no', blank=True, null = True)
+    school_practice= models.CharField(max_length = 250, default='no', blank=True, null = True)
+    id = models.CharField(max_length = 250, default='no', blank=True, null =False,primary_key=True)
+    _id = models.CharField(max_length = 250, default='no', blank=True, null = True)
+    add_photo= models.CharField(max_length = 250, default='no', blank=True, null = True)
+    
+    
 
     # class Meta:
     #     managed = False
     #     db_table = 'poshan_form_information'
     # def __str__(self):
     #     return self.organization_name
+    
 
 class BasicPoshanModel(models.Model):
     # user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default = 1)

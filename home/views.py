@@ -17,7 +17,7 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login, logout
 from .forms import UploadPictureForm, UploadWellPictureForm,BasicPoshanForm
-from .models import BasicPoshanModel, UploadWellPictureModel, UploadPictureModel,PoshanInformation
+from .models import  UploadWellPictureModel, UploadPictureModel,PoshanInformation,PoshanFormInformation,BasicPoshanModel
 # Create your views here.
 from django.template.defaultfilters import filesizeformat
 from django.utils.translation import ugettext_lazy as _
@@ -29,28 +29,27 @@ from django.conf import settings
 # from PIL import Image
 # from django.core.files.uploadedfile import InMemoryUploadedFile
 
+def viewVatikas(request):
+    wells = UploadWellPictureModel.objects.all()
+    vatikas = UploadPictureModel.objects.all()
+    vatikas1 = PoshanFormInformation.objects.all()
+    selfcons = PoshanFormInformation.objects.filter(level_nutri_garden='for_self_consumption',nutri_garden_scale ='Only for vegetables and fruits, Backyard Poultry')
+    sellsurp = PoshanFormInformation.objects.filter(level_nutri_garden='selling_surplus')
+    context = {'vatikas1': vatikas1, 'vatikas':vatikas,'selfcons':selfcons,'sellsurp':sellsurp}
+    # context = {'wells': wells, 'mylist':mylist}
+    return render(request, 'home/viewVatikas.html', context )
+    # return render(request, 'map/map.html', context)
+
 # def viewVatikas(request):
 #     # wells = UploadWellPictureModel.objects.all()
 #     vatikas = UploadPictureModel.objects.all()
-#     vatikas1 = PoshanFormInformation.objects.all()
-#     selfcons = PoshanFormInformation.objects.filter(level_nutri_garden='for_self_consumption',nutri_garden_scale ='Only for vegetables and fruits, Backyard Poultry')
-#     sellsurp = PoshanFormInformation.objects.filter(level_nutri_garden='selling_surplus')
+#     # vatikas1 = PoshanInformation.objects.all()
+#     # vatikas1 = BasicPoshanModel.objects.all()
+#     # selfcons = PoshanInformation.objects.filter(level_nutri_garden='for_self_consumption',nutri_garden_scale ='Only for vegetables and fruits, Backyard Poultry')
+#     # sellsurp = PoshanInformation.objects.filter(level_nutri_garden='selling_surplus')
     
-#     context = {'vatikas1': vatikas1, 'vatikas':vatikas,'selfcons':selfcons,'sellsurp':sellsurp}
-#     # context = {'wells': wells, 'mylist':mylist}
-#     return render(request, 'home/viewVatikas.html', context )
-    #return render(request, 'map/map.html', context)
-
-def viewVatikas(request):
-    # wells = UploadWellPictureModel.objects.all()
-    vatikas = UploadPictureModel.objects.all()
-    # vatikas1 = PoshanInformation.objects.all()
-    # vatikas1 = BasicPoshanModel.objects.all()
-    # selfcons = PoshanInformation.objects.filter(level_nutri_garden='for_self_consumption',nutri_garden_scale ='Only for vegetables and fruits, Backyard Poultry')
-    # sellsurp = PoshanInformation.objects.filter(level_nutri_garden='selling_surplus')
-    
-    # context = {'vatikas1': vatikas1} 
-    context = {'vatikas':vatikas}
+    # context = {'vatikas1': vatikas1}
+    #  context = {'vatikas1': vatikas1, 'vatikas':vatikas,'selfcons':selfcons,'sellsurp':sellsurp} 
     # {'selfcons':selfcons,'sellsurp':sellsurp}
     # context = {'wells': wells, 'mylist':mylist}
     return render(request, 'home/viewVatikas.html', context )
@@ -143,12 +142,12 @@ def captvatikapic(request):
         form = UploadPictureForm(request.POST, request.FILES)
         # if form.is_valid():
         #     form.save()
-        # name = request.POST.get('name')
+        name = request.POST.get('name')
         # nutri_nm = request.POST.get('nutri_nm')
         # area = request.POST.get('area')
-        # village = request.POST.get('village')
+        village = request.POST.get('village')
         # district = request.POST.get('district')
-        # state = request.POST.get('state')
+        state = request.POST.get('state')
         # pincode = request.POST.get('pincode')
         # lat = request.POST.get('lat')
         # lng = request.POST.get('lng')
@@ -221,7 +220,7 @@ def captvatikapic(request):
                                cultivation_others=cultivation_others,month=month,well=well,canel=canel,bore_well=bore_well,river=river,
                                source_water=source_water,school_name=school_name,any_weekly_class=any_weekly_class,
                                weekly=weekly,any_innovative=any_innovative,mid_day_meal=mid_day_meal,surplus_selling=surplus_selling,
-                               hot_cooked_meal=hot_cooked_meal,school_child=school_child,school_scale=school_scale)
+                               hot_cooked_meal=hot_cooked_meal,school_child=school_child,school_scale=school_scale,village=village,state=state,name=name)
             picLocation.save()
             datauri = False
             del datauri
