@@ -10,7 +10,7 @@ from django.db import models
 from PIL import Image
 from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
-from matplotlib.pyplot import summer
+#from matplotlib.pyplot import summer
 from numpy import average
 
 # Create your models here.
