@@ -25,8 +25,10 @@ SECRET_KEY = 'xyre8e*04pgg&_mktm4y_uy%(j!vxfj!_(=*pzov9+d8ur2ken'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['poshanvatika.communitygis.net','127.0.0.1','localhost','myposhanvatika.in','www.myposhanvatika.in']
+# ALLOWED_HOSTS = ['poshanvatika.communitygis.net','127.0.0.1','localhost','myposhanvatika.in','www.myposhanvatika.in']
 
+ALLOWED_HOSTS = ['myposhanvatika.in','www.myposhanvatika.in']
+# ALLOWED_HOSTS = ['poshanvatika.communitygis.net','127.0.0.1','localhost','myposhanvatika.in','www.myposhanvatika.in','157.90.173.126']
 # Application definition
 
 WAGTAIL_APPS = [
@@ -122,6 +124,16 @@ WSGI_APPLICATION = 'poshanvatika_pwa_django.wsgi.application'
 #     }
 # }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'poshan',
+#         'USER' : 'postgres',
+#         'PASSWORD' : 'postgres',
+#         'HOST' : 'localhost',
+#         'PORT' : '5432',
+#     }
+# }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
