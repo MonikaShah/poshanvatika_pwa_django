@@ -133,7 +133,7 @@
 
 			mymap = L.map('mapdiv', {
 				center: [19.601194,75.552979],
-				zoom: 7,
+				zoom: 4,
 				zoomControl: false,
 				attributionControl: false,
 				messagebox: true,
@@ -145,7 +145,16 @@
 			lyrOSM = L.tileLayer.provider('OpenStreetMap.Mapnik');
 			lyrOSM2 = L.tileLayer.provider('OpenStreetMap.Mapnik');
 			lyrImagery = L.tileLayer.provider('Esri.WorldImagery');
-			mymap.addLayer(lyrOSM);
+			//mymap.addLayer(lyrOSM);
+
+			var wms = L.tileLayer.wms('https://geoserver2.communitygis.net/geoserver/wms', {
+				//layer: layer,
+        layers: 'geonode:states_in_india',
+				format: 'image/png',
+				//transparent: 'true',
+			});
+      wms.addTo(mymap);
+    
 			var miniMap = new L.Control.MiniMap(lyrOSM2, { toggleDisplay: true }).addTo(mymap);
 			//  var miniMap = new L.Control.MiniMap(lyrOSM).addTo(mymap);
 
