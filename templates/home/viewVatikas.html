@@ -168,32 +168,17 @@
            
            {% if i.district %}
            <tr>
-             <td>Area</td>
-             <td>{{ i.one_to_fourthousand_sq}} sq mtrs</td>
+             <td>District</td>
+             <td>{{ i.district}}</td>
            </tr>
            {% endif %}
  
-           {% if i.district %}
+           {% if i.village %}
            <tr>
-             <td>District/Village</td>
-             <td>{{ i.district }}</td>
+             <td>Village</td>
+             <td>{{ i.village }}</td>
            </tr>
            {% endif %}
- 
-           {% if i.income %}
-           <tr>
-             <td>Monthly</td>
-             <td>{{ i.income }}</td>
-           </tr>
-           {% endif %}
- 
-           {% if i.irrigation %}
-           <tr>
-             <td>Irrigation</td>
-             <td>{{ i.irrigation }}</td>
-           </tr>
-           {% endif %}
- 
          </tbody>
     </table>
     </br>`
