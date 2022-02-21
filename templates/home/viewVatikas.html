@@ -27,7 +27,7 @@
 
 <script>
     let isClicked = false
-    var mymap = L.map('mapid').setView([19.7515-1,75.7139-1], 4);
+    var mymap = L.map('mapid').setView([19.7515-1,75.7139-1], 4.5);
     
     var mbAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
 			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -57,7 +57,7 @@
 				//transparent: 'true',
 			});
       wms.addTo(mymap);
-      console.log(layers);
+      //console.log(layers);
       console.log(wms);
 
     var baseLayers = {
