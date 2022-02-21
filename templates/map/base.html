@@ -133,7 +133,7 @@
 
 			mymap = L.map('mapdiv', {
 				center: [19.601194,75.552979],
-				zoom: 4,
+				zoom: 4.5,
 				zoomControl: false,
 				attributionControl: false,
 				messagebox: true,
@@ -149,7 +149,7 @@
 
 			var wms = L.tileLayer.wms('https://geoserver2.communitygis.net/geoserver/wms', {
 				//layer: layer,
-        layers: 'geonode:states_in_india',
+        		layers: 'geonode:states_in_india',
 				format: 'image/png',
 				//transparent: 'true',
 			});
