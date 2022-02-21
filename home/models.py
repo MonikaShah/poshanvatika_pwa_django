@@ -103,7 +103,7 @@ class UploadPictureModel(models.Model):
         picture = InMemoryUploadedFile(outputIoStream,'ImageField', "%s.jpg" % picture.name.split('.')[0], 'image/jpeg', sys.getsizeof(outputIoStream), None)
         return picture
     def __str__(self):
-        return self.nutri_nm
+        return self.name
     class Meta:
        managed = True
 
