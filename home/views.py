@@ -33,9 +33,10 @@ def viewVatikas(request):
     wells = UploadWellPictureModel.objects.all()
     vatikas = UploadPictureModel.objects.all()
     vatikas1 = PoshanFormInformation.objects.all()
+    vatikas2 = UploadPictureModel.objects.filter(type='AFIF')
     selfcons = PoshanFormInformation.objects.filter(level_nutri_garden='for_self_consumption',nutri_garden_scale ='Only for vegetables and fruits, Backyard Poultry')
     sellsurp = PoshanFormInformation.objects.filter(level_nutri_garden='selling_surplus')
-    context = {'vatikas1': vatikas1, 'vatikas':vatikas,'selfcons':selfcons,'sellsurp':sellsurp}
+    context = {'vatikas1': vatikas1,'vatikas2': vatikas2, 'vatikas':vatikas,'selfcons':selfcons,'sellsurp':sellsurp}
     # context = {'wells': wells, 'mylist':mylist}
     return render(request, 'home/viewVatikas.html', context )
     # return render(request, 'map/map.html', context)
@@ -333,6 +334,9 @@ def about(request):
 
 def myPoshan(request):
     return render(request,"home/myPoshan.html",{})
+def treecensus(request):
+    return render(request,"home/treecensus.html",{})
+
 def basic(request):
     return render(request,"forms/basic_forms.html",{})
 
