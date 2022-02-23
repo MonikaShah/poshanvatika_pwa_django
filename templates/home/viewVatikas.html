@@ -33,8 +33,8 @@
 			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
 		mbUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
 
-	var grayscale   = L.tileLayer(mbUrl, {id: 'mapbox/light-v9', tileSize: 512, zoomOffset: -1, attribution: mbAttr}),
-        streets  = L.tileLayer(mbUrl, {id: 'mapbox/streets-v11', tileSize: 512, zoomOffset: -1, attribution: mbAttr});
+	//var grayscale   = L.tileLayer(mbUrl, {id: 'mapbox/light-v9', tileSize: 512, zoomOffset: -1, attribution: mbAttr}),
+  //      streets  = L.tileLayer(mbUrl, {id: 'mapbox/streets-v11', tileSize: 512, zoomOffset: -1, attribution: mbAttr});
         
     // const url = 'https://geonode.communitygis.net/geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&outputFormat=json&typename=geonode:diet_data8jan';
     const url = 'https://geoserver2.communitygis.net/geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typename=geonode%3Aposhan_dummy&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326&access_token=3r7XCeWunHUOfoyqPxnUNt7XY7ZWHu'
@@ -60,10 +60,11 @@
       //console.log(layers);
       console.log(wms);
 
-    var baseLayers = {
-		"Grayscale": grayscale,
-		"Streets": streets
-    };
+    // var baseLayers = {
+		//"Grayscale": grayscale,
+		//"Streets": streets
+    //};
+    var baseLayers = {};
     let indiaState = L.tileLayer.wms("https://geoserver2.communitygis.net/geoserver/wms", {
             layers: "geonode:states_in_india",
             format: "image/png",
@@ -221,7 +222,88 @@
         })
     </script>
 {% endfor %}
-      
+
+<script>
+  //poshan
+  var logo = L.icon({
+         iconUrl: "{% static 'map/images/logo_3.png' %}",
+         iconSize:     [40, 40], // size of the icon
+         //shadowSize:   [50, 64], // size of the shadow
+         iconAnchor:   [25,10], // point of the icon which will correspond to marker's location
+         // shadowAnchor: [4, 62],  // the same for the shadow
+         popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+     });
+
+  var poshanlayerGroup3 = L.layerGroup();
+</script>
+
+{% for i in vatikas2 %}
+ 
+   <script>
+      //  alert("in vatikas -" +i+"- "+ +i.nutri_nm) 
+
+    var table3 = 
+         
+         `<table class="w3-table" id="popup" style="font-size:12px; align:center;" >
+           <tbody>
+         {% if i.picture %}
+           <tr>
+             <tr><img src={{ i.picture.url }} alt="No image uploaded" style="height:100px; width:170px; border:2px solid #555;"/>
+           </tr>
+           {% endif %}
+ 
+           {% if i.organization %}
+           <tr>
+               <th>Organization name</th>
+               <th>{{ i.organization}}</th>
+           </tr>
+           {% endif %}
+           
+           {% if i.district %}
+           <tr>
+             <td>District</td>
+             <td>{{ i.district}}</td>
+           </tr>
+           {% endif %}
+ 
+           {% if i.village %}
+           <tr>
+             <td>Village</td>
+             <td>{{ i.village }}</td>
+           </tr>
+           {% endif %}
+         </tbody>
+    </table>
+    </br>`
+       var popupOptions =
+        {
+          'maxWidth': '500',
+          'className' : 'another-popup' // classname for another popup
+        }
+        var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:logo}).addTo(mymap).bindPopup(table3, popupOptions);
+        poshanlayerGroup3.addLayer(marker);
+        // Added  hover to open popups
+        marker.on('mouseover', function (e) {
+              this.openPopup(e.latlng);
+          });
+        marker.on('mouseout', function (e) {
+              this.openPopup(e.latlng);
+        });
+        marker.on('click', function (e) {
+              this.openPopup(e.latlng);
+        });
+
+        mymap.on ({
+            click: function() {
+                isClicked = false
+            },
+            popupclose: function () {
+                isClicked = false
+            }
+        })
+    </script>
+{% endfor %}
+
 <script>
   //poshan - myposhanvatikas
   var pvIcon1 = L.icon({
@@ -535,16 +617,18 @@ var table =
 <script>
   
   var overlays = {
-        "States":indiaState,
+        //"States":indiaState,
         "Districts":indiaDistrict,
         "Maharashtra Highways":mahaHighways,
         "Maharashtra Schools":mahaSchools,
         "PoshanVatikas": poshanlayerGroup,
+        "AFIF": poshanlayerGroup3,
         "Self Consumption Vatiaks":selfconvatikaslayerGroup,
         "Selling Surplus Vatikas":sellsurpluslayerGroup
 	};
 
 	L.control.layers(baseLayers, overlays).addTo(mymap);
+  //L.control.layers(overlays).addTo(mymap);
 
 document.addEventListener('DOMContentLoaded', () => {
     var elems = document.querySelectorAll('.modal');

@@ -108,10 +108,16 @@
       
 
     
-    var baseLayers = {
-		"Grayscale": grayscale,
-		"Streets": streets
-    };
+    //var baseLayers = {
+		//"Grayscale": grayscale,
+		//"Streets": streets
+    //};
+
+    //baselayers have radio buttons, thats why it is kept empty.
+      var baseLayers = {
+
+      };
+
     let indiaState = L.tileLayer.wms("https://geoserver2.communitygis.net/geoserver/wms", {
             layers: "geonode:states_in_india",
             format: "image/png",
@@ -148,7 +154,7 @@
     );
 
 	var overlays = {
-        "States":indiaState,
+        //"States":indiaState,
         "Districts":indiaDistrict,
         "Maharashtra Highways":mahaHighways,
         "Maharashtra Schools":mahaSchools

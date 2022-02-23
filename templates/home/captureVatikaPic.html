@@ -102,9 +102,10 @@
           {% endcomment %}
           <div class='row'>
             <div class='input-field col s12'>
-             <span >Name: </span>
+             <span style="float: left; color: black;">Name: </span>
              <input type="text" class="fieldlabels" placeholder=" Name" name="Name" id="Name" required>  
             </div>
+          </div>
           <div class='row'>
             <div class='input-field col s12'>
              <span style="float: left; color: black;" >Name of individual / organization / school under which Nutri-Garden is cultivated  : </span>
@@ -362,6 +363,15 @@
           
             </div>
           </div>
+          <div class='row'>
+            <div class='input-field col s12'>
+              <span style="float: left; color: black;">Type of entity</span><br>
+              <p><label><input class="with-gap" name="type" type="radio" value="AFIF" /><span>AFIF</span></label> </p><br>
+              <p><label><input  class="with-gap" name="type" type="radio" value="Poshanvatika" ><span>Poshanvatika</span></label></p><br>
+              <p><label><input class="with-gap" name="type" type="radio" value="nutrigarden"/><span>Nutri-garden</span></label></p><br>
+              
+            </div>  
+          </div>
      
           <div class="input-section center">
           <a id="location-btn" class="waves-effect waves-light btn-small" style=" background-color: #4CAF50; visibility: hidden;">Get Location</a>
@@ -390,6 +400,48 @@
   document.getElementById('location-btn').click();
 }
       </script>
+      <script>
+
+        $(function() {
+           $("input[name='afif']").click(function() {
+             if ($("#chkno").is(":checked")) {
+               $("#text").show();
+             } else {
+               $("#text").hide();
+             }
+           });
+         });
+      
+         $(function() {
+           $("input[name='ifAFIF']").click(function() {
+             if ($("#afifyes").is(":checked")) {
+               $("#afiftext").show();
+             } else {
+               $("#afiftext").hide();
+             }
+           });
+         });
+      
+         $(function() {
+           $("input[name='prodCompany']").click(function() {
+             if ($("#chkyes").is(":checked")) {
+               $("#yesComp").show();
+             } else {
+               $("#yesComp").hide();
+             }
+           });
+         });
+      
+         $(function() {
+           $("input[name='surplus']").click(function() {
+             if ($("#chkdyes").is(":checked")) {
+               $("#surplusyes").show();
+             } else {
+               $("#surplusyes").hide();
+             }
+           });
+         });
+        </script>
     </div>
 
     

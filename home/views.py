@@ -33,9 +33,10 @@ def viewVatikas(request):
     wells = UploadWellPictureModel.objects.all()
     vatikas = UploadPictureModel.objects.all()
     vatikas1 = PoshanFormInformation.objects.all()
+    vatikas2 = UploadPictureModel.objects.filter(type='AFIF')
     selfcons = PoshanFormInformation.objects.filter(level_nutri_garden='for_self_consumption',nutri_garden_scale ='Only for vegetables and fruits, Backyard Poultry')
     sellsurp = PoshanFormInformation.objects.filter(level_nutri_garden='selling_surplus')
-    context = {'vatikas1': vatikas1, 'vatikas':vatikas,'selfcons':selfcons,'sellsurp':sellsurp}
+    context = {'vatikas1': vatikas1,'vatikas2': vatikas2, 'vatikas':vatikas,'selfcons':selfcons,'sellsurp':sellsurp}
     # context = {'wells': wells, 'mylist':mylist}
     return render(request, 'home/viewVatikas.html', context )
     # return render(request, 'map/map.html', context)
@@ -200,6 +201,7 @@ def captvatikapic(request):
         hot_cooked_meal = request.POST.get('hot_cooked_meal')
         school_child = request.POST.get('school_child')
         school_scale = request.POST.get('school_scale')
+        type=request.POST.get('type')
 
         try:
             imgstr = re.search(r'base64,(.*)', datauri).group(1)
@@ -220,7 +222,7 @@ def captvatikapic(request):
                                cultivation_others=cultivation_others,month=month,well=well,canel=canel,bore_well=bore_well,river=river,
                                source_water=source_water,school_name=school_name,any_weekly_class=any_weekly_class,
                                weekly=weekly,any_innovative=any_innovative,mid_day_meal=mid_day_meal,surplus_selling=surplus_selling,
-                               hot_cooked_meal=hot_cooked_meal,school_child=school_child,school_scale=school_scale,village=village,state=state,name=name)
+                               hot_cooked_meal=hot_cooked_meal,school_child=school_child,school_scale=school_scale,village=village,state=state,name=name,type=type)
             picLocation.save()
             datauri = False
             del datauri
@@ -333,6 +335,9 @@ def about(request):
 
 def myPoshan(request):
     return render(request,"home/myPoshan.html",{})
+def treecensus(request):
+    return render(request,"home/treecensus.html",{})
+
 def basic(request):
     return render(request,"forms/basic_forms.html",{})
 
