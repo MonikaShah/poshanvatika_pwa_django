@@ -201,6 +201,7 @@ def captvatikapic(request):
         hot_cooked_meal = request.POST.get('hot_cooked_meal')
         school_child = request.POST.get('school_child')
         school_scale = request.POST.get('school_scale')
+        type=request.POST.get('type')
 
         try:
             imgstr = re.search(r'base64,(.*)', datauri).group(1)
@@ -221,7 +222,7 @@ def captvatikapic(request):
                                cultivation_others=cultivation_others,month=month,well=well,canel=canel,bore_well=bore_well,river=river,
                                source_water=source_water,school_name=school_name,any_weekly_class=any_weekly_class,
                                weekly=weekly,any_innovative=any_innovative,mid_day_meal=mid_day_meal,surplus_selling=surplus_selling,
-                               hot_cooked_meal=hot_cooked_meal,school_child=school_child,school_scale=school_scale,village=village,state=state,name=name)
+                               hot_cooked_meal=hot_cooked_meal,school_child=school_child,school_scale=school_scale,village=village,state=state,name=name,type=type)
             picLocation.save()
             datauri = False
             del datauri
