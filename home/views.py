@@ -21,7 +21,7 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login, logout
 from .forms import UploadPictureForm, UploadWellPictureForm,BasicPoshanForm
-from .models import  UploadWellPictureModel, UploadPictureModel,PoshanInformation,PoshanFormInformation,BasicPoshanModel
+from .models import  UploadWellPictureModel, UploadPictureModel,PoshanInformation,PoshanFormInformation,BasicPoshanModel,CensusTable
 # Create your views here.
 from django.template.defaultfilters import filesizeformat
 from django.utils.translation import ugettext_lazy as _
@@ -341,62 +341,62 @@ def myPoshan(request):
     return render(request,"home/myPoshan.html",{})
 def treecensus(request):
     return render(request,"home/treecensus.html",{})
-def treecharts(request):
-    return render(request,"home/tree_census_charts.html",{})
-
 # def treecharts(request):
-#     census_table_csv_data = CensusTable.objects.all()
+#     return render(request,"home/tree_census_charts.html",{})
 
-#     df = pd.DataFrame(census_table_csv_data.values())
+def treecharts(request):
+    census_table_csv_data = CensusTable.objects.all()
+
+    df = pd.DataFrame(census_table_csv_data.values())
     
-#     print(df.columns)
-#     # fig = px.histogram(df, x = 'name_of_the_city')
-#     # plt.xlabel('Number of Trees')
-#     # plt.ylabel('Cities')
-#     # fig.write_image('charts/static/charts/tree-city.png')
-#     # plt.close()
+    print(df.columns)
+    fig = px.histogram(df, x = 'name_of_the_city')
+    plt.xlabel('Number of Trees')
+    plt.ylabel('Cities')
+    fig.write_image('static/charts/tree-city.png')
+    plt.close()
     
     
-#     fig = px.histogram(df[df['tree_type']=='Indegenious'], x = 'name_of_the_city')
-#     plt.xlabel('Number of Indegenious Trees')
-#     plt.ylabel('Cities')
-#     fig.write_image('charts/static/charts/indegenious-city.png')
-#     plt.close()
+    fig = px.histogram(df[df['tree_type']=='Indegenious'], x = 'name_of_the_city')
+    plt.xlabel('Number of Indegenious Trees')
+    plt.ylabel('Cities')
+    fig.write_image('static/charts/indegenious-city.png')
+    plt.close()
     
-#     fig = px.bar(df, x='tree_common_name', y= 'total_area_in_sq_kms_under_all_trees')
-#     plt.xlabel('Common Name of the tree')
-#     plt.ylabel('Total are in sq kms under all tree')
-#     plt.xticks(rotation=40)
-#     fig.write_image('charts/static/charts/tree-area.png')
-#     plt.close()
+    fig = px.bar(df, x='tree_common_name', y= 'total_area_in_sq_kms_under_all_trees')
+    plt.xlabel('Common Name of the tree')
+    plt.ylabel('Total are in sq kms under all tree')
+    plt.xticks(rotation=40)
+    fig.write_image('static/charts/tree-area.png')
+    plt.close()
 
-#     no_of_heritage_trees = len(df[df['current_tree_age'] >= 50])
-#     no_of_newly_planted_trees = len(df[df['current_tree_age'] <= 25])
-#     total_area_under_indegenious_trees = sum(df['total_area_in_sq_kms_under_native_indegeniuos_trees'].tolist())
-#     total_area_under_all_trees = sum(df['total_area_in_sq_kms_under_all_trees'].tolist())
-#     trees_under_govt_land = sum(df[df['tree_ownership_plantation_initiated_by'] == 'Government']['total_area_in_sq_kms_under_all_trees'].tolist())
-#     trees_under_private_land = sum(df[df['tree_ownership_plantation_initiated_by'] == 'Private']['total_area_in_sq_kms_under_all_trees'].tolist())
-#     trees_under_other_land = sum(df[df['tree_ownership_plantation_initiated_by'] == 'Others']['total_area_in_sq_kms_under_all_trees'].tolist())
+    no_of_heritage_trees = len(df[df['current_tree_age'] >= 50])
+    no_of_newly_planted_trees = len(df[df['current_tree_age'] <= 25])
+    total_area_under_indegenious_trees = sum(df['total_area_in_sq_kms_under_native_indegeniuos_trees'].tolist())
+    total_area_under_all_trees = sum(df['total_area_in_sq_kms_under_all_trees'].tolist())
+    trees_under_govt_land = sum(df[df['tree_ownership_plantation_initiated_by'] == 'Government']['total_area_in_sq_kms_under_all_trees'].tolist())
+    trees_under_private_land = sum(df[df['tree_ownership_plantation_initiated_by'] == 'Private']['total_area_in_sq_kms_under_all_trees'].tolist())
+    trees_under_other_land = sum(df[df['tree_ownership_plantation_initiated_by'] == 'Others']['total_area_in_sq_kms_under_all_trees'].tolist())
 
-#     print(no_of_heritage_trees)
-#     print(no_of_newly_planted_trees)
-#     print(total_area_under_indegenious_trees)
-#     print(total_area_under_all_trees)
-#     print(trees_under_govt_land)
-#     print(trees_under_private_land)
-#     print(trees_under_other_land)
+    print(no_of_heritage_trees)
+    print(no_of_newly_planted_trees)
+    print(total_area_under_indegenious_trees)
+    print(total_area_under_all_trees)
+    print(trees_under_govt_land)
+    print(trees_under_private_land)
+    print(trees_under_other_land)
 
-#     context = {
-#         'heritage_trees' : no_of_heritage_trees,
-#         'newly_planted_trees' : no_of_newly_planted_trees,
-#         'area_under_indegenious_trees' : total_area_under_indegenious_trees,
-#         'area_under_all_trees' : total_area_under_all_trees,
-#         'govt_land_trees' : trees_under_govt_land,
-#         'private_land_trees' : trees_under_private_land,
-#         'other_land_trees' : trees_under_other_land
-#     }
+    context = {
+        'heritage_trees' : no_of_heritage_trees,
+        'newly_planted_trees' : no_of_newly_planted_trees,
+        'area_under_indegenious_trees' : total_area_under_indegenious_trees,
+        'area_under_all_trees' : total_area_under_all_trees,
+        'govt_land_trees' : trees_under_govt_land,
+        'private_land_trees' : trees_under_private_land,
+        'other_land_trees' : trees_under_other_land
+    }
 
-#     return render(request,'home/tree_census_charts.html', context)
+    return render(request,'home/tree_census_charts.html', context)
 
 
 def basic(request):

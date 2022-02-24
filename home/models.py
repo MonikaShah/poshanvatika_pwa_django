@@ -22,6 +22,54 @@ from numpy import average
 #         easygui.msgbox("Upload image lesser than 15 MB", title="Warning!")
 #         raise ValidationError("Max size of file is %s MB" % limit_mb)
 
+class CensusTable(models.Model):
+    sstart = models.DateTimeField(blank=True, null=True)
+    eend = models.DateTimeField(blank=True, null=True)
+    name_of_the_city = models.CharField(max_length=50, blank=True, null=True)
+    cencus_code = models.IntegerField(blank=True, null=True)
+    tree_common_name = models.CharField(max_length=50, blank=True, null=True)
+    scientific_name = models.CharField(max_length=50, blank=True, null=True)
+    tree_type = models.CharField(max_length=50, blank=True, null=True)
+    tree_gps_location = models.CharField(max_length=50, blank=True, null=True)
+    tree_gps_location_latitude = models.CharField(max_length=30, blank=True, null=True)
+    tree_gps_location_longitude = models.CharField(max_length=30, blank=True, null=True)
+    tree_gps_location_altitude = models.CharField(max_length=30, blank=True, null=True)
+    tree_gps_location_precision = models.CharField(max_length=30, blank=True, null=True)
+    photo = models.CharField(max_length=70, blank=True, null=True)
+    photo_url = models.BinaryField(blank=True, null=True)
+    tree_girth_in_inches = models.IntegerField(blank=True, null=True)
+    tree_height_in_cm = models.IntegerField(blank=True, null=True)
+    tree_canopy = models.CharField(max_length=50, blank=True, null=True)
+    total_area_in_sq_kms_under_all_trees = models.IntegerField(blank=True, null=True)
+    total_area_in_sq_kms_under_native_indegeniuos_trees = models.IntegerField(blank=True, null=True)
+    current_tree_age = models.IntegerField(blank=True, null=True)
+    age_of_tree_when_planted = models.CharField(max_length=50, blank=True, null=True)
+    date_of_plantation = models.DateField(blank=True, null=True)
+    present_status_of_tree = models.CharField(max_length=50, blank=True, null=True)
+    tree_ownership_plantation_initiated_by = models.CharField(max_length=50, blank=True, null=True)
+    please_specify_tree_ownership = models.CharField(max_length=50, blank=True, null=True)
+    name_of_the_owner = models.CharField(max_length=50, blank=True, null=True)
+    field_version_field = models.CharField(db_column='__version__', max_length=50, blank=True, null=True)  # Field renamed because it contained more than one '_' in a row. Field renamed because it started with '_'. Field renamed because it ended with '_'.
+    tree_scientific_tree_local_name = models.CharField(max_length=50, blank=True, null=True)
+    address = models.CharField(max_length=50, blank=True, null=True)
+    id = models.BigIntegerField(blank=True, null=False, primary_key=True)
+    field_uuid = models.CharField(db_column='_uuid', max_length=50, blank=True, null=True)  # Field renamed because it started with '_'.
+    field_submission_time = models.DateField(db_column='_submission_time', blank=True, null=True)  # Field renamed because it started with '_'.
+    field_validation_status = models.CharField(db_column='_validation_status', max_length=50, blank=True, null=True)  # Field renamed because it started with '_'.
+    field_notes = models.CharField(db_column='_notes', max_length=50, blank=True, null=True)  # Field renamed because it started with '_'.
+    field_status = models.CharField(db_column='_status', max_length=50, blank=True, null=True)  # Field renamed because it started with '_'.
+    field_submitted_by = models.CharField(db_column='_submitted_by', max_length=50, blank=True, null=True)  # Field renamed because it started with '_'.
+    field_tags = models.CharField(db_column='_tags', max_length=50, blank=True, null=True)  # Field renamed because it started with '_'.
+    field_index = models.IntegerField(db_column='_index', blank=True, null=True)  # Field renamed because it started with '_'.
+    tree_gps_location_geom = models.TextField(blank=True, null=True)  # This field type is a guess.
+
+    class Meta:
+        managed = False
+        db_table = 'census_table'
+
+
+
+
 class UploadPictureModel(models.Model):
     # picture = models.ImageField(upload_to='PoshanVatikaPics/', blank=True, null=True, default='PoshanVatikaPics/noImage.jpg')
     name = models.CharField(max_length=100, default='')
