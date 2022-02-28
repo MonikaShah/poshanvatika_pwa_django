@@ -340,12 +340,16 @@ def about(request):
 def myPoshan(request):
     return render(request,"home/myPoshan.html",{})
 def treecensus(request):
-    return render(request,"home/treecensus.html",{})
+    tree = CensusTable.objects.all()
+    context = {'tree':tree}
+    return render(request,"home/treecensus.html",context)
 # def treecharts(request):
 #     return render(request,"home/tree_census_charts.html",{})
 
 def treecharts(request):
     census_table_csv_data = CensusTable.objects.all()
+    
+
 
     df = pd.DataFrame(census_table_csv_data.values())
     
@@ -386,6 +390,8 @@ def treecharts(request):
     print(trees_under_private_land)
     print(trees_under_other_land)
 
+
+
     context = {
         'heritage_trees' : no_of_heritage_trees,
         'newly_planted_trees' : no_of_newly_planted_trees,
@@ -394,7 +400,7 @@ def treecharts(request):
         'govt_land_trees' : trees_under_govt_land,
         'private_land_trees' : trees_under_private_land,
         'other_land_trees' : trees_under_other_land
-    }
+        }
 
     return render(request,'home/tree_census_charts.html', context)
 

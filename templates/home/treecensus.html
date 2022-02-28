@@ -261,7 +261,87 @@ function removeposhan(){
 </script>
 
 
+<script>
+    //poshan
+    var logo = L.icon({
+           iconUrl: "{% static 'map/images/tree_icon.png' %}",
+           iconSize:     [40, 40], // size of the icon
+           //shadowSize:   [50, 64], // size of the shadow
+           iconAnchor:   [25,10], // point of the icon which will correspond to marker's location
+           // shadowAnchor: [4, 62],  // the same for the shadow
+           popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+       });
+  
+    var TreeGroup = L.layerGroup();
+  </script>
+  
+  {% for i in tree %}
+   
+     <script>
+        //  alert("in vatikas -" +i+"- "+ +i.nutri_nm) 
+        //alert('hii');
+      var table4 = 
+           
+           `<table class="w3-table" id="popup" style="font-size:12px; align:center;" >
+             <tbody>
+           
+             {% if i.name_of_the_city %}
+             <tr>
+                 <th>City name</th>
+                 <th>{{ i.name_of_the_city}}</th>
+             </tr>
+             {% endif %}
+             
+             {% if i.tree_common_name %}
+             <tr>
+               <td>Tree common name</td>
+               <td>{{ i.tree_common_name}}</td>
+             </tr>
+             {% endif %}
+   
+             {% if i.date_of_plantation %}
+             <tr>
+               <td>date_of_plantation</td>
+               <td>{{ i.date_of_plantation }}</td>
+             </tr>
+             {% endif %}
+           </tbody>
+      </table>
+      </br>`
 
+      console.log(table4);
+         var popupOptions =
+          {
+            'maxWidth': '500',
+            'className' : 'another-popup' // classname for another popup
+          }
+          var marker = L.marker(["{{ i.tree_gps_location_latitude }}", "{{ i.tree_gps_location_longitude }}"], {icon:logo}).addTo(mymap).bindPopup(table4, popupOptions);
+          TreeGroup.addLayer(marker);
+          console.log(marker);
+          // Added  hover to open popups
+          marker.on('mouseover', function (e) {
+                this.openPopup(e.latlng);
+            });
+          marker.on('mouseout', function (e) {
+                this.openPopup(e.latlng);
+          });
+          marker.on('click', function (e) {
+                this.openPopup(e.latlng);
+          });
+  
+          mymap.on ({
+              click: function() {
+                  isClicked = false
+              },
+              popupclose: function () {
+                  isClicked = false
+              }
+          })
+      </script>
+  {% endfor %}
+  
+
+  
 
 
 <script>
@@ -305,8 +385,7 @@ var baseLayers = {};
         "Districts":indiaDistrict,
         "Maharashtra Highways":mahaHighways,
         "Maharashtra Schools":mahaSchools,
-
-        //"Tree": TreeGroup,
+        "Tree": TreeGroup,
 
         // "PoshanVatikas": poshanlayerGroup,
 
