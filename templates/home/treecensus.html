@@ -139,6 +139,7 @@ table, th, td
 </div>
 <script>
 
+
 //add Pune boundary to map
 var wms_layer = L.tileLayer.wms('https://geoserver2.communitygis.net/geoserver/wms', {
                                         layers: 'geonode:all_india_districts_11june2020',
@@ -155,6 +156,7 @@ var wms_layer = L.tileLayer.wms('https://geoserver2.communitygis.net/geoserver/w
 
 
     var list = [];
+
 function getPoshan(clickedCheckBox){
     let value = clickedCheckBox.value;
     //var state = document.getElementById('indstate').value;
@@ -189,7 +191,10 @@ function getPoshan(clickedCheckBox){
                                         
                                     }); 
         wms_layer.addTo(mymap);
+
         list.push(wms_layer);
+
+
         mymap.setView(currentPos, zoom);                          
         console.log(wms_layer);
         }
@@ -228,7 +233,9 @@ function getPoshan(clickedCheckBox){
                 console.log("not");
                 // list =[];
                 //mymap.removeLayer(compendium);
+
                 list.forEach(wms_layer => mymap.removeLayer(wms_layer));
+
                 // console.log(list);
             }
             mymap.on('contextmenu', function(e) {
@@ -249,6 +256,7 @@ function removeposhan(){
     $(chkposhan).prop( "checked", false );
     getPoshan($(chkposhan));
 }
+
 
 </script>
 
@@ -335,7 +343,6 @@ function removeposhan(){
 
   
 
- 
 
 <script>
 var baseLayers = {};
@@ -378,8 +385,11 @@ var baseLayers = {};
         "Districts":indiaDistrict,
         "Maharashtra Highways":mahaHighways,
         "Maharashtra Schools":mahaSchools,
-        "Tree": TreeGroup
-        // "AFIF": TreeGroup,
+        "Tree": TreeGroup,
+
+        // "PoshanVatikas": poshanlayerGroup,
+
+        // "AFIF": poshanlayerGroup3,
         // "Self Consumption Vatiaks":selfconvatikaslayerGroup,
         // "Selling Surplus Vatikas":sellsurpluslayerGroup
 	};
