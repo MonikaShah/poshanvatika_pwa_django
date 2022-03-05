@@ -81,6 +81,7 @@ class CensusTable(models.Model):
     tree_gps_location_precision = models.CharField(max_length=50, blank=True, null=True)
     photo = models.CharField(max_length=70, blank=True, null=True)
     photo_url = models.BinaryField(blank=True, null=True)
+    #photo_url = models.CharField(max_length=250,blank=True, null=True)
     tree_girth_in_inches = models.IntegerField(blank=True, null=True)
     tree_height_in_cm = models.IntegerField(blank=True, null=True)
     tree_canopy = models.CharField(max_length=250, blank=True, null=True)
@@ -107,8 +108,9 @@ class CensusTable(models.Model):
     name_of_the_user = models.CharField(max_length=250, blank=True, null=True)
     please_specify_common_name = models.CharField(max_length=50, blank=True, null=True)
     phone_number = models.IntegerField(blank=True, null=True)
-    device_id = models.CharField(max_length=50, blank=True, null=True)
-
+    device_id = models.CharField(max_length=50, blank=True, null=True)    
+    def __str__(self):
+        return self.name_of_the_ulb
     class Meta:
         managed = False
         db_table = 'census_table'

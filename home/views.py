@@ -341,7 +341,10 @@ def myPoshan(request):
     return render(request,"home/myPoshan.html",{})
 def treecensus(request):
     tree = CensusTable.objects.all()
-    context = {'tree':tree}
+    tree_count = CensusTable.objects.count()
+    tree_count_satara = CensusTable.objects.filter(name_of_the_ulb='Satara Municipal Council').count()
+    tree_count_natepute = CensusTable.objects.filter(name_of_the_ulb='Natepute').count()
+    context = {'tree':tree,'tree_count':tree_count,'tree_count_satara':tree_count_satara,'tree_count_natepute':tree_count_natepute}
     return render(request,"home/treecensus.html",context)
 # def treecharts(request):
 #     return render(request,"home/tree_census_charts.html",{})
@@ -354,14 +357,14 @@ def treecharts(request):
     df = pd.DataFrame(census_table_csv_data.values())
     
     print(df.columns)
-    fig = px.histogram(df, x = 'name_of_the_city')
+    fig = px.histogram(df, x = 'name_of_the_ulb')
     plt.xlabel('Number of Trees')
     plt.ylabel('Cities')
     fig.write_image('static/charts/tree-city.png')
     plt.close()
     
     
-    fig = px.histogram(df[df['tree_type']=='Indegenious'], x = 'name_of_the_city')
+    fig = px.histogram(df[df['tree_type']=='Indegenious'], x = 'name_of_the_ulb')
     plt.xlabel('Number of Indegenious Trees')
     plt.ylabel('Cities')
     fig.write_image('static/charts/indegenious-city.png')

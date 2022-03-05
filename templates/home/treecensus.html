@@ -134,10 +134,15 @@ table, th, td
     <label><input type="checkbox" value="nateputeEB" id ="nateputeEB" onchange="getPoshan(this)"><span style="color:black;"><b> Show Natepute EB </b></span></label>
                      
   </div>
-
-
+<hr>
+  <h6><b>Last Updated few hours back(on 5March2022)</b></h6>
+  <!-- <button type="button" onclick="{{ tree_count }}">Total Count</button> -->
+  <h6 style ="line-height: 2.0;"> Total Tree Count : {{ tree_count }} </h6>
+  <h6 style ="line-height: 2.0;"> Satara Tree Count : {{ tree_count_satara }} </h6>
+  <h6 style ="line-height: 2.0;"> Natepute Tree Count : {{ tree_count_natepute }} </h6>
 </div>
 <script>
+
 
 
 //add Pune boundary to map
@@ -303,6 +308,18 @@ function removeposhan(){
              <tr>
                <td>date_of_plantation</td>
                <td>{{ i.date_of_plantation }}</td>
+             </tr>
+             {% endif %}
+             {% if i.photo %}
+             <tr>
+               <td>photo</td>
+               <td>{{ i.photo }}</td>
+             </tr>
+             {% endif %}
+             {% if i.photo_url %}
+             <tr>
+               <td>image_url</td>
+               <td><img src={{ i.photo_url }} alt="No image uploaded" style="height:100px; width:170px; border:2px solid #555;"/></td>
              </tr>
              {% endif %}
            </tbody>
