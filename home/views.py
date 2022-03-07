@@ -360,7 +360,7 @@ def treecharts(request):
     fig = px.histogram(df, x = 'name_of_the_ulb')
     plt.xlabel('Number of Trees')
     plt.ylabel('Cities')
-    fig.write_image('./static/charts/tree-city.png')
+    fig.write_image('/home/poshan/new25jan/poshanvatika_pwa_django/static/charts/tree-city.png')
     plt.close()
     
     
