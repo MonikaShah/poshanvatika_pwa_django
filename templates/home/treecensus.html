@@ -111,7 +111,7 @@ table, th, td
 
 <div id="side-bar" style="background-color: rgba(0, 0, 0, 0.2);">                <!-- Main container -->
 
-    <a class="nav-link" href="{% url 'treecharts' %}">Charts<span class="sr-only">(current)</span></a>
+    <!-- <a class="nav-link" href="{% url 'treecharts' %}">Charts<span class="sr-only">(current)</span></a> -->
     <br>
     <a class="nav-link" href="https://ee.kobotoolbox.org/x/KCR9XYmc">Form<span class="sr-only">(current)</span></a>
     <br>
@@ -126,20 +126,20 @@ table, th, td
   </div>
   <div class="tooltips" title="Please select the PV" id="pv">
         
-    <label><input type="checkbox" value="sataraEB" id ="sataraEB" onchange="getPoshan(this)"><span style="color:black;"><b> Show Satara EB </b></span></label>
+    <label><input type="checkbox" value="sataraEB" id ="sataraEB" onchange="getPoshan(this)"><span style="color:black;"><b> Show Satara EB ({{ tree_count_satara }})</b></span></label>
                      
   </div>
   <div class="tooltips" title="Please select the PV" id="pv">
         
-    <label><input type="checkbox" value="nateputeEB" id ="nateputeEB" onchange="getPoshan(this)"><span style="color:black;"><b> Show Natepute EB </b></span></label>
+    <label><input type="checkbox" value="nateputeEB" id ="nateputeEB" onchange="getPoshan(this)"><span style="color:black;"><b> Show Natepute EB ({{ tree_count_natepute }})</b></span></label>
                      
   </div>
 <hr>
   <h6><b>Last Updated few hours back(on 7March2022)</b></h6>
   <!-- <button type="button" onclick="{{ tree_count }}">Total Count</button> -->
   <h6 style ="line-height: 2.0;"> Total Tree Count : {{ tree_count }} </h6>
-  <h6 style ="line-height: 2.0;"> Satara Tree Count : {{ tree_count_satara }} </h6>
-  <h6 style ="line-height: 2.0;"> Natepute Tree Count : {{ tree_count_natepute }} </h6>
+  <!-- <h6 style ="line-height: 2.0;"> Satara Tree Count : {{ tree_count_satara }} </h6> -->
+  <!-- <h6 style ="line-height: 2.0;"> Natepute Tree Count : {{ tree_count_natepute }} </h6> -->
 </div>
 <script>
 
