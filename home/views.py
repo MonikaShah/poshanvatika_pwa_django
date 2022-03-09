@@ -341,10 +341,12 @@ def myPoshan(request):
     return render(request,"home/myPoshan.html",{})
 def treecensus(request):
     tree = CensusTable.objects.all()
+    tree_satara = CensusTable.objects.filter(name_of_the_ulb='Satara Municipal Council')
+    tree_natepute = CensusTable.objects.filter(name_of_the_ulb='Natepute')
     tree_count = CensusTable.objects.count()
     tree_count_satara = CensusTable.objects.filter(name_of_the_ulb='Satara Municipal Council').count()
     tree_count_natepute = CensusTable.objects.filter(name_of_the_ulb='Natepute').count()
-    context = {'tree':tree,'tree_count':tree_count,'tree_count_satara':tree_count_satara,'tree_count_natepute':tree_count_natepute}
+    context = {'tree':tree,'tree_count':tree_count,'tree_count_satara':tree_count_satara,'tree_count_natepute':tree_count_natepute,'tree_satara':tree_satara,'tree_natepute':tree_natepute}
     return render(request,"home/treecensus.html",context)
 # def treecharts(request):
 #     return render(request,"home/tree_census_charts.html",{})
@@ -360,7 +362,7 @@ def treecharts(request):
     fig = px.histogram(df, x = 'name_of_the_ulb')
     plt.xlabel('Number of Trees')
     plt.ylabel('Cities')
-    fig.write_image('home/poshan/new25jan/poshanvatika_pwa_django/static/charts/tree-city.png')
+    fig.write_image('static/charts/tree-city.png')
     plt.close()
     
     

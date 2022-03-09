@@ -73,14 +73,14 @@
     const url = 'https://geoserver2.communitygis.net/geoserver/ows?service=WFS&version=1.0.0&request=GetFeature&typename=geonode%3Aposhan_dummy&outputFormat=json&srs=EPSG%3A4326&srsName=EPSG%3A4326&access_token=3r7XCeWunHUOfoyqPxnUNt7XY7ZWHu'
     const url1 = 'https://gist.githubusercontent.com/AnimeshN/bf517d5fd3cf387a73e49404037f1c4d/raw/15ae046fc379c62f63934b86b9dda97d8165d4d6/organization_wise_compendium.json'
 
-    //L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-		//maxZoom: 18,
-		//attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
-		//	'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-		//id: 'mapbox/streets-v11',
-		//tileSize: 512,
-		//zoomOffset: -1
-    //}).addTo(mymap);
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+		maxZoom: 18,
+		attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
+			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+		id: 'mapbox/streets-v11',
+		tileSize: 512,
+		zoomOffset: -1
+    }).addTo(mymap);
 
   
 
@@ -98,7 +98,7 @@
 				//layer: layer,
         layers: 'geonode:states_in_india',
 				format: 'image/png',
-				//transparent: 'true',
+				transparent: 'true',
 			});
       wms.addTo(mymap);
       //console.log(layers);
