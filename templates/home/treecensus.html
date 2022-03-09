@@ -109,11 +109,11 @@ table, th, td
 
 
 
-<div id="side-bar" style="background-color: rgba(0, 0, 0, 0.2);">                <!-- Main container -->
+<div id="side-bar" style="background-color: rgba(223, 217, 217, 0.952);">                <!-- Main container -->
 
     <!-- <a class="nav-link" href="{% url 'treecharts' %}">Charts<span class="sr-only">(current)</span></a> -->
     <br>
-    <a class="nav-link" href="https://ee.kobotoolbox.org/x/KCR9XYmc">Form<span class="sr-only">(current)</span></a>
+    <a class="nav-link" href="https://ee.kobotoolbox.org/x/KCR9XYmc" style="color: black;"><b><u>Form</u></b><span class="sr-only">(current)</span></a>
     <br>
     <hr>
     <br>
@@ -135,7 +135,7 @@ table, th, td
                      
   </div>
 <hr>
-  <h6><b>Last Updated few hours back(on 7March2022)</b></h6>
+  <h6><b>Last Updated few hours back(on 9March2022)</b></h6>
   <!-- <button type="button" onclick="{{ tree_count }}">Total Count</button> -->
   <h6 style ="line-height: 2.0;"> Total Tree Count : {{ tree_count }} </h6>
   <!-- <h6 style ="line-height: 2.0;"> Satara Tree Count : {{ tree_count_satara }} </h6> -->
@@ -143,7 +143,7 @@ table, th, td
 </div>
 <script>
 
-
+    
 
 //add Pune boundary to map
 // var wms_layer = L.tileLayer.wms('https://geoserver2.communitygis.net/geoserver/wms', {
@@ -178,11 +178,13 @@ function getPoshan(clickedCheckBox){
             layer = 'treecensus:satarablocks_22feb22';
             currentPos = [17.691401, 74.000938];
             zoom = 14;
+            //TreeGroupSatara;
         }
         else if(value == 'nateputeEB'){
             layer = 'treecensus:nateputebloxks_22feb22';
             currentPos = [17.898615, 74.754189];
             zoom = 14;
+            //TreeGroupNatepute;
         }
            
         var wms_layer = L.tileLayer.wms('https://geoserver2.communitygis.net/geoserver/wms', {
@@ -240,6 +242,7 @@ function getPoshan(clickedCheckBox){
                 //mymap.removeLayer(compendium);
 
                 list.forEach(wms_layer => mymap.removeLayer(wms_layer));
+                
 
                 // console.log(list);
             }
@@ -280,6 +283,7 @@ function removeposhan(){
     var TreeGroup = L.layerGroup();
   </script>
   
+  
   {% for i in tree %}
    
      <script>
@@ -315,7 +319,7 @@ function removeposhan(){
       </table>
       </br>`
 
-      console.log(table4);
+      //console.log(table4);
          var popupOptions =
           {
             'maxWidth': '500',
@@ -345,8 +349,175 @@ function removeposhan(){
           })
       </script>
   {% endfor %}
-  
 
+
+<!-- show satara trees -->
+  <!-- <script>
+    //poshan
+    var logo = L.icon({
+           iconUrl: "{% static 'map/images/tree_icon.png' %}",
+           iconSize:     [40, 40], // size of the icon
+           //shadowSize:   [50, 64], // size of the shadow
+           iconAnchor:   [25,10], // point of the icon which will correspond to marker's location
+           // shadowAnchor: [4, 62],  // the same for the shadow
+           popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+       });
+  
+    var TreeGroupSatara = L.layerGroup();
+  </script>
+
+
+
+  {% for i in tree_satara %}
+   
+  <script>
+     //  alert("in vatikas -" +i+"- "+ +i.nutri_nm) 
+     //alert('hii');
+   var table4 = 
+        
+        `<table class="w3-table" id="popup" style="font-size:12px; align:center;" >
+          <tbody>
+        
+          {% if i.name_of_the_ulb %}
+          <tr>
+              <th>ULB name</th>
+              <th>{{ i.name_of_the_ulb}}</th>
+          </tr>
+          {% endif %}
+          
+          {% if i.tree_common_name %}
+          <tr>
+            <td>Tree common name</td>
+            <td>{{ i.tree_common_name}}</td>
+          </tr>
+          {% endif %}
+
+          {% if i.date_of_plantation %}
+          <tr>
+            <td>date_of_plantation</td>
+            <td>{{ i.date_of_plantation }}</td>
+          </tr>
+          {% endif %}
+          
+        </tbody>
+   </table>
+   </br>`
+
+   //console.log(table4);
+      var popupOptions =
+       {
+         'maxWidth': '500',
+         'className' : 'another-popup' // classname for another popup
+       }
+       var marker = L.marker(["{{ i.tree_gps_location_latitude }}", "{{ i.tree_gps_location_longitude }}"], {icon:logo}).addTo(mymap).bindPopup(table4, popupOptions);
+       TreeGroupSatara.addLayer(marker);
+       console.log(marker);
+       // Added  hover to open popups
+       marker.on('mouseover', function (e) {
+             this.openPopup(e.latlng);
+         });
+       marker.on('mouseout', function (e) {
+             this.openPopup(e.latlng);
+       });
+       marker.on('click', function (e) {
+             this.openPopup(e.latlng);
+       });
+
+       mymap.on ({
+           click: function() {
+               isClicked = false
+           },
+           popupclose: function () {
+               isClicked = false
+           }
+       })
+   </script>
+{% endfor %} -->
+
+<!-- show natepute trees -->
+<!-- <script>
+    //poshan
+    var logo = L.icon({
+           iconUrl: "{% static 'map/images/tree_icon.png' %}",
+           iconSize:     [40, 40], // size of the icon
+           //shadowSize:   [50, 64], // size of the shadow
+           iconAnchor:   [25,10], // point of the icon which will correspond to marker's location
+           // shadowAnchor: [4, 62],  // the same for the shadow
+           popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+       });
+  
+    var TreeGroupNatepute = L.layerGroup();
+  </script>
+
+
+
+  {% for i in tree_natepute %}
+   
+  <script>
+     //  alert("in vatikas -" +i+"- "+ +i.nutri_nm) 
+     //alert('hii');
+   var table4 = 
+        
+        `<table class="w3-table" id="popup" style="font-size:12px; align:center;" >
+          <tbody>
+        
+          {% if i.name_of_the_ulb %}
+          <tr>
+              <th>ULB name</th>
+              <th>{{ i.name_of_the_ulb}}</th>
+          </tr>
+          {% endif %}
+          
+          {% if i.tree_common_name %}
+          <tr>
+            <td>Tree common name</td>
+            <td>{{ i.tree_common_name}}</td>
+          </tr>
+          {% endif %}
+
+          {% if i.date_of_plantation %}
+          <tr>
+            <td>date_of_plantation</td>
+            <td>{{ i.date_of_plantation }}</td>
+          </tr>
+          {% endif %}
+          
+        </tbody>
+   </table>
+   </br>`
+
+   //console.log(table4);
+      var popupOptions =
+       {
+         'maxWidth': '500',
+         'className' : 'another-popup' // classname for another popup
+       }
+       var marker = L.marker(["{{ i.tree_gps_location_latitude }}", "{{ i.tree_gps_location_longitude }}"], {icon:logo}).addTo(mymap).bindPopup(table4, popupOptions);
+       TreeGroupNatepute.addLayer(marker);
+       console.log(marker);
+       // Added  hover to open popups
+       marker.on('mouseover', function (e) {
+             this.openPopup(e.latlng);
+         });
+       marker.on('mouseout', function (e) {
+             this.openPopup(e.latlng);
+       });
+       marker.on('click', function (e) {
+             this.openPopup(e.latlng);
+       });
+
+       mymap.on ({
+           click: function() {
+               isClicked = false
+           },
+           popupclose: function () {
+               isClicked = false
+           }
+       })
+       
+
+   </script>
+{% endfor %} -->
   
 
 
