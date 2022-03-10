@@ -395,6 +395,25 @@ def treecharts(request):
     print(trees_under_private_land)
     print(trees_under_other_land)
 
+    total_trees = CensusTable.objects.all().count()
+    total_indegenious_trees = CensusTable.objects.filter(tree_type='Indegenious').count()
+    govt_trees = CensusTable.objects.filter(tree_ownership_plantation_initiated_by='Government').count()
+    private_trees = CensusTable.objects.filter(tree_ownership_plantation_initiated_by='Private').count()
+    other_trees = CensusTable.objects.filter(tree_ownership_plantation_initiated_by='Other').count()
+
+    satara_total_trees = CensusTable.objects.filter(name_of_the_ulb='Satara Municipal Council').count()
+    satara_total_indegenious_trees = CensusTable.objects.filter(name_of_the_ulb='Satara Municipal Council',tree_type='Indegenious').count()
+    satara_govt_trees = CensusTable.objects.filter(name_of_the_ulb='Satara Municipal Council',tree_ownership_plantation_initiated_by='Government').count()
+    satara_private_trees = CensusTable.objects.filter(name_of_the_ulb='Satara Municipal Council',tree_ownership_plantation_initiated_by='Private').count()
+    satara_other_trees = CensusTable.objects.filter(name_of_the_ulb='Satara Municipal Council',tree_ownership_plantation_initiated_by='Other').count()
+
+    natepute_total_trees = CensusTable.objects.filter(name_of_the_ulb='Natepute').count()
+    natepute_total_indegenious_trees = CensusTable.objects.filter(name_of_the_ulb='Natepute',tree_type='Indegenious').count()
+    natepute_govt_trees = CensusTable.objects.filter(name_of_the_ulb='Natepute',tree_ownership_plantation_initiated_by='Government').count()
+    natepute_private_trees = CensusTable.objects.filter(name_of_the_ulb='Natepute',tree_ownership_plantation_initiated_by='Private').count()
+    natepute_other_trees = CensusTable.objects.filter(name_of_the_ulb='Natepute',tree_ownership_plantation_initiated_by='Other').count()
+
+
 
 
     context = {
@@ -404,7 +423,23 @@ def treecharts(request):
         'area_under_all_trees' : total_area_under_all_trees,
         'govt_land_trees' : trees_under_govt_land,
         'private_land_trees' : trees_under_private_land,
-        'other_land_trees' : trees_under_other_land
+        'other_land_trees' : trees_under_other_land,
+        'total_trees':total_trees,
+        'total_indegenious_trees':total_indegenious_trees,
+        'govt_trees':govt_trees,
+        'private_trees':private_trees,
+        'other_trees':other_trees,
+        'satara_total_trees':satara_total_trees,
+        'satara_total_indegenious_trees':satara_total_indegenious_trees,
+        'satara_govt_trees':satara_govt_trees,
+        'satara_private_trees':satara_private_trees,
+        'satara_other_trees':satara_other_trees,
+        'natepute_total_trees':natepute_total_trees,
+        'natepute_total_indegenious_trees':natepute_total_indegenious_trees,
+        'natepute_govt_trees':natepute_govt_trees,
+        'natepute_private_trees':natepute_private_trees,
+        'natepute_other_trees':natepute_other_trees
+
         }
 
     return render(request,'home/tree_census_charts.html', context)

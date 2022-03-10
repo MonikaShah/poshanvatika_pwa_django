@@ -135,7 +135,7 @@ table, th, td
                      
   </div>
 <hr>
-  <h6><b>Last Updated few hours back(on 9March2022)</b></h6>
+  <h6><b>Last Updated few hours back(on 10March2022)</b></h6>
   <!-- <button type="button" onclick="{{ tree_count }}">Total Count</button> -->
   <h6 style ="line-height: 2.0;"> Total Tree Count : {{ tree_count }} </h6>
   <!-- <h6 style ="line-height: 2.0;"> Satara Tree Count : {{ tree_count_satara }} </h6> -->
@@ -179,7 +179,8 @@ function getPoshan(clickedCheckBox){
             currentPos = [17.691401, 74.000938];
             zoom = 14;
             //TreeGroupSatara;
-        }
+            //list.push(TreeGroupSatara);
+          }
         else if(value == 'nateputeEB'){
             layer = 'treecensus:nateputebloxks_22feb22';
             currentPos = [17.898615, 74.754189];
@@ -240,8 +241,13 @@ function getPoshan(clickedCheckBox){
                 console.log("not");
                 // list =[];
                 //mymap.removeLayer(compendium);
-
+                //console.log(TreeGroupSatara);
+                //mymap.removeLayer(TreeGroupSatara);
+                //TreeGroupSatara.removeLayer(marker);
+                //TreeGroupSatara.clearlayer();
                 list.forEach(wms_layer => mymap.removeLayer(wms_layer));
+                //list.forEach(TreeGroupSatara => mymap.removeLayer(TreeGroupSatara));
+                //TreeGroupSatara.forEach(marker =>mymap.removeLayer(marker));
                 
 
                 // console.log(list);
@@ -250,6 +256,7 @@ function getPoshan(clickedCheckBox){
              copyToClipboard(e.latlng.lat + "," + e.latlng.lng);
              mymap.messagebox.show("<h6>Latitude:<b>" + round(e.latlng.lat, 4) + "</b> Longitude:<b>" + round(e.latlng.lng, 4) + "</b> copied to clipboard</h6>");
             });
+            
 }
 function copyToClipboard(text) {
         var dummy = document.createElement("textarea");
@@ -269,6 +276,7 @@ function removeposhan(){
 </script>
 
 
+<!-- all trees -->
 <script>
     //poshan
     var logo = L.icon({
@@ -364,6 +372,7 @@ function removeposhan(){
        });
   
     var TreeGroupSatara = L.layerGroup();
+    console.log(TreeGroupSatara);
   </script>
 
 
@@ -411,7 +420,7 @@ function removeposhan(){
        }
        var marker = L.marker(["{{ i.tree_gps_location_latitude }}", "{{ i.tree_gps_location_longitude }}"], {icon:logo}).addTo(mymap).bindPopup(table4, popupOptions);
        TreeGroupSatara.addLayer(marker);
-       console.log(marker);
+       //console.log(marker);
        // Added  hover to open popups
        marker.on('mouseover', function (e) {
              this.openPopup(e.latlng);
@@ -432,6 +441,13 @@ function removeposhan(){
            }
        })
    </script>
+   <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      var elems = document.querySelectorAll('.modal');
+      var instances = M.Modal.init(elems, {opacity:.3});
+    });
+  </script>
+  
 {% endfor %} -->
 
 <!-- show natepute trees -->
@@ -563,6 +579,7 @@ var baseLayers = {};
         "Maharashtra Highways":mahaHighways,
         "Maharashtra Schools":mahaSchools,
         "Tree": TreeGroup,
+        //"SataraTree":TreeGroupSatara
 
         // "PoshanVatikas": poshanlayerGroup,
 
@@ -581,5 +598,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 </script>
        
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    var elems = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(elems, {opacity:.3});
+  });
+</script>
+
+
 {% endblock %}
 
