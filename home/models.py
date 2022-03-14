@@ -119,7 +119,7 @@ class CensusTable(models.Model):
 
 class UploadPictureModel(models.Model):
     # picture = models.ImageField(upload_to='PoshanVatikaPics/', blank=True, null=True, default='PoshanVatikaPics/noImage.jpg')
-    name = models.CharField(max_length=100, default='')
+    name = models.CharField(max_length=100, blank=True, null=True)
     # nutri_nm = models.CharField(max_length=100, default='')
     # area = models.IntegerField()
     village = models.CharField(max_length=100, blank=True, null=True)
