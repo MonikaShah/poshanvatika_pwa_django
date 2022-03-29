@@ -19,7 +19,9 @@ urlpatterns = [
     path('captwellpic/', views.captwellpic, name='captwellpic'),
     path('uploadwellpic/', views.uploadwellpic, name='uploadwellpic'),
     path('viewVatikas/', views.viewVatikas, name='viewVatikas'),
-    path('viewWells/',views.viewWells, name='viewWells')
+    path('viewWells/',views.viewWells, name='viewWells'),
+    path('ahmednagar_schools/',views.ahmednagar_schools,name='ahmednagar_schools'),
+    path('ahmed_sch_form/',views.ahmed_sch_form,name='ahmed_sch_form')
 
 
 
