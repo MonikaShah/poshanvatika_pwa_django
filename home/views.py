@@ -21,7 +21,7 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login, logout
 from .forms import UploadPictureForm, UploadWellPictureForm,BasicPoshanForm
-from .models import  UploadWellPictureModel, UploadPictureModel,PoshanInformation,PoshanFormInformation,BasicPoshanModel,CensusTable
+from .models import  UploadWellPictureModel, UploadPictureModel,PoshanInformation,PoshanFormInformation,BasicPoshanModel,CensusTable,AhmedSchoolForm
 # Create your views here.
 from django.template.defaultfilters import filesizeformat
 from django.utils.translation import ugettext_lazy as _
@@ -443,6 +443,32 @@ def treecharts(request):
         }
 
     return render(request,'home/tree_census_charts.html', context)
+
+def ahmednagar_schools(request):
+    ahmed_sch = AhmedSchoolForm.objects.all()
+    context = {'ahmed_sch':ahmed_sch}
+    return render(request,"home/ahmednagar_schools.html",context)
+
+def ahmed_sch_form(request):
+    form = AhmedSchoolForm()
+    if request.method == 'POST':
+        form = AhmedSchoolForm(request.POST, request.FILES)
+        # if form.is_valid():
+        #     form.save()
+        # name = request.POST.get('name')
+        # form = CoalForm(request.POST, request.FILES)
+        school_name = request.POST.get('school_name')
+        lat=request.POST.get('lat')
+        lng=request.POST.get('lng')
+        ahmed_sch = AhmedSchoolForm.objects.create(school_name = school_name,lat=lat,lng=lng)
+        ahmed_sch.save()
+        messages.info(request, _(u'Your data is submitted successfully!'))
+        # return HttpResponseRedirect(request.path_info)
+        return redirect('/ahmed_sch_form')
+           
+    else:
+        form = AhmedSchoolForm()
+    return render(request,'home/ahmed_sch_form.html',{})
 
 
 def basic(request):

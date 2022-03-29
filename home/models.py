@@ -66,6 +66,19 @@ from numpy import average
 #     class Meta:
 #         managed = False
 #         db_table = 'census_table'
+
+
+class AhmedSchoolForm(models.Model):
+    school_name=models.CharField(max_length = 250, default='', blank=True,null = True)
+    
+    lat = models.CharField(max_length=255, blank=True, null=True)
+    lng = models.CharField(max_length=255, blank=True, null=True)
+    def __str__(self):
+        return self.school_name
+
+
+
+
 class CensusTable(models.Model):
     sstart = models.DateTimeField(blank=True, null=True)
     eend = models.DateTimeField(blank=True, null=True)

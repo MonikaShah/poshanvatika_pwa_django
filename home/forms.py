@@ -1,6 +1,6 @@
 from django.db.models import fields
 from django.forms import ModelForm
-from .models import UploadPictureModel, UploadWellPictureModel,BasicPoshanModel
+from .models import UploadPictureModel, UploadWellPictureModel,BasicPoshanModel,AhmedSchoolForm
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.contrib.auth.models import User
@@ -9,6 +9,14 @@ class BasicPoshanForm(forms.ModelForm):
     class Meta:
         model = BasicPoshanModel
         fields = '__all__'
+
+class AhmedSchoolForm(forms.ModelForm):
+    class Meta:
+
+       model=AhmedSchoolForm
+       fields='__all__'
+
+
 
 class UploadPictureForm(forms.ModelForm):
     class Meta:
