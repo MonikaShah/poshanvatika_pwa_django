@@ -48,6 +48,8 @@ select{display: block;padding: 0px;}
               </div>
            
           </div> {% endcomment %}
+
+          <h6><b>School Information</b></h6>
           <div class='row' >
             <div class='input-field col s12'>
               <span style="float: left; color: black;">Name of School </span>
@@ -120,6 +122,189 @@ select{display: block;padding: 0px;}
                 <span style="float: left; color: black;">Longitude</span>
                 <input placeholder="Allow location access to capture your location" id="lng" type="text" name="lng"  required>
               </div>
+            </div>
+            <div class='row' >
+              <div class='input-field col s12'>
+                <span style="float: left; color: black;">Altitude</span>
+                <input placeholder="Altitude" id="alitude" type="text" name="altitude"  required>
+              </div>
+            </div>
+            <div class='row' >
+              <div class='input-field col s12'>
+                <span style="float: left; color: black;">Gram Panchayat Name:</span>
+                <input placeholder="Gram Panchayat Name" id="gram_panchayat_name" type="text" name="gram_panchayat_name"  required>
+              </div>
+            </div>
+            <div class='row' >
+              <div class='input-field col s12'>
+                <span style="float: left; color: black;">Principal Name:</span>
+                <input placeholder="Principal Name" id="principal_name" type="text" name="principal_name"  required>
+              </div>
+            </div>
+            <div class='row' >
+              <div class='input-field col s12'>
+                <span style="float: left; color: black;">Data Entry Date:</span>
+                <input placeholder="dd-mm-yyyy" id="data_entry_date" type="date" name="data_entry_date"  required>
+              </div>
+            </div>
+            <div class='row' >
+              <div class='input-field col s12'>
+                <span style="float: left; color: black;">Officer Designation:</span>
+                <input placeholder="Officer Designation" id="officer_designation" type="text" name="officer_designation"  required>
+              </div>
+            </div>
+            <div class='row' >
+              <div class='input-field col s12'>
+                <span style="float: left; color: black;">Phone Number:</span>
+                <input placeholder="Phone Number" id="phone_no" type="number" name="phone_no"  required>
+              </div>
+            </div><div class='row' >
+              <div class='input-field col s12'>
+                <span style="float: left; color: black;">Email:</span>
+                <input placeholder="Email" id="email" type="text" name="email"  required>
+              </div>
+            </div>
+            <div class='row' >
+              <div class='input-field col s12'>
+                <span style="float: left; color: black;">School Level:</span>
+                <input placeholder="School Level" id="school_level" type="text" name="school_level"  required>
+              </div>
+            </div>
+            <div class='row' >
+              <div class='input-field col s12'>
+                <span style="float: left; color: black;">School Type:</span>
+                <input placeholder="School Type" id="school_type" type="text" name="school_type"  required>
+              </div>
+            </div>
+            <div class='row' >
+              <div class='input-field col s12'>
+                <span style="float: left; color: black;">Type of School Building:</span>
+                <input placeholder="Type of School Building" id="sch_building_type" type="text" name="sch_building_type"  required>
+              </div>
+            </div>
+            <div class='row' >
+              <div class='input-field col s12'>
+                <span style="float: left; color: black;">Use of School Building:</span>
+                <input placeholder="Use of School Building" id="sch_building_use" type="text" name="sch_building_use"  required>
+              </div>
+            </div>
+            <div class='row' >
+              <div class='input-field col s12'>
+                <span style="float: left; color: black; height: 3rem;">School Location</span>
+                <select name = "sch_location" id="sch_location">
+                  <option value="" selected>Choose Your Option</option>
+                  <option value="rural">Rural</option>
+                  <option value="urban">Urban</option>
+                  
+                </select>
+                </div>
+                </div>
+            <div class='row' >
+              <div class='input-field col s12'>
+                <span style="float: left; color: black;">Number of boys in school:</span>
+                <input placeholder="Number of boys in school" id="tot_boys_students" type="number" name="tot_boys_students"  required>
+              </div>
+            </div>
+            <div class='row' >
+              <div class='input-field col s12'>
+                <span style="float: left; color: black;">Number of girls in school:</span>
+                <input placeholder="Number of girls in school" id="tot_girls_students" type="number" name="tot_girls_students"  required>
+              </div>
+            </div>
+            <div class='row' >
+              <div class='input-field col s12'>
+                <span style="float: left; color: black;">Number of differently abled students in school:</span>
+                <input placeholder="Number of differently abled students in school" id="tot_diff_abled_students" type="number" name="tot_diff_abled_students"  required>
+              </div>
+            </div>
+
+            <h6><b>Drinking Water</b></h6>
+            <div class='row' >
+              <div class='input-field col s12'>
+                <span style="float: left; color: black;">Availability of drinking water / day:</span>
+                <input placeholder="Availability of drinking water / day" id="drinking_water_availability_per_day" type="text" name="drinking_water_availability_per_day"  required>
+              </div>
+            </div>
+            <div class='row' >
+              <div class='input-field col s12'>
+                <span style="float: left; color: black;">How water is stored in school?</span>
+                <input placeholder="How water is stored in school?" id="water_storage_in_school" type="text" name="water_storage_in_school"  required>
+              </div>
+            </div>
+            <div class='row'>
+              <div class='input-field col s12'>
+                <span style="float: left; color: black;">Is quality check of water done regularly?</span><br>
+                <p><label><input class="with-gap" name="is_water_quality_check_done" type="radio" value="yes" /><span>Yes</span></label> </p><br>
+                <p><label><input  class="with-gap" name="is_water_quality_check_done" type="radio" value="no" ><span>No</span></label></p><br>
+                
+              </div>  
+            </div>
+
+            <h6><b>Sanitization</b></h6>
+            <div class='row'>
+              <div class='input-field col s12'>
+                <span style="float: left; color: black;">Is sanitization done from time to time?</span><br>
+                <p><label><input class="with-gap" name="is_sanitization_done_timely" type="radio" value="yes" /><span>Yes</span></label> </p><br>
+                <p><label><input  class="with-gap" name="is_sanitization_done_timely" type="radio" value="no" ><span>No</span></label></p><br>
+                
+              </div>  
+            </div>
+            
+            <div class='row' >
+              <div class='input-field col s12'>
+                <span style="float: left; color: black;">How is solid waste management done?</span>
+                <input placeholder="How is solid waste management done?" id="solid_waste_management" type="text" name="solid_waste_management"  required>
+              </div>
+            </div>
+            
+            <div class='row' >
+              <div class='input-field col s12'>
+                <span style="float: left; color: black;">How is sewage water management done?</span>
+                <input placeholder="How is sewage water management done?" id="sewage_water_management" type="text" name="sewage_water_management"  required>
+              </div>
+            </div>
+
+            <h6><b>Hygiene</b></h6>
+            <div class='row'>
+              <div class='input-field col s12'>
+                <span style="float: left; color: black;">Is toilet facility available in school?</span><br>
+                <p><label><input class="with-gap" name="is_toilet_facility_available" type="radio" value="yes" /><span>Yes</span></label> </p><br>
+                <p><label><input  class="with-gap" name="is_toilet_facility_available" type="radio" value="no" ><span>No</span></label></p><br>
+                
+              </div>  
+            </div>
+
+            <div class='row' >
+              <div class='input-field col s12'>
+                <span style="float: left; color: black;">Number of boys toilet facility:</span>
+                <input placeholder="Number of boys toilet facility:" id="tot_boys_toilets" type="number" name="tot_boys_toilets"  required>
+              </div>
+            </div>
+            <div class='row' >
+              <div class='input-field col s12'>
+                <span style="float: left; color: black;">Number of girls toilet facility:</span>
+                <input placeholder="Number of girls toilet facility:" id="tot_girls_toilets" type="number" name="tot_girls_toilets"  required>
+              </div>
+            </div>
+            <div class='row' >
+              <div class='input-field col s12'>
+                <span style="float: left; color: black;">Number of toilet facility for differently abled students:</span>
+                <input placeholder="Number of toilet facility for differently abled students:" id="tot_diff_abled_toilets" type="number" name="tot_diff_abled_toilets"  required>
+              </div>
+            </div>
+            <div class='row' >
+              <div class='input-field col s12'>
+                <span style="float: left; color: black;">Kitchen Hygiene</span>
+                <input placeholder="Kitchen Hygiene" id="kitchen_hygiene" type="text" name="kitchen_hygiene"  required>
+              </div>
+            </div>
+            <div class='row'>
+              <div class='input-field col s12'>
+                <span style="float: left; color: black;">Do all students wash their hands before eating food?</span><br>
+                <p><label><input class="with-gap" name="hand_wash_before_eating" type="radio" value="yes" /><span>Yes</span></label> </p><br>
+                <p><label><input  class="with-gap" name="hand_wash_before_eating" type="radio" value="no" ><span>No</span></label></p><br>
+                
+              </div>  
             </div>
             <!-- <div class='row' >
               <div class='input-field col s12'>
