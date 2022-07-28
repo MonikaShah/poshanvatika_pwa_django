@@ -17,9 +17,9 @@
 </head>
 
   <!-- add  side nav -->
-  <div id="side-form" class="center">
+  <div id="side-form" class="">
     <div >
-      <form id ='form' class="container section" enctype="multipart/form-data" method="post">
+      <form style="width: 100%; padding-left:3%; padding-right:3%;" id ='form' class="container section" enctype="multipart/form-data" method="post">
         {% csrf_token %}
         <label for="img" id="selectimg" style="font-size:14px; padding-right:20px;">Browse image from your device:</label>
         <input type="file"  accept="image/*" name="picture" id="file"  onchange="loadFile(event)" required>
@@ -81,13 +81,13 @@
         <div class='input-field'>
             <span style="float: left; color: black;">Type of Nutri-Garden:</span><br>
             {% comment %} <span>Type of Nutri-Garden:</span><br> {% endcomment %}
-            <p><label><input class="with-gap" name="self_made" type="checkbox" id = "self_made"value = "Individual level-self made" /><span>Individual level-self made</span></label></p><br>
-            <p><label><input  class="with-gap" name="local_ngo" type="checkbox" id = "local_ngo" value = "Individual level-got help from local NGO" ><span>Individual level-got help from local NGO</span></label></p><br>
-            <p><label><input class="with-gap" name="external_support" type="checkbox" id = "external_support"value = "without external support" /><span>Community level- without external support</span></label></p><br>
-            <p><label><input class="with-gap" name="govt_support" type="checkbox" id = "govt_support"value = "through Government support" /><span>Individual level-through Government support</span></label></p><br>
-            <p><label><input class="with-gap" name="community_level" type="checkbox" id = "community_level"value = "with support from external agency" /><span>Community level - with support from external agency</span></label></p><br>
-            <p><label><input class="with-gap" name="school_level" type="checkbox" id = "school_level"value = "School level" /><span>School Nutri-Garden</span></label></p><br>
-            <p><label><input class="with-gap" name="anganwadi" type="checkbox" id = "anganwadi"value = "Anganwadi level" /><span>Anganwadi level Nutri-Garden</span></label></p><br>
+            <p><label><input class="with-gap" name="self_made" type="checkbox" id = "self_made"value = "Individual level-self made" /><span style="height:auto;">Individual level-self made</span></label></p><br>
+            <p><label><input  class="with-gap" name="local_ngo" type="checkbox" id = "local_ngo" value = "Individual level-got help from local NGO" ><span style="height:auto;">Individual level-got help from local NGO</span></label></p><br>
+            <p><label><input class="with-gap" name="external_support" type="checkbox" id = "external_support"value = "without external support" /><span style="height:auto;">Community level- without external support</span></label></p><br>
+            <p><label><input class="with-gap" name="govt_support" type="checkbox" id = "govt_support"value = "through Government support" /><span style="height:auto;">Individual level-through Government support</span></label></p><br>
+            <p><label><input class="with-gap" name="community_level" type="checkbox" id = "community_level"value = "with support from external agency" /><span style="height:auto;">Community level - with support from external agency</span></label></p><br>
+            <p><label><input class="with-gap" name="school_level" type="checkbox" id = "school_level"value = "School level" /><span style="height:auto;">School Nutri-Garden</span></label></p><br>
+            <p><label><input class="with-gap" name="anganwadi" type="checkbox" id = "anganwadi"value = "Anganwadi level" /><span style="height:auto;">Anganwadi level Nutri-Garden</span></label></p><br>
              {% comment %} <p><label><input class="with-gap" name="Other" type="text" id = "self-made" />Others :</label></p><br> {% endcomment %}
             <p><label><input type="text" class="fieldlabels" placeholder="type of Nutri-Garden" name="others_nutri" id="others_nutri">Others:</label></p><br>
         </div>
@@ -272,12 +272,12 @@
         <div class='row'>
           <div class='input-field col s12'>
             <span style="float: left; color: black;">At what scale School Nutri-Garden is operating:</span><br>
-            <p><label><input class="with-gap" name="mid_day_meal" type="checkbox" id = "mid_day_meal"value = "school Mid-day-meal" /><span>Using output in school Mid-day-meal</span></label></p><br>
-            <p><label><input  class="with-gap" name="surplus_selling" type="checkbox" id = "surplus_selling" value = "surplus produce" ><span>Selling the surplus produce from Nutri-Garden</span></label></p><br>
-            <p><label><input class="with-gap" name="openfield_science_lab" type="checkbox" id = "openfield_science_lab"value = "open field science lab" /><span>Using Nutri-Garden as a open field science laboratory</span></label></p><br>
-            <p><label><input class="with-gap" name="hot_cooked_meal" type="checkbox" id = "hot_cooked_meal"value = "hot cooked meal" /><span>Using Nutri-Garden output in hot cooked meal of Anganwadi</span></label></p><br>
-            <p><label><input class="with-gap" name="school_child" type="checkbox" id = "school_child"value = "families of school children" /><span>sharing the excess produce from Nutri-Garden to families of school children</span></label></p><br>
-            <p><label><input type="text" class="fieldlabels" placeholder="scale school nutri-garden" name="school_scale" id="school_scale"><span>Others:</span></label></p><br>
+            <p><label><input class="with-gap" name="mid_day_meal" type="checkbox" id = "mid_day_meal"value = "school Mid-day-meal" /><span style="height:auto;">Using output in school Mid-day-meal</span></label></p><br>
+            <p><label><input  class="with-gap" name="surplus_selling" type="checkbox" id = "surplus_selling" value = "surplus produce" ><span style="height:auto;">Selling the surplus produce from Nutri-Garden</span></label></p><br>
+            <p><label><input class="with-gap" name="openfield_science_lab" type="checkbox" id = "openfield_science_lab"value = "open field science lab" /><span style="height:auto;">Using Nutri-Garden as a open field science laboratory</span></label></p><br>
+            <p><label><input class="with-gap" name="hot_cooked_meal" type="checkbox" id = "hot_cooked_meal"value = "hot cooked meal" /><span style="height:auto;">Using Nutri-Garden output in hot cooked meal of Anganwadi</span></label></p><br>
+            <p><label><input class="with-gap" name="school_child" type="checkbox" id = "school_child"value = "families of school children" /><span style="height:auto;">sharing the excess produce from Nutri-Garden to families of school children</span></label></p><br>
+            <p><label><input type="text" class="fieldlabels" placeholder="scale school nutri-garden" name="school_scale" id="school_scale"><span style="height:auto;">Others:</span></label></p><br>
      
           </div>
         </div>    
