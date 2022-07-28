@@ -4,12 +4,14 @@
   /* recipe styles */
 
    #form{
-      width:40%;
+      width: 100%;
     }
     #form label{
       color: black;
       font-size: 18px;
     }
+
+    
   
   .recipes{
     margin-top: 20px;
@@ -65,7 +67,6 @@
   .side-form{
     z-index: 1001;
     position: fixed;
-    width: 100%;
     min-height: 100vh -56px;
     overflow-y: scroll;
     bottom: 0;
