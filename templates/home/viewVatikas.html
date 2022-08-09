@@ -191,6 +191,12 @@
              <td>{{ i.village }}</td>
            </tr>
            {% endif %}
+           {% if i.name %}
+           <tr>
+             <td>Beneficiary Name</td>
+             <td>{{ i.name }}</td>
+           </tr>
+           {% endif %}
          </tbody>
     </table>
     </br>`
@@ -252,7 +258,12 @@
              <tr><img src={{ i.picture.url }} alt="No image uploaded" style="height:100px; width:170px; border:2px solid #555;"/>
            </tr>
            {% endif %}
- 
+           {% if i.name %}
+           <tr>
+             <td>Beneficiary Name</td>
+             <td>{{ i.name }}</td>
+           </tr>
+           {% endif %}
            {% if i.organization %}
            <tr>
                <th>Organization name</th>
