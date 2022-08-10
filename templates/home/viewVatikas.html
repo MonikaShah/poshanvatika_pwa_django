@@ -197,6 +197,13 @@
              <td>{{ i.name }}</td>
            </tr>
            {% endif %}
+           {% if i.one_to_fourthousand_sq %}
+           <tr>
+             <td>Area of Nutrigarden</td>
+             <td>{{ i.one_to_fourthousand_sq }}</td>
+           </tr>
+           {% endif %}
+           
          </tbody>
     </table>
     </br>`

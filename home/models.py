@@ -12,6 +12,7 @@ from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
 #from matplotlib.pyplot import summer
 from numpy import average
+import datetime
 
 # Create your models here.
 
@@ -224,6 +225,8 @@ class UploadPictureModel(models.Model):
     lat = models.CharField(max_length=15, default='')
     lng = models.CharField(max_length=15, default='')
     type=models.CharField(max_length = 100, default='', blank=True,null = True)
+    submission_date = models.DateTimeField(auto_now_add=True, blank=True)
+    nal = models.CharField(max_length = 250, default='no', blank=True, null = True)
 
     def save(self, *args, **kwargs):
         if not self.id:
