@@ -156,7 +156,9 @@
     <li><a href="{% url 'captwellpic'%}" class="waves-effect">Capture Wells</a></li>
     <li><a href="{% url 'viewVatikas'%}" class="waves-effect">View All PoshanVatikas</a></li>
     <li><a href="{% url 'viewWells'%}" class="waves-effect" style="pointer-events: none">View Wells</a></li>
+    {% if user.is_authenticated %}
     <li><a href="{% url 'archive' %}" class="waves-effect" ><b>Archived PoshanVatikas</b></a></li>
+    {% endif %}
     <!-- style="font-size: large;" -->
     
     <!-- <li>
@@ -217,8 +219,9 @@
     <li><a href="{% url 'captwellpic'%}" class="waves-effect">Capture Wells</a></li>
     <li><a href="{% url 'viewVatikas'%}" class="waves-effect">View All PoshanVatikas</a></li>
     <li><a href="{% url 'viewWells'%}" class="waves-effect" style="pointer-events: none">View Wells</a></li>
+    {% if user.is_authenticated %}
     <li><a href="{% url 'archive' %}" class="waves-effect" ><b>Archived PoshanVatikas</b></a></li>
-
+    {% endif %}
     
     <!-- <li>
       <div class="divider"></div>
