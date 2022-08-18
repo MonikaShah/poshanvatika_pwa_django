@@ -27,7 +27,8 @@ from .forms import UploadPictureForm, UploadWellPictureForm,BasicPoshanForm
 from .models import  UploadWellPictureModel, UploadPictureModel,PoshanInformation,PoshanFormInformation,BasicPoshanModel,CensusTable,AhmedSchoolForm
 # Create your views here.
 from django.template.defaultfilters import filesizeformat
-from django.utils.translation import ugettext_lazy as _
+# from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 #for rendering the data from database 
 
@@ -145,6 +146,7 @@ def captvatikapic(request):
     global datauri
     if request.is_ajax():
         datauri = request.POST['picture']
+   
     
     if request.method == 'POST' and not request.is_ajax():
         form = UploadPictureForm(request.POST, request.FILES)
@@ -525,7 +527,7 @@ def archive(request):
     response = HttpResponse(content_type='text/csv')
 
     writer = csv.writer(response)
-    writer.writerow(['name', 'state', 'district', 'village','pincode','anganwadi','organization','type','self_made','local_ngo','external_support','community_level','govt_support','school_level','others_nutri','local_ngo','self_consumption','selling_surplus','surplus_addition','others_level','vegetable','backyard_poultry','backyard_fishery','others_scale','surplus','income','one_to_fourthousand_sq','seed_ngo','seasonal_vegetable','perennial_vegetable','fruitsgrown','dailyfruit','indigeous','open_cultivation','open_cultivation_multilayer','protectcultivation_shed_net','protectcultivation_shed_polyhouse','cultivation_others','month','well','pond','canel','bore_well','river','source_water','irrigation','school_name','any_weekly_class','weekly','any_innovative','mid_day_meal','surplus_selling','openfield_science_lab','hot_cooked_meal','school_child','school_scale','type','nal','submission_date'])
+    writer.writerow(['Beneficiary name', 'state', 'district', 'village','pincode','anganwadi','organization','type','self_made','local_ngo','external_support','community_level','govt_support','school_level','others_nutri','local_ngo','self_consumption','selling_surplus','surplus_addition','others_level','vegetable','backyard_poultry','backyard_fishery','others_scale','surplus','income','one_to_fourthousand_sq','seed_ngo','seasonal_vegetable','perennial_vegetable','fruitsgrown','dailyfruit','indigeous','open_cultivation','open_cultivation_multilayer','protectcultivation_shed_net','protectcultivation_shed_polyhouse','cultivation_others','month','well','pond','canel','bore_well','river','source_water','irrigation','school_name','any_weekly_class','weekly','any_innovative','mid_day_meal','surplus_selling','openfield_science_lab','hot_cooked_meal','school_child','school_scale','type','nal','submission_date'])
 
     for project in UploadPictureModel.objects.all().values_list('name', 'state', 'district', 'village','pincode','anganwadi','organization','type','self_made','local_ngo','external_support','community_level','govt_support','school_level','others_nutri','local_ngo','self_consumption','selling_surplus','surplus_addition','others_level','vegetable','backyard_poultry','backyard_fishery','others_scale','surplus','income','one_to_fourthousand_sq','seed_ngo','seasonal_vegetable','perennial_vegetable','fruitsgrown','dailyfruit','indigeous','open_cultivation','open_cultivation_multilayer','protectcultivation_shed_net','protectcultivation_shed_polyhouse','cultivation_others','month','well','pond','canel','bore_well','river','source_water','irrigation','school_name','any_weekly_class','weekly','any_innovative','mid_day_meal','surplus_selling','openfield_science_lab','hot_cooked_meal','school_child','school_scale','type','nal','submission_date'):
         writer.writerow(project)
@@ -533,3 +535,21 @@ def archive(request):
     response['Content-Disposition'] = 'attachment; filename="archive.csv"'
 
     return response
+def single(request,id):
+    s=UploadPictureModel.objects.get(id=id)
+    # print(s)
+    response = HttpResponse(content_type='text/csv')
+
+    writer = csv.writer(response)
+    writer.writerow(['Beneficiary name', 'state', 'district', 'village','pincode','anganwadi','organization','type','self_made','local_ngo','external_support','community_level','govt_support','school_level','others_nutri','local_ngo','self_consumption','selling_surplus','surplus_addition','others_level','vegetable','backyard_poultry','backyard_fishery','others_scale','surplus','income','one_to_fourthousand_sq','seed_ngo','seasonal_vegetable','perennial_vegetable','fruitsgrown','dailyfruit','indigeous','open_cultivation','open_cultivation_multilayer','protectcultivation_shed_net','protectcultivation_shed_polyhouse','cultivation_others','month','well','pond','canel','bore_well','river','source_water','irrigation','school_name','any_weekly_class','weekly','any_innovative','mid_day_meal','surplus_selling','openfield_science_lab','hot_cooked_meal','school_child','school_scale','type','nal','submission_date'])
+    # s.id == this will fetch id of each project--- helps in downloading excel sheet of only single project
+    for project in UploadPictureModel.objects.filter(id=s.id).values_list('name', 'state', 'district', 'village','pincode','anganwadi','organization','type','self_made','local_ngo','external_support','community_level','govt_support','school_level','others_nutri','local_ngo','self_consumption','selling_surplus','surplus_addition','others_level','vegetable','backyard_poultry','backyard_fishery','others_scale','surplus','income','one_to_fourthousand_sq','seed_ngo','seasonal_vegetable','perennial_vegetable','fruitsgrown','dailyfruit','indigeous','open_cultivation','open_cultivation_multilayer','protectcultivation_shed_net','protectcultivation_shed_polyhouse','cultivation_others','month','well','pond','canel','bore_well','river','source_water','irrigation','school_name','any_weekly_class','weekly','any_innovative','mid_day_meal','surplus_selling','openfield_science_lab','hot_cooked_meal','school_child','school_scale','type','nal','submission_date'):
+        # if(UploadPictureModel.objects.filter(project_name=s).latest('id')):
+          writer.writerow(project)
+
+    response['Content-Disposition'] = 'attachment; filename="project_info.csv"'
+
+    return response
+    
+    # print(s)
+    # return render(request,'home/download.html')

@@ -23,6 +23,7 @@ urlpatterns = [
     path('ahmednagar_schools/',views.ahmednagar_schools,name='ahmednagar_schools'),
     path('ahmed_sch_form/',views.ahmed_sch_form,name='ahmed_sch_form'),
     path('archive/',views.archive,name='archive'),
+    path('download/<int:id>',views.single,name='download'),
 
 
 
