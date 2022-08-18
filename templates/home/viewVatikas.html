@@ -204,16 +204,14 @@
            </tr>
            {% endif %}
            <tr>
-           {% if i.commpendium %}
-            <td><a href="{{ i.commpendium.url }}" target = "_app"><img src="../static/map/images/icons8-pdf-40.png"/></a></td>
-           {% endif %}
-           {% if s.picture %}
+          
+           {% if i.picture %}
             <td><a href="{{ i.picture.url }}" class = "popupimage2" target = "_app"><img src="../static/map/images/icons8-image-48.png"/></a></td>
            {% else %}
             <td><img src="../static/map/images/icons8-image-48.png"/></td>
            {% endif %}  
           
-            <td><a href="download/{{ i.id }}"><img src="../static/map/images/icons8-microsoft-excel-48.png" /></a></td>
+            <td><a href="../download/{{ i.id }}"><img src="../static/map/images/icons8-microsoft-excel-48.png" /></a></td>
              
           
           
@@ -262,7 +260,7 @@
          popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
      });
 
-  var poshanlayerGroup3 = L.layerGroup();
+  var poshanlayerGroup3 = L.layerGroup().addTo(mymap);
 </script>
 
 {% for i in vatikas2 %}
