@@ -1,9 +1,9 @@
 from django.db.models import fields
-from django.forms import ModelForm
-from .models import UploadPictureModel, UploadWellPictureModel,BasicPoshanModel,AhmedSchoolForm
+from .models import UploadPictureModel, UploadWellPictureModel,BasicPoshanModel,AhmedSchoolForm,UploadSeedModel
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.contrib.auth.models import User
+from django.db import models
 
 class BasicPoshanForm(forms.ModelForm):
     class Meta:
@@ -23,11 +23,16 @@ class UploadPictureForm(forms.ModelForm):
         model = UploadPictureModel
         # fields = ('picture','name','nutri_nm','area','village','district','state','pincode','lat','lng')
         fields = '__all__'
+
 class UploadWellPictureForm(forms.ModelForm):
     class Meta:
         model = UploadWellPictureModel
         fields = ('picture','name','well_nm','radius','depth','level','village','district','state','pincode', 'lat', 'lng')
 
+class UploadSeedForm(forms.ModelForm):
+    class Meta:
+        model = UploadSeedModel
+        fields = '__all__'
 
 class CreateUserForm(UserCreationForm):
     class Meta:

@@ -1,7 +1,7 @@
+from pickle import TRUE
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.db.models.fields.files import ImageField
 from django.db.models.fields.files import ImageField
 from django.core.exceptions import ValidationError
 import easygui
@@ -273,7 +273,38 @@ class UploadWellPictureModel(models.Model):
         picture = InMemoryUploadedFile(outputIoStream,'ImageField', "%s.jpg" % picture.name.split('.')[0], 'image/jpeg', sys.getsizeof(outputIoStream), None)
         return picture
 
+class UploadSeedModel(models.Model):
+    id = models.AutoField(primary_key=TRUE)
+    picture = models.ImageField( upload_to='SeedPics/', blank=True, null=True, default='SeedPics/noImage.jpg')
+    name = models.CharField(max_length=100, blank=True, null=True)
+    contact = models.CharField(max_length=100, blank=True, null=True)
+    village = models.CharField(max_length=100, blank=True, null=True)
+    district = models.CharField(max_length=100, blank=True, null=True)
+    state = models.CharField(max_length=100, blank=True, null=True)
+    pincode = models.CharField(max_length=8, blank=True, null=True)
+    lat = models.CharField(max_length=15)
+    lng = models.CharField(max_length=15)
+    seed_nm = models.CharField(max_length=100, blank=True, null=True)
 
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.picture = self.compressImage(self.picture)
+        super().save(*args, **kwargs)
+    def compressImage(self,picture):
+        imageTemproary = Image.open(picture)
+        imageTemproary = imageTemproary.convert('RGB')
+        outputIoStream = BytesIO()
+        imageTemproary = imageTemproary.resize( (1020,573) ) 
+        imageTemproary.save(outputIoStream , format='JPEG', quality=60)
+        outputIoStream.seek(0)
+        picture = InMemoryUploadedFile(outputIoStream,'ImageField', "%s.jpg" % picture.name.split('.')[0], 'image/jpeg', sys.getsizeof(outputIoStream), None)
+        return picture
+
+    class Meta:
+       managed = True
+       db_table = 'home_uploadseedmodel'
+       
 class PoshanFormInformation(models.Model):
     organization_name = models.CharField(max_length=100,default='',blank=True, null = True)
     district_village_taluka_name = models.CharField(max_length=100,default='',blank=True, null = True)
@@ -406,3 +437,48 @@ class PoshanInformation(models.Model):
     month_earnings = models.IntegerField(blank=True, null=True)
     level_nutri_garden = models.CharField(max_length=100)
     nutri_garden_scale=models.CharField(max_length=100)
+
+
+class KoboPoshan(models.Model):
+    organization = models.CharField(max_length=100, blank=True, null=True)
+    district = models.CharField(max_length=100, blank=True, null=True)
+    pincode = models.CharField(max_length=100, blank=True, null=True)
+    lat_lng = models.CharField(max_length=100, blank=True, null=True)
+    type_nutri = models.CharField(max_length=100, blank=True, null=True)
+    local_ngo = models.CharField(max_length=100, blank=True, null=True)
+    level_nutri = models.CharField(max_length=100, blank=True, null=True)
+    nutri_scale = models.CharField(max_length=100, blank=True, null=True)
+    selling_surplus = models.CharField(max_length=255, blank=True, null=True)
+    surplus_in_month = models.CharField(max_length=100, blank=True, null=True)
+    nutri_area = models.CharField(max_length=100, blank=True, null=True)
+    nutri_area_other = models.CharField(max_length=100, blank=True, null=True)
+    seeds = models.CharField(max_length=100, blank=True, null=True)
+    seasonal_veg = models.CharField(max_length=100, blank=True, null=True)
+    perennial_veg = models.CharField(max_length=100, blank=True, null=True)
+    fruits = models.CharField(max_length=100, blank=True, null=True)
+    avg_daily_fruits = models.CharField(max_length=100, blank=True, null=True)
+    seed_type = models.CharField(max_length=100, blank=True, null=True)
+    other_seed_type = models.CharField(max_length=100, blank=True, null=True)
+    earning_per_month = models.CharField(max_length=100, blank=True, null=True)
+    cultivation_type = models.CharField(max_length=100, blank=True, null=True)
+    other_cultivation_type = models.CharField(max_length=100, blank=True, null=True)
+    monthly_expenses = models.CharField(max_length=100, blank=True, null=True)
+    water_source = models.CharField(max_length=100, blank=True, null=True)
+    other_water_source = models.CharField(max_length=100, blank=True, null=True)
+    irrigation_water = models.CharField(max_length=100, blank=True, null=True)
+    org_name_school = models.CharField(max_length=100, blank=True, null=True)
+    weekly_classes = models.CharField(max_length=100, blank=True, null=True)
+    weekly_time = models.CharField(max_length=100, blank=True, null=True)
+    nutri_scale_school = models.CharField(max_length=100, blank=True, null=True)
+    other_nutri_scale_school = models.CharField(max_length=100, blank=True, null=True)
+    innovative_practices = models.CharField(max_length=100, blank=True, null=True)
+    endtime = models.DateTimeField(blank=True, null=True)
+    endtime1 = models.DateTimeField(primary_key=True)
+    picture = models.CharField(max_length=100, blank=True, null=True)
+
+    class Meta:
+        managed = TRUE
+        db_table = 'kobo_poshan'
+
+    def __str__(self):
+        return self.organization
