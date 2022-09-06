@@ -403,9 +403,16 @@
     // shadowAnchor: [4, 62],  // the same for the shadow
     popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
   });
-      
+  var icon_kobo = L.icon({
+    iconUrl:  "{% static 'map/images/leaves-icon-13.png' %}",
+    iconSize:     [30, 30], // size of the icon
+    //shadowSize:   [50, 64], // size of the shadow
+    iconAnchor:   [25,10], // point of the icon which will correspond to marker's location
+    // shadowAnchor: [4, 62],  // the same for the shadow
+    popupAnchor:  [0, 0] // point from which the popup should open relative to the iconAnchor
+  });
 
-    var poshanlayerGroup1 = L.layerGroup();
+    var poshanlayerGroup2 = L.layerGroup().addTo(mymap);
 
 </script>
   <style>
@@ -638,6 +645,26 @@ var table =
       </tr>
       {% endif %}
 
+      {% if i.area_nutri_garden %}
+      <tr>
+        <td>Area of Nutrigarden</td>
+        <td>{{ i.area_nutri_garden }}</td>
+      </tr>
+      {% endif %}
+
+      {% if i.area_nutri_garden %}
+      <tr>
+        <td>Area of Nutrigarden</td>
+        <td>{{ i.area_nutri_garden }}</td>
+      </tr>
+      {% endif %}
+
+      {% if i.area_nutri_garden %}
+      <tr>
+        <td>Area of Nutrigarden</td>
+        <td>{{ i.area_nutri_garden }}</td>
+      </tr>
+      {% endif %}
       
     </tbody>
   </table>
@@ -652,8 +679,175 @@ var table =
        sellsurpluslayerGroup.addLayer(marker);
    </script>
 {% endfor %}
+<!-- Added for kobo_poshan - Kobo Form -->
+{% for i in vatikas3 %}
+<script>
+  var table4 = 
+    
+    `<table class="table table-bordered table-striped mb-0" id="popup" style="font-size:12px; align:center;" >
+      <tbody>
+      
+        {% if i.picture %}
+           <tr>
+             <tr><img src="/media/VatikaPics/{{i.picture}}" alt="Image not Uploaded" style="height:100px; width:170px; border:2px solid #555;"/>
+           </tr>
+           {% endif %}  
 
+      {% if i.organization %}
+      <tr>
+          <th>Beneficiary name</th>
+          <th>{{ i.organization }}</th>
+      </tr>
+      
+      {% endif %}
 
+      {% if i.org_name_school %}
+      <tr>
+          <th>Organisation name</th>
+          <th>{{ i.org_name_school }}</th>
+      </tr>
+      
+      {% endif %}
+      
+      
+      {% if i.district %}
+      <tr>
+        <td>District</td>
+        <td>{{ i.district }}</td>
+      </tr>
+      {% endif %}
+
+      {% if i.pincode %}
+      <tr>
+        <td>Pincode</td>
+        <td>{{ i.pincode }}</td>
+      </tr>
+      {% endif %}
+
+      {% if i.type_nutri %}
+      <tr>
+        <td>Type of Nutrigarden</td>
+        <td>{{ i.type_nutri }}</td>
+      </tr>
+      {% endif %}
+
+      {% if i.nutri_area %}
+      <tr>
+        <td>Area of Nutrigarden</td>
+        <td>{{ i.nutri_area }}</td>
+      </tr>
+      {% endif %}
+
+      {% if i.type_nutri %}
+      <tr>
+        <td>Type of Nutrigarden</td>
+        <td>{{ i.type_nutri }}</td>
+      </tr>
+      {% endif %}
+
+      {% if i.local_ngo %}
+      <tr>
+        <td>Name of Local NGO giving Support</td>
+        <td>{{ i.local_ngo }}</td>
+      </tr>
+      {% endif %}
+
+      {% if i.level_nutri %}
+      <tr>
+        <td>Level of Nutrigarden</td>
+        <td>{{ i.level_nutri }}</td>
+      </tr>
+      {% endif %}
+
+      {% if i.nutri_scale %}
+      <tr>
+        <td>Scale of Nutrigarden</td>
+        <td>{{ i.nutri_scale }}</td>
+      </tr>
+      {% endif %}
+      
+      {% if i.seasonal_veg %}
+      <tr>
+        <td>Seaonal Vegetables</td>
+        <td>{{ i.seasonal_veg }}</td>
+      </tr>
+      {% endif %}
+
+      {% if i.perennial_veg %}
+      <tr>
+        <td>Perennial Vegetables</td>
+        <td>{{ i.perennial_veg }}</td>
+      </tr>
+      {% endif %}
+
+      {% if i.earning_per_month %}
+      <tr>
+        <td>Earning Per Month</td>
+        <td>{{ i.earning_per_month }}</td>
+      </tr>
+      {% endif %}
+
+      {% if i.monthly_expenses %}
+      <tr>
+        <td>Expenses per Month</td>
+        <td>{{ i.monthly_expenses }}</td>
+      </tr>
+      {% endif %}
+
+      {% if i.water_source %}
+      <tr>
+        <td>Source of Irrigation</td>
+        <td>{{ i.water_source }}</td>
+      </tr>
+      {% endif %}
+    </tbody>
+  </table>
+  </br>`
+
+  
+  // var iconvar = pvIcon1;
+  var iconvar = icon_kobo;
+  // pattern = i.lat_lng;
+  c = "{{i.lat_lng}}".split(sep=' ');
+  lat = c[0];
+  lng = c[1];
+  console.log("cordinates : ",c[0],"+",c[1]);
+
+  var popupOptions =
+  {
+    'maxWidth': '500',
+    'className' : 'another-popup' // classname for another popup
+  }
+  var marker = L.marker([lat,lng], {icon:iconvar}).addTo(mymap).bindPopup(table4, popupOptions);
+  // var marker = L.marker(["{{ i.lat }}", "{{ i.lng }}"], {icon:iconvar}).addTo(mymap);
+  poshanlayerGroup2.addLayer(marker);
+  
+// Added  hover to open popups
+  marker.on('mouseover', function (e) {
+        this.openPopup(e.latlng);
+    });
+  marker.on('mouseout', function (e) {
+        this.openPopup(e.latlng);
+  });
+  marker.on('click', function (e) {
+        this.openPopup(e.latlng);
+  });
+
+  mymap.on ({
+      click: function() {
+          isClicked = false
+      },
+      popupclose: function () {
+          isClicked = false
+      }
+  })
+
+//hover end
+  </script>
+{% endfor %}
+      
+
+<!-- kobo -poshan ends -->
 <script>
   
   var overlays = {
@@ -663,6 +857,7 @@ var table =
         "Maharashtra Schools":mahaSchools,
         "PoshanVatikas": poshanlayerGroup,
         "AFIF": poshanlayerGroup3,
+        "Poshanvatikas(off)":poshanlayerGroup2,
         // "Self Consumption Vatiaks":selfconvatikaslayerGroup,
         // "Selling Surplus Vatikas":sellsurpluslayerGroup
 	};

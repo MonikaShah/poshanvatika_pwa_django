@@ -24,7 +24,8 @@ urlpatterns = [
     path('ahmed_sch_form/',views.ahmed_sch_form,name='ahmed_sch_form'),
     path('archive/',views.archive,name='archive'),
     path('download/<int:id>',views.single,name='download'),
-
+    path('captseedpic/', views.captseedpic, name='captseedpic'),
+    path('uploadseedpic/', views.uploadseedpic, name='uploadseedpic'),
 
 
 

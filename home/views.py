@@ -23,8 +23,8 @@ from django.contrib.auth.models import User,auth
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login, logout
-from .forms import UploadPictureForm, UploadWellPictureForm,BasicPoshanForm
-from .models import  UploadWellPictureModel, UploadPictureModel,PoshanInformation,PoshanFormInformation,BasicPoshanModel,CensusTable,AhmedSchoolForm
+from .forms import UploadPictureForm, UploadWellPictureForm,BasicPoshanForm,UploadSeedForm
+from .models import  UploadWellPictureModel, UploadPictureModel,PoshanFormInformation,BasicPoshanModel,CensusTable,AhmedSchoolForm,UploadSeedModel,KoboPoshan
 # Create your views here.
 from django.template.defaultfilters import filesizeformat
 # from django.utils.translation import ugettext_lazy as _
@@ -41,10 +41,11 @@ def viewVatikas(request):
     wells = UploadWellPictureModel.objects.all()
     vatikas = UploadPictureModel.objects.all()
     vatikas1 = PoshanFormInformation.objects.all()
+    vatikas3 = KoboPoshan.objects.all()
     vatikas2 = UploadPictureModel.objects.filter(type='AFIF')
     selfcons = PoshanFormInformation.objects.filter(level_nutri_garden='for_self_consumption',nutri_garden_scale ='Only for vegetables and fruits, Backyard Poultry')
     sellsurp = PoshanFormInformation.objects.filter(level_nutri_garden='selling_surplus')
-    context = {'vatikas1': vatikas1,'vatikas2': vatikas2, 'vatikas':vatikas,'selfcons':selfcons,'sellsurp':sellsurp}
+    context = {'vatikas1': vatikas1,'vatikas2': vatikas2, 'vatikas':vatikas,'selfcons':selfcons,'sellsurp':sellsurp,'vatikas3':vatikas3}
     # context = {'wells': wells, 'mylist':mylist}
     return render(request, 'home/viewVatikas.html', context )
     # return render(request, 'map/map.html', context)
@@ -126,6 +127,8 @@ def captwellpic(request):
 #     instance.image = inmemory_uploaded_file
 #     instance.save()
 #     return render(request,'home/uploadWellPic.html',{})
+def is_ajax(request):
+    return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 
 def uploadwellpic(request):
     if request.method == 'POST':
@@ -144,7 +147,8 @@ def uploadwellpic(request):
 def captvatikapic(request):
     form = UploadPictureForm()
     global datauri
-    if request.is_ajax():
+    # if request.is_ajax():
+    if is_ajax(request):
         datauri = request.POST['picture']
    
     
@@ -555,3 +559,107 @@ def single(request,id):
     
     # print(s)
     # return render(request,'home/download.html')
+
+def uploadseedpic(request):
+    form = UploadSeedForm()
+    global datauri
+
+    def is_ajax(request):
+        return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
+
+    if is_ajax(request):
+        datauri = request.POST['picture']
+    
+    # if request.method == 'POST' and not request.is_ajax():
+    if request.method == 'POST' and not is_ajax(request):
+        form = UploadSeedForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+        name = request.POST.get('name')
+        # nutri_nm = request.POST.get('nutri_nm')
+        # area = request.POST.get('area')
+        village = request.POST.get('village')
+        # district = request.POST.get('district')
+        state = request.POST.get('state')
+        # pincode = request.POST.get('pincode')
+        # lat = request.POST.get('lat')
+        # lng = request.POST.get('lng')
+        # organization= request.POST.get('organization')
+        district = request.POST.get('district')
+        pincode = request.POST.get('pincode')
+        lat = request.POST.get('lat')
+        lng = request.POST.get('lng')
+        seed_nm=request.POST.get('seed_nm')
+        contact=request.POST.get('contact')
+
+
+        try:
+            imgstr = re.search(r'base64,(.*)', datauri).group(1)
+            data = ContentFile(base64.b64decode(imgstr))
+            myfile = "SeedPics/profile-"+time.strftime("%Y%m%d-%H%M%S")+".png"
+            fs = FileSystemStorage()
+            filename = fs.save(myfile, data)
+            picLocation =UploadSeedModel.objects.create(picture=filename,district=district,pincode=pincode,lat=lat,lng=lng,
+                               village=village,state=state,name=name,seed_nm=seed_nm,contact=contact)
+            
+            picLocation.save()
+            datauri= False
+            del datauri
+        except NameError:
+            print("Image is not captured")
+    else:
+        form = UploadSeedForm()
+    return render(request,'home/UploadSeedPic.html',{})
+
+def captseedpic(request):
+    form = UploadSeedForm()
+    global datauri
+    def is_ajax(request):
+        return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
+
+    if is_ajax(request):
+        datauri = request.POST['picture']
+   
+    
+    if request.method == 'POST' and not is_ajax(request):
+        
+        form = UploadSeedForm(request.POST, request.FILES)
+        # if form.is_valid():
+        #     form.save()
+        print(form)
+        name = request.POST.get('name')
+        # nutri_nm = request.POST.get('nutri_nm')
+        # area = request.POST.get('area')
+        village = request.POST.get('village')
+        # district = request.POST.get('district')
+        state = request.POST.get('state')
+        # pincode = request.POST.get('pincode')
+        # lat = request.POST.get('lat')
+        # lng = request.POST.get('lng')
+        # organization= request.POST.get('organization')
+        district = request.POST.get('district')
+        pincode = request.POST.get('pincode')
+        lat = request.POST.get('lat')
+        lng = request.POST.get('lng')
+        seed_nm=request.POST.get('seed_nm')
+        contact=request.POST.get('contact')
+
+
+        try:
+            imgstr = re.search(r'base64,(.*)', datauri).group(1)
+            data = ContentFile(base64.b64decode(imgstr))
+            myfile = "SeedPics/profile-"+time.strftime("%Y%m%d-%H%M%S")+".png"
+            fs = FileSystemStorage()
+            filename = fs.save(myfile, data)
+            # picLocation = UploadPictureModel.objects.create(picture=filename, name=name, nutri_nm=nutri_nm, area=area, village=village, district=district, state=state,pincode=pincode, lat=lat, lng=lng)
+            picLocation =UploadSeedModel.objects.create(picture=filename,district=district,pincode=pincode,lat=lat,lng=lng,
+                               village=village,state=state,name=name,seed_nm=seed_nm,contact=contact)
+            print(picLocation)
+            picLocation.save()
+            datauri = False
+            del datauri
+        except NameError:
+            print("Image is not captured")
+    else:
+        form = UploadSeedForm()
+    return render(request,'home/captureSeedPic.html',{})
