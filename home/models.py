@@ -474,7 +474,7 @@ class KoboPoshan(models.Model):
     innovative_practices = models.CharField(max_length=100, blank=True, null=True)
     endtime = models.DateTimeField(blank=True, null=True)
     endtime1 = models.DateTimeField(primary_key=True)
-    picture = models.CharField(max_length=100, blank=True, null=True)
+    picture = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         managed = TRUE
