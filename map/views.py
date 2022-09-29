@@ -5,8 +5,8 @@ from home.forms import UploadWellPictureForm
 # Create your views here.
 def map(request):
   qs = UploadPictureModel.objects.all()
-  serialized = serializers.serialize("json", qs)
-  print(serialized[0])
+  #serialized = serializers.serialize("json", qs)
+  #print(serialized[0])
   return render(request,'map/map.html',{'data':qs})
 
 def heir_map(request):
