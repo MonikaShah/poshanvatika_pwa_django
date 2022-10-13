@@ -24,7 +24,7 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login, logout
 from .forms import UploadPictureForm, UploadWellPictureForm,BasicPoshanForm,UploadSeedForm
-from .models import  UploadWellPictureModel, UploadPictureModel,PoshanFormInformation,BasicPoshanModel,CensusTable,AhmedSchoolForm,UploadSeedModel,KoboPoshan,NewUploadpicturemodel
+from .models import  UploadWellPictureModel, UploadPictureModel,PoshanFormInformation,BasicPoshanModel,CensusTable,AhmedSchoolForm,UploadSeedModel,KoboPoshan
 # Create your views here.
 from django.template.defaultfilters import filesizeformat
 # from django.utils.translation import ugettext_lazy as _
@@ -39,10 +39,10 @@ from django.conf import settings
 
 def viewVatikas(request):
     wells = UploadWellPictureModel.objects.all()
-    vatikas = NewUploadpicturemodel.objects.all()
+    vatikas = UploadPictureModel.objects.all()
     vatikas1 = PoshanFormInformation.objects.all()
     vatikas3 = KoboPoshan.objects.all()
-    vatikas2 = NewUploadpicturemodel.objects.filter(type='AFIF')
+    vatikas2 = UploadPictureModel.objects.filter(type='AFIF')
     selfcons = PoshanFormInformation.objects.filter(level_nutri_garden='for_self_consumption',nutri_garden_scale ='Only for vegetables and fruits, Backyard Poultry')
     sellsurp = PoshanFormInformation.objects.filter(level_nutri_garden='selling_surplus')
     context = {'vatikas1': vatikas1,'vatikas2': vatikas2, 'vatikas':vatikas,'selfcons':selfcons,'sellsurp':sellsurp,'vatikas3':vatikas3}
@@ -223,7 +223,7 @@ def captvatikapic(request):
             fs = FileSystemStorage()
             filename = fs.save(myfile, data)
             # picLocation = UploadPictureModel.objects.create(picture=filename, name=name, nutri_nm=nutri_nm, area=area, village=village, district=district, state=state,pincode=pincode, lat=lat, lng=lng)
-            picLocation = NewUploadpicturemodel.objects.create(picture=filename,organization=organization,district=district,pincode=pincode,lat=lat,lng=lng,self_made=self_made,
+            picLocation = UploadPictureModel.objects.create(picture=filename,organization=organization,district=district,pincode=pincode,lat=lat,lng=lng,self_made=self_made,
                                local_ngo=local_ngo,external_support=external_support,
                                community_level=community_level,school_level=school_level,anganwadi=anganwadi,others_nutri=others_nutri,
                                self_consumption=self_consumption,selling_surplus=selling_surplus,surplus_addition=surplus_addition,
@@ -535,21 +535,21 @@ def archive(request):
     writer = csv.writer(response)
     writer.writerow(['Beneficiary name', 'State', 'District', 'Village','Pincode','Organization','type:Individual level-self made','type:Individual level-got help from local NGO','type:Community level-without external support','type:Community level-with support from external agency','type:Individual level-through Government support','type:School Nutri-garden','type:anganwadi','type:other','Name of supporting local NGO','Level:self consumption','Level:selling surplus','Level:Selling surplus with value addition','Level:other','Scale:Only for vegetables and fruits','Scale:backyard poultry','Scale:backyard fishery','Scale:other','Are you selling the surplus from Nutri-Garden','If yes How much surplus you sell per month (in Kg/month)','Area of Nutri-garden','Does the NGO/ supporter provide seeds every year?','seasonal vegetable','perennial vegetable','fruits grown','daily fruit output','Type of Seeds used in Nutri-Garden','Average Monthly income from Nutri-garden','Type of Cultivation method:open cultivation','Type of Cultivation method:open cultivation multilayer','Type of Cultivation method:protectcultivation using shed net','Type of Cultivation method:protectcultivation using shed polyhouse','Type of Cultivation method:other','Average per month expenses','Source of Water:well','Source of Water:pond','Source of Water:canel','Source of Water:bore_well','Source of Water:river','Source of Water:nal','Source of Water:other','Irrigation Water Availability','Name the organizations / government schemes supporting the school Nutri-Garden','any weekly class','Weekly time spent by students','Any Innovative practices','School nutri-garden scale:mid day meal','School nutri-garden scale:Selling the surplus produce from Nutri-Garden','School nutri-garden scale:openfield science lab','School nutri-garden scale:hot cooked meal','School nutri-garden scale:sharing the excess produce','School nutri-garden scale:other','category','submission_date'])
 
-    for project in NewUploadpicturemodel.objects.all().values_list('name', 'state', 'district', 'village','pincode','organization','self_made','local_ngo','external_support','community_level','govt_support','school_level','anganwadi','others_nutri','local_ngo','self_consumption','selling_surplus','surplus_addition','others_level','vegetable','backyard_poultry','backyard_fishery','others_scale','surplus','month','one_to_fourthousand_sq','seed_ngo','seasonal_vegetable','perennial_vegetable','fruitsgrown','dailyfruit','indigeous','income','open_cultivation','open_cultivation_multilayer','protectcultivation_shed_net','protectcultivation_shed_polyhouse','cultivation_others','month','well','pond','canel','bore_well','river','nal','source_water','irrigation','school_name','any_weekly_class','weekly','any_innovative','mid_day_meal','surplus_selling','openfield_science_lab','hot_cooked_meal','school_child','school_scale','type','submission_date'):
+    for project in UploadPictureModel.objects.all().values_list('name', 'state', 'district', 'village','pincode','organization','self_made','local_ngo','external_support','community_level','govt_support','school_level','anganwadi','others_nutri','local_ngo','self_consumption','selling_surplus','surplus_addition','others_level','vegetable','backyard_poultry','backyard_fishery','others_scale','surplus','month','one_to_fourthousand_sq','seed_ngo','seasonal_vegetable','perennial_vegetable','fruitsgrown','dailyfruit','indigeous','income','open_cultivation','open_cultivation_multilayer','protectcultivation_shed_net','protectcultivation_shed_polyhouse','cultivation_others','month','well','pond','canel','bore_well','river','nal','source_water','irrigation','school_name','any_weekly_class','weekly','any_innovative','mid_day_meal','surplus_selling','openfield_science_lab','hot_cooked_meal','school_child','school_scale','type','submission_date'):
         writer.writerow(project)
 
     response['Content-Disposition'] = 'attachment; filename="archive.csv"'
 
     return response
 def single(request,id):
-    s=NewUploadpicturemodel.objects.get(id=id)
+    s=UploadPictureModel.objects.get(id=id)
     # print(s)
     response = HttpResponse(content_type='text/csv')
 
     writer = csv.writer(response)
     writer.writerow(['Beneficiary name', 'State', 'District', 'Village','Pincode','Organization','type:Individual level-self made','type:Individual level-got help from local NGO','type:Community level-without external support','type:Community level-with support from external agency','type:Individual level-through Government support','type:School Nutri-garden','type:anganwadi','type:other','Name of supporting local NGO','Level:self consumption','Level:selling surplus','Level:Selling surplus with value addition','Level:other','Scale:Only for vegetables and fruits','Scale:backyard poultry','Scale:backyard fishery','Scale:other','Are you selling the surplus from Nutri-Garden','If yes How much surplus you sell per month (in Kg/month)','Area of Nutri-garden','Does the NGO/ supporter provide seeds every year?','seasonal vegetable','perennial vegetable','fruits grown','daily fruit output','Type of Seeds used in Nutri-Garden','Average Monthly income from Nutri-garden','Type of Cultivation method:open cultivation','Type of Cultivation method:open cultivation multilayer','Type of Cultivation method:protectcultivation using shed net','Type of Cultivation method:protectcultivation using shed polyhouse','Type of Cultivation method:other','Average per month expenses','Source of Water:well','Source of Water:pond','Source of Water:canel','Source of Water:bore_well','Source of Water:river','Source of Water:nal','Source of Water:other','Irrigation Water Availability','Name the organizations / government schemes supporting the school Nutri-Garden','any weekly class','Weekly time spent by students','Any Innovative practices','School nutri-garden scale:mid day meal','School nutri-garden scale:Selling the surplus produce from Nutri-Garden','School nutri-garden scale:openfield science lab','School nutri-garden scale:hot cooked meal','School nutri-garden scale:sharing the excess produce','School nutri-garden scale:other','category','submission_date'])
     # s.id == this will fetch id of each project--- helps in downloading excel sheet of only single project
-    for project in NewUploadpicturemodel.objects.filter(id=s.id).values_list('name', 'state', 'district', 'village','pincode','organization','self_made','local_ngo','external_support','community_level','govt_support','school_level','anganwadi','others_nutri','local_ngo','self_consumption','selling_surplus','surplus_addition','others_level','vegetable','backyard_poultry','backyard_fishery','others_scale','surplus','month','one_to_fourthousand_sq','seed_ngo','seasonal_vegetable','perennial_vegetable','fruitsgrown','dailyfruit','indigeous','income','open_cultivation','open_cultivation_multilayer','protectcultivation_shed_net','protectcultivation_shed_polyhouse','cultivation_others','month','well','pond','canel','bore_well','river','nal','source_water','irrigation','school_name','any_weekly_class','weekly','any_innovative','mid_day_meal','surplus_selling','openfield_science_lab','hot_cooked_meal','school_child','school_scale','type','submission_date'):
+    for project in UploadPictureModel.objects.filter(id=s.id).values_list('name', 'state', 'district', 'village','pincode','organization','self_made','local_ngo','external_support','community_level','govt_support','school_level','anganwadi','others_nutri','local_ngo','self_consumption','selling_surplus','surplus_addition','others_level','vegetable','backyard_poultry','backyard_fishery','others_scale','surplus','month','one_to_fourthousand_sq','seed_ngo','seasonal_vegetable','perennial_vegetable','fruitsgrown','dailyfruit','indigeous','income','open_cultivation','open_cultivation_multilayer','protectcultivation_shed_net','protectcultivation_shed_polyhouse','cultivation_others','month','well','pond','canel','bore_well','river','nal','source_water','irrigation','school_name','any_weekly_class','weekly','any_innovative','mid_day_meal','surplus_selling','openfield_science_lab','hot_cooked_meal','school_child','school_scale','type','submission_date'):
         # if(UploadPictureModel.objects.filter(project_name=s).latest('id')):
           writer.writerow(project)
 
