@@ -106,21 +106,7 @@
     <!-- /<li> <a href= "{% url 'howto' %}" class="waves-effect">How To</a></li> -->
 
       <li><a href="{% url 'contact' %}" class="waves-effect">Contact<i class="material-icons  right">mail_outline</i></a></li> 
-      <!-- <li>Language<form action="{% url 'set_language' %}" method="post">
-        {% csrf_token %}
-        <input name="next" type="hidden" value="{{ redirect_to }}" />            
-        <select name="language" style="width: auto;" id="">
-          {% get_current_language as LANGUAGE_CODE %}
-          {% get_available_languages as LANGUAGES %}
-          {% get_language_info_list for LANGUAGES as languages %}
-          {% for language in languages %} 
-              <option value="{{ language.code }}"
-                {% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}>
-                    {{ language.name_local }} ({{ language.code }})
-              </option>    {% endfor %}
-        </select>  <input type = "submit" value ="Go">{{ language.name_local }} ({{ language.code }})
-    </form>
-    </li> -->
+      
       <li><span class="right grey-text text-darken-1">
         <a><i class="material-icons sidenav-trigger" data-target="side-menu">menu</i></a>
       </span></li>
