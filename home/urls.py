@@ -26,6 +26,7 @@ urlpatterns = [
     path('download/<int:id>',views.single,name='download'),
     path('captseedpic/', views.captseedpic, name='captseedpic'),
     path('uploadseedpic/', views.uploadseedpic, name='uploadseedpic'),
+    path('well_info/', views.well_info, name='well_info'),
 
 
 

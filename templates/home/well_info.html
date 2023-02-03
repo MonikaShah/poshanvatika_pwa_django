@@ -1,0 +1,43 @@
+{% extends 'home/base.html'%}
+
+{% block content %}
+<section class="container">
+    <div class="row justify-content-around mt-10">
+        <div class="col-sm-8 border">
+            <h4>Water Level</h4>
+        </div>
+    </div>
+    <div class="row justify-content-around">
+        <div class= "col-sm-8">
+            <input type=button class='btn btn-primary' value="Print me!" onClick="javascript:window.print()">
+            {% comment %} <a href="#" class='btn btn-primary float-end'>Print</a> {% endcomment %}
+        </div>
+    </div> 
+        <div class="row justify-content-around mt-10">
+            <div class="col-sm-8 border">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Well Name</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Level (in meters)</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {% for well in welldata %}
+                        <tr>
+                            <th scope="row">{{well.id}}</th>
+                            <td>{{well.well_nm}}</td>
+                            <td>{{well.date}}</td>
+                            <td>{{well.level}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+</section>
+
+{% endblock content %}
