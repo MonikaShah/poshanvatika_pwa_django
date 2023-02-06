@@ -18,6 +18,7 @@ import csv
 
 #login dependacies
 from django.contrib.auth import login, authenticate #add this
+from django.contrib.auth import logout
 from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from django.contrib.auth.models import User,auth
 from django.contrib import messages
@@ -70,13 +71,18 @@ def viewWells(request):
     context = {'wells': wells}
     return render(request, 'home/viewWells.html',context)
 
+def is_ajax(request):
+    return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
+
 def captwellpic(request):
     form = UploadWellPictureForm()
     global datauri
-    if request.is_ajax():
+    # if request.is_ajax():
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest': 
         datauri = request.POST['picture']
     
-    if request.method == 'POST' and not request.is_ajax():
+    if request.method == 'POST' and not request.META.get('HTTP_X_REQUESTED_WITH'):
+    # if request.method == 'POST':
         form = UploadWellPictureForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
@@ -91,13 +97,14 @@ def captwellpic(request):
         pincode = request.POST.get('pincode')
         lat = request.POST.get('lat')
         lng = request.POST.get('lng')
+        date= request.POST.get('date')
         try:
             imgstr = re.search(r'base64,(.*)', datauri).group(1)
             data = ContentFile(base64.b64decode(imgstr))
             myfile = "WellPics/profile-"+time.strftime("%Y%m%d-%H%M%S")+".png"
             fs = FileSystemStorage()
             filename = fs.save(myfile, data)
-            picLocation = UploadWellPictureModel.objects.create(picture=filename, name=name, well_nm=well_nm, radius=radius, depth=depth, level=level, village=village, district=district, state=state,pincode=pincode, lat=lat, lng=lng)
+            picLocation = UploadWellPictureModel.objects.create(picture=filename, name=name, well_nm=well_nm, radius=radius, depth=depth, level=level, village=village, district=district, state=state,pincode=pincode, lat=lat, lng=lng, date=date)
             picLocation.save()
             datauri= False
             del datauri
@@ -148,7 +155,7 @@ def captvatikapic(request):
     form = UploadPictureForm()
     global datauri
     # if request.is_ajax():
-    if is_ajax(request):
+    if request.is_ajax():
         datauri = request.POST['picture']
    
     
@@ -663,3 +670,7 @@ def captseedpic(request):
     else:
         form = UploadSeedForm()
     return render(request,'home/captureSeedPic.html',{})
+
+def well_info(request):
+    well_data= UploadWellPictureModel.objects.all()
+    return render(request, 'home/well_info.html', {'welldata': well_data})

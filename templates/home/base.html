@@ -99,6 +99,7 @@
       <!-- <li><a href="" class="waves-effect">Tree Census</a></li> -->
       <li><a href="{% url 'news' %}" class="waves-effect">Beneficiaries</a></li>
       <li><a href="{% url 'heir_map' %}" class="waves-effect">Compendiums</a></li>
+      {% comment %} <li><a href="/well_info">Well Info</a></li> {% endcomment %}
       <li> <a href="{% url 'news' %}" class="dropdown-trigger" data-target="dropdown">Marketplace<i class="material-icons right">arrow_drop_down</i></a></li>
       
       <!-- <li> <a href= "{% url 'howto' %}" class="waves-effect">How To</a></li> -->
@@ -154,8 +155,10 @@
     <li><a href="{% url 'captvatikapic'%}" class="waves-effect">Capture PoshanVatikas</a></li>
     <!-- <li><a href="http://ee.communitygis.net/x/RWF4D9SR" class="waves-effect">Vistrit Mahiti(Marathi Form)</a></li> -->
     <li><a href="{% url 'captwellpic'%}" class="waves-effect">Capture Wells</a></li>
+    
     <li><a href="{% url 'captseedpic'%}" class="waves-effect">Capture Seed</a></li>
     <li><a href="{% url 'viewVatikas'%}" class="waves-effect">View All PoshanVatikas</a></li>
+    <li><a href="{% url 'well_info'%}" class="waves-effect">View Wells Data</a></li>
     <li><a href="{% url 'viewWells'%}" class="waves-effect" >View Wells</a></li>
     {% if user.is_authenticated %}
     <li><a href="{% url 'archive' %}" class="waves-effect" ><b>Archived PoshanVatikas</b></a></li>
@@ -218,6 +221,7 @@
     <li><a href="{% url 'captvatikapic'%}" class="waves-effect">Capture PoshanVatikas</a></li>
     <!-- <li><a href="http://ee.communitygis.net/x/RWF4D9SR" class="waves-effect">Vistrit Mahiti(Marathi Form)</a></li> -->
     <li><a href="{% url 'captwellpic'%}" class="waves-effect">Capture Wells</a></li>
+    <li><a href="{% url 'well_info'%}" class="waves-effect">View Wells Data</a></li>
     <li><a href="{% url 'captseedpic'%}" class="waves-effect">Capture Seed</a></li>
     <li><a href="{% url 'viewVatikas'%}" class="waves-effect">View All PoshanVatikas</a></li>
     <!-- <li><a href="{% url 'viewWells'%}" class="waves-effect" style="pointer-events: none">View Wells</a></li> -->
