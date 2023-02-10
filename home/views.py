@@ -31,6 +31,9 @@ from django.template.defaultfilters import filesizeformat
 # from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
+
+from django.db.models.functions import TruncMonth
+from django.db.models import Sum, Avg
 #for rendering the data from database 
 
 # #compress image
@@ -672,5 +675,42 @@ def captseedpic(request):
     return render(request,'home/captureSeedPic.html',{})
 
 def well_info(request):
-    well_data= UploadWellPictureModel.objects.all()
-    return render(request, 'home/well_info.html', {'welldata': well_data})
+    well_data= UploadWellPictureModel.objects.all().order_by('id')
+    # date = []
+    # level = []
+    # for data in well_data:
+    #     date.append(str(data.date))
+    #     level.append(data.level)
+    # context = {
+    #     'dates': date,
+    #     'level': level,
+    # }
+    return render(request, 'home/well_info.html', {'welldata': well_data}, )#context
+
+def graph_well(request):
+    well_data= UploadWellPictureModel.objects.all().order_by('date')   
+    date = []
+    level = []
+    monthly_data = well_data.annotate(month=TruncMonth('date')).values('month').annotate(level_avg=Avg('level'))
+    for data in monthly_data:
+        if data['month'] is not None:
+            date.append(data['month'].strftime('%B %Y'))
+        else:
+            date.append('')
+        level.append(str(data['level_avg']))
+    context = {
+        'dates': date,
+        'level': level,
+    }
+    # water_level_data = {}
+    # for data in well_data:
+    #     date = data.date.strftime("%Y-%m")
+    #     if date in water_level_data:
+    #         water_level_data[date].append(data.level)
+    #     else:
+    #         water_level_data[date] = [data.level]
+    # for date, levels in water_level_data.items():
+    #     water_level_data[date] = sum(levels) / len(levels)
+    # return render(request, 'home/graph_well.html',{'water_level_data':water_level_data})
+
+    return render(request, 'home/graph_well.html',context)
