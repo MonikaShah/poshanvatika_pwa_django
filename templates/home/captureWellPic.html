@@ -14,10 +14,25 @@
   </style>
 </head>
   <!-- recipes -->
-  <div class="recipes container text-darken-1">
+  <div class="recipes container text-darken-1" style="display: flex;  justify-content: space-between;">
+    <div>
+      {% if request.user.is_authenticated %}
+        <div>
+          <h4>Welcome, {{ request.user.username }}</h4>
+        </div>
+      {% endif %}
+    </div>
     <img src="{% static 'home/images/well.jpg'%}"
            alt="Poshan vatika"
-           class="main-image">
+           class="main-image" style="margin-right:150px;">
+           <div>
+            <button class="btn btn-primary" style="width: 200px; text-align: center;" onclick="location.href='{% url 'well_info' %}'">View Wells Data</button> 
+          <br>
+          <br>
+            <button class="btn btn-primary" style="width: 200px; text-align: center;" onclick="location.href='{% url 'view_entered_details' %}'">View Entered Details</button> 
+          </div>
+  </div>
+  <div>
 
     <p class='msg-box'>Add Wells Information</p>
     <!-- <div class="card-panel recipe white row">
@@ -116,10 +131,24 @@
             <input placeholder="Allow location access to capture your location" id="lng" type="text" name="lng" readonly="readonly" required>
             <label for="title">Longitude</label>
           </div>
+          
           <div class="input-field">
             <input placeholder="Enter the date" id="date" type="date" name="date" required>
             <label for="title">Date</label>
           </div> 
+          <div class="input-field">
+            <p>Quality of Water:</p>
+            <label style="margin-right: 10px; display: inline-block;">
+                <input name="water_quality" type="radio" value="drinking" style="position: relative; top: 4px; display: inline-block;">
+                <span>Drinking</span>
+            </label>
+          
+            <label style="margin-right: 10px;margin-left: 100px; ">
+                <input name="water_quality" type="radio" value="agriculture" style="position: relative; top: 4px; display: inline-block;">
+                <span>Agriculture</span>
+            </label>
+        </div>
+        
           <div class="input-section center">
           <a id="location-btn" class="waves-effect waves-light btn-small" style=" background-color: #4CAF50; visibility: hidden;">Get Location</a>
           

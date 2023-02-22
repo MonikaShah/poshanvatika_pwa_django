@@ -15,13 +15,30 @@
 </head>
   <!-- recipes -->
   <div class="recipes container grey-text text-darken-1">
+    <div style="display: flex; justify-content:space-between; align-items:right;">
+      <!-- Button to redirect to graph_well page -->
+       
+      <div>
+        {% if request.user.is_authenticated %}
+          <div>
+            <h5 style="color:black">Welcome, <span style="color:black">{{ request.user.username }}</span></h5>
+          </div>
+        {% endif %}
+      </div>
     <img src="{% static 'home/images/main.jpeg'%}"
            alt="Poshan vatika"
-           class="main-image">
-
+           class="main-image" style="margin-right:50px;">
+           <div>
+            <button class="btn btn-primary" style="width: 200px; text-align: center;" onclick="location.href='{% url 'view_poshan' %}'">View PoshanVaitka</button>
+            <br>
+          <br>
+            <button class="btn btn-primary" style="width: 200px; text-align: center;" onclick="location.href='{% url 'view_entered_details' %}'">View Entered Details</button> 
+           </div> 
+    </div>
     <p class='msg-box'>Add Nutrigardens Information</p>
   </div>
 
+  <!-- Add Button -->
   <div class="center">
     <a class="btn-floating btn-small btn-large add-btn">
       <i class="material-icons" style=" background-color: #4CAF50;">add</i>
@@ -395,6 +412,8 @@
           <div class="input-field center">
             <button class="btn-small" type="submit" name="action" style=" background-color: #4CAF50;">Submit</button>
           </div>
+          
+        
       </form>
       <script>
         window.onload = function(){
