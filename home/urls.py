@@ -28,6 +28,12 @@ urlpatterns = [
     path('uploadseedpic/', views.uploadseedpic, name='uploadseedpic'),
     path('well_info/', views.well_info, name='well_info'),
     path('graph_well/', views.graph_well, name='graph_well'),
+    path('view_poshan/', views.view_poshan, name='view_poshan'),
+    path('view_entered_details/', views.view_entered_details, name="view_entered_details"),
+    # path('delete/<int:id>', views.delete, name='delete')
+    path('edit_well_picture/<int:pk>/', views.edit_well_picture, name='edit_well_picture'),
+
+
 
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

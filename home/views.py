@@ -1,6 +1,6 @@
 from cmath import log
 from django.core.exceptions import TooManyFieldsSent
-from django.shortcuts import render
+from django.shortcuts import render , redirect, get_object_or_404
 from .forms import CreateUserForm
 import re
 # from django.core.files import 
@@ -32,8 +32,10 @@ from django.template.defaultfilters import filesizeformat
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 
-from django.db.models.functions import TruncMonth
-from django.db.models import Sum, Avg
+from django.db.models.functions import TruncMonth 
+from django.db.models import Sum, Avg ,Max
+
+from django.views import View
 #for rendering the data from database 
 
 # #compress image
@@ -88,7 +90,9 @@ def captwellpic(request):
     # if request.method == 'POST':
         form = UploadWellPictureForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            obj = form.save(commit=False)
+            obj.username = request.user.username
+            # obj.save()
         name = request.POST.get('name')
         well_nm = request.POST.get('well_nm')
         radius = request.POST.get('radius')
@@ -101,13 +105,14 @@ def captwellpic(request):
         lat = request.POST.get('lat')
         lng = request.POST.get('lng')
         date= request.POST.get('date')
+        water_quality = request.POST.get('water_quality')
         try:
             imgstr = re.search(r'base64,(.*)', datauri).group(1)
             data = ContentFile(base64.b64decode(imgstr))
             myfile = "WellPics/profile-"+time.strftime("%Y%m%d-%H%M%S")+".png"
             fs = FileSystemStorage()
             filename = fs.save(myfile, data)
-            picLocation = UploadWellPictureModel.objects.create(picture=filename, name=name, well_nm=well_nm, radius=radius, depth=depth, level=level, village=village, district=district, state=state,pincode=pincode, lat=lat, lng=lng, date=date)
+            picLocation = UploadWellPictureModel.objects.create(picture=filename, name=name, well_nm=well_nm, radius=radius, depth=depth, level=level, village=village, district=district, state=state,pincode=pincode, lat=lat, lng=lng, date=date, username=request.user.username, water_quality =water_quality)
             picLocation.save()
             datauri= False
             del datauri
@@ -153,6 +158,7 @@ def uploadwellpic(request):
     else:
         form = UploadWellPictureForm()
     return render(request,'home/uploadWellPic.html',{})
+#Capture poshan vatika
 
 def captvatikapic(request):
     form = UploadPictureForm()
@@ -164,6 +170,9 @@ def captvatikapic(request):
     
     if request.method == 'POST' and not request.is_ajax():
         form = UploadPictureForm(request.POST, request.FILES)
+        # Save the username of the logged-in user
+        user = request.user
+        username = user.username
         # if form.is_valid():
         #     form.save()
         name = request.POST.get('name')
@@ -245,7 +254,7 @@ def captvatikapic(request):
                                cultivation_others=cultivation_others,month=month,well=well,canel=canel,bore_well=bore_well,river=river,
                                source_water=source_water,school_name=school_name,any_weekly_class=any_weekly_class,
                                weekly=weekly,any_innovative=any_innovative,mid_day_meal=mid_day_meal,surplus_selling=surplus_selling,
-                               hot_cooked_meal=hot_cooked_meal,school_child=school_child,school_scale=school_scale,village=village,state=state,name=name,type=type)
+                               hot_cooked_meal=hot_cooked_meal,school_child=school_child,school_scale=school_scale,village=village,state=state,name=name,type=type, username=username)
             picLocation.save()
             datauri = False
             del datauri
@@ -675,7 +684,28 @@ def captseedpic(request):
     return render(request,'home/captureSeedPic.html',{})
 
 def well_info(request):
-    well_data= UploadWellPictureModel.objects.all().order_by('id')
+    welldata = UploadWellPictureModel.objects.all().order_by('id')
+    
+    # check if a search query was submitted
+    if request.GET.get('search'):
+        # get the search query from the submitted form
+        search_query = request.GET.get('search')
+        
+        # filter the welldata queryset to only include results containing the search query
+        welldata = welldata.filter(well_nm__icontains=search_query)
+        
+        # create a message to display the search results
+        message = f"Search results for '{search_query}':"
+        
+    else:
+        # set message to None if no search query was submitted
+        message = None
+    
+    context = {
+        'welldata': welldata,
+        'message': message,
+    }
+    # well_data= UploadWellPictureModel.objects.all().order_by('id')
     # date = []
     # level = []
     # for data in well_data:
@@ -685,22 +715,26 @@ def well_info(request):
     #     'dates': date,
     #     'level': level,
     # }
-    return render(request, 'home/well_info.html', {'welldata': well_data}, )#context
+    
+    return render(request, 'home/well_info.html', context)#context
 
 def graph_well(request):
     well_data= UploadWellPictureModel.objects.all().order_by('date')   
     date = []
     level = []
-    monthly_data = well_data.annotate(month=TruncMonth('date')).values('month').annotate(level_avg=Avg('level'))
+    highest_level = []
+    monthly_data = well_data.annotate(month=TruncMonth('date')).values('month').annotate(level_avg=Avg('level'),level_max=Max('level'))
     for data in monthly_data:
         if data['month'] is not None:
             date.append(data['month'].strftime('%B %Y'))
         else:
             date.append('')
         level.append(str(data['level_avg']))
+        highest_level.append(str(data['level_max']))
     context = {
         'dates': date,
         'level': level,
+        'highest_level': highest_level,
     }
     # water_level_data = {}
     # for data in well_data:
@@ -714,3 +748,58 @@ def graph_well(request):
     # return render(request, 'home/graph_well.html',{'water_level_data':water_level_data})
 
     return render(request, 'home/graph_well.html',context)
+
+def view_poshan(request):
+    poshan_data= UploadPictureModel.objects.all().order_by('id')
+    return render(request, 'home/view_poshan.html' ,{'poshandata': poshan_data}, )
+
+def view_entered_details(request):
+    username = request.user.username
+    # Retrieve the record from the database based on the user who is currently logged in
+    uploaded_pics = UploadWellPictureModel.objects.filter(username=username)
+    
+    context = {
+        'uploaded_pics': uploaded_pics
+    }
+    return render(request, 'home/view_entered_details.html',context)
+
+# def delete_uploaded_pic(request, pic_id):
+#     pic = get_object_or_404(UploadWellPictureModel, id=pic_id, name=request.user.username)
+#     pic.delete()
+#     return redirect('view_entered_details')
+
+# def delete_well(request):
+#     pics = UploadWellPictureModel.objects.filter(username=request.user.username).values()
+#     for pic in pics:
+#         pic['delete_url'] = reverse('delete_well', args=[pic['id']])
+#     context = {'pics': pics}
+#     return render(request, 'home/view_entered_details.html', context)
+# def delete(request,id):
+#     dele = UploadWellPictureModel.objects.get(id=id)
+#     dele.delete()
+#     return redirect('/view_entered_details')
+
+def edit_well_picture(request, pk):
+    well_picture = get_object_or_404(UploadWellPictureModel,pk=pk, username=request.user.username)
+    
+    # form= None 
+
+    if request.method == 'POST':
+        form = UploadWellPictureForm(request.POST, instance=well_picture)
+        if form.is_valid():
+            well_picture = form.save(commit=False)
+            well_picture.username = request.user.username
+            well_picture.save()
+            messages.success(request, 'Well picture updated successfully')
+            return redirect('view_entered_details')
+    else:
+        # messages.error(request, 'There was an error in the form. Please correct it.')
+        form = UploadWellPictureForm(instance=well_picture)
+
+    context = {
+        'form': form ,
+        'well_picture': well_picture,
+    }
+
+    return render(request, 'home/edit_well_picture.html', context)
+

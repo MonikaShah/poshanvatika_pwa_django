@@ -227,6 +227,7 @@ class UploadPictureModel(models.Model):
     type=models.CharField(max_length = 100, default='', blank=True,null = True)
     submission_date = models.DateTimeField(auto_now_add=True, blank=True)
     nal = models.CharField(max_length = 250, default='no', blank=True, null = True)
+    username = models.CharField(max_length=50, blank=True,null=True)
 
     def save(self, *args, **kwargs):
         if not self.id:
@@ -265,6 +266,8 @@ class UploadWellPictureModel(models.Model):
     lat = models.CharField(max_length=15)
     lng = models.CharField(max_length=15)
     date = models.DateField(null=True)
+    username = models.CharField(max_length=50, blank=True,null=True)
+    water_quality = models.CharField(max_length=100, null=True)
     def save(self, *args, **kwargs):
         if not self.id:
             self.picture = self.compressImage(self.picture)

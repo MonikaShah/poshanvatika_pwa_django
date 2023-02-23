@@ -1,0 +1,87 @@
+{% extends 'home/base.html'%}
+
+{% block content %}
+{% comment %} <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> {% endcomment %}
+<style>
+    table {
+        width: 50%;
+        margin-left: 0;
+      }
+</style>
+<section class="container">
+    <div class="row justify-content-around mt-10">
+        <div class="col-sm-8 border">
+            <h4 style="text-align:center">Poshan Vatikas</h4>
+            
+        </div>
+    </div>
+    <div class="row justify-content-around mt-10">
+        <div class="col-sm-8 border">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">State</th>
+                        <th scope="col">Village</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">District</th>
+                        <th scope="col">Organization</th>
+                        <th scope="col">Anganwadi</th>
+                        <th scope="col">Bore Well</th>
+                        <th scope="col">Canel</th>
+                        <th scope="col">Community Level</th>
+                        <th scope="col">Cultivation Other</th>
+                        <th scope="col">External Support</th>
+                        <th scope="col">Government Support</th>
+                        <th scope="col">Irrigation</th>
+                        <th scope="col">Open Cultivation</th>
+                        <th scope="col">Open Cultivation Multiplayer</th>
+                        <th scope="col">Open Field Science Lab</th>                        
+                        <th scope="col">Pond</th>
+                        <th scope="col">Protect Cultivation Shed</th>
+                        <th scope="col">Protect Cultivation Shed Polyhouse</th>
+                        <th scope="col">River</th>
+                        <th scope="col">School Level</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for poshan in poshandata %}
+                    <tr>
+                        <th scope="row">{{poshan.id}}</th>
+                        <td>{{poshan.name}}</td>
+                        <td>{{poshan.state}}</td>
+                        <td>{{poshan.village}}</td>
+                        <td>{{poshan.type}}</td>
+                        <td>{{poshan.district}}</td>
+                        <td>{{poshan.organization}}</td> 
+                        <td>{{poshan.anganwadi}}</td>
+                        <td>{{poshan.bore_well}}</td>
+                        <td>{{poshan.canel}}</td>
+                        <td>{{poshan.community_level}}</td>
+                        <td>{{poshan.cultivation_others}}</td>
+                        <td>{{poshan.external_support}}</td>
+                        <td>{{poshan.govt_support}}</td>
+                        <td>{{poshan.irrigation}}</td>
+                        <td>{{poshan.open_cultivation}}</td> 
+                        <td>{{poshan.open_cultivation_multilayer}}</td>  
+                        <td>{{poshan.openfield_science_lab}}</td> 
+                        
+                        <td>{{poshan.pond}}</td>
+                        <td>{{poshan.protectcultivation_shed_net}}</td>
+                        <td>{{poshan.protectcultivation_shed_polyhouse}}</td>
+                        <td>{{poshan.river}}</td>
+                        <td>{{poshan.school_level}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+
+
+</section>
+{% endblock content %}

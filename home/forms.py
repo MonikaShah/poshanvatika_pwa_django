@@ -27,7 +27,7 @@ class UploadPictureForm(forms.ModelForm):
 class UploadWellPictureForm(forms.ModelForm):
     class Meta:
         model = UploadWellPictureModel
-        fields = ('picture','name','well_nm','radius','depth','level','village','district','state','pincode', 'lat', 'lng')
+        fields = ('picture','name','well_nm','radius','depth','level','village','district','state','pincode', 'lat', 'lng','date','username', 'water_quality')
 
 class UploadSeedForm(forms.ModelForm):
     class Meta:
