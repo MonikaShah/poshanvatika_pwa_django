@@ -15,13 +15,13 @@
 </head>
   <!-- recipes -->
   <div class="recipes container text-darken-1" style="display: flex;  justify-content: space-between;">
-    <div>
+    {% comment %} <div>
       {% if request.user.is_authenticated %}
         <div>
           <h4>Welcome, {{ request.user.username }}</h4>
         </div>
       {% endif %}
-    </div>
+    </div> {% endcomment %}
     <img src="{% static 'home/images/well.jpg'%}"
            alt="Poshan vatika"
            class="main-image" style="margin-right:150px;">

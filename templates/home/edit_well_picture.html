@@ -84,12 +84,16 @@
     </div>
       <div class="form-group">
         <label for="date">Date:</label>
-        <input type="text" name="date" id="date" class="form-control" value="{{ well_picture.date|date:'Y-m-d'  }}" required>
+        <input type="text" name="date" id="date" class="form-control" value="{{ well_picture.date|date:'d-m-Y'  }}" required>
       {% comment %} value="{{ well_picture.date }}" {% endcomment %}
     </div >
     <div class="form-group">
       <label for="water_quality">Quality of water:</label>
-      <input type="text" name="water_quality" id="water_quality" class="form-control" value="{{ well_picture.water_quality }}"  required>
+      <select name="water_quality" id="water_quality" class="form-control" required>
+        <option value="">--Select--</option>
+        <option value="Drinking" {% if well_picture.water_quality == 'Drinking' %} selected {% endif %}>Drinking</option>
+        <option value="Agriculture" {% if well_picture.water_quality == 'Agriculture' %} selected {% endif %}>Agriculture</option>
+      </select>
     </div>
     <div class="form-update">
     <button type="submit" class="btn btn-primary">Update</button>
