@@ -110,7 +110,8 @@
   <!-- top nav -->
   <nav class="green width" style="position: sticky; top: 0; z-index: 9999999; width: 100%;">
     <div class="nav-wrapper container" >
-      <a href="/" class="brand-logo" style="color: white;  font-weight: bold; font-size: 16px; text-align: left;">PoshanVatika{% if user.is_authenticated %}<span class="hide-on-small-only"> - Welcome {{ user.username }}</span>{% endif %}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      <a href="/" class="brand-logo" style="color: white;  font-weight: bold; font-size: 16px; text-align: left;">PoshanVatika{% if user.is_authenticated %}<span class="hide-on-small-only"> - Welcome {{ user.username }}</span>{% else %}
+        <span class="hide-on-small-only"> - Welcome Guest</span>{% endif %}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       {% comment %} <!-- Display Username-->
             {% if user.is_authenticated %}
             <span class="right" style="color: white; font-weight: bold; font-size: 16px; text-align: right;">{{ user.username }}</span>
@@ -148,7 +149,11 @@
   <ul class="sidenav" id="mobile-nav" style="z-index: 9999999;">
     
     <li><a class="subheader" style="font-size: 18px;">POSHANVATIKA
-      {% if user.is_authenticated %}- Welcome {{ user.username }}{% endif %}
+      {% if user.is_authenticated %}
+        - Welcome {{ user.username }} 
+      {% else %}
+        - Welcome Guest
+      {% endif %}
     
     </a></li>
     <br>

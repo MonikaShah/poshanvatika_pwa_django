@@ -67,7 +67,7 @@
   .side-form{
     z-index: 1001;
     position: fixed;
-    min-height: 100vh -56px;
+    min-height: 90vh;
     overflow-y: scroll;
     bottom: 0;
     top: 56px;
@@ -127,6 +127,23 @@
     margin: auto;
   }
 
+  .input-field input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+
+  .input[type="radio"] {
+    position: relative;
+    top: 2px;
+    margin-right: 10px;
+    transform: scale(1.5);
+    width: 20px;
+    height: 20px;
+  }
+  .input-field label {
+    padding-right: 20px;
+  }
 
   .image-options{
     width: 100%;

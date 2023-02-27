@@ -88,10 +88,15 @@ def captwellpic(request):
     
     if request.method == 'POST' and not request.META.get('HTTP_X_REQUESTED_WITH'):
     # if request.method == 'POST':
+    # if user is authenticated, use their username
+                       
         form = UploadWellPictureForm(request.POST, request.FILES)
         if form.is_valid():
             obj = form.save(commit=False)
-            obj.username = request.user.username
+            if not request.user.is_authenticated:
+                obj.username = "Guest"
+            else:
+                obj.username = request.user.username
             # obj.save()
         name = request.POST.get('name')
         well_nm = request.POST.get('well_nm')
@@ -112,7 +117,7 @@ def captwellpic(request):
             myfile = "WellPics/profile-"+time.strftime("%Y%m%d-%H%M%S")+".png"
             fs = FileSystemStorage()
             filename = fs.save(myfile, data)
-            picLocation = UploadWellPictureModel.objects.create(picture=filename, name=name, well_nm=well_nm, radius=radius, depth=depth, level=level, village=village, district=district, state=state,pincode=pincode, lat=lat, lng=lng, date=date, username=request.user.username, water_quality =water_quality)
+            picLocation = UploadWellPictureModel.objects.create(picture=filename, name=name, well_nm=well_nm, radius=radius, depth=depth, level=level, village=village, district=district, state=state,pincode=pincode, lat=lat, lng=lng, date=date, username=obj.username, water_quality =water_quality)
             picLocation.save()
             datauri= False
             del datauri
