@@ -176,8 +176,8 @@ def captvatikapic(request):
     if request.method == 'POST' and not request.is_ajax():
         form = UploadPictureForm(request.POST, request.FILES)
         # Save the username of the logged-in user
-        user = request.user
-        username = user.username
+        # user = request.user
+        # username = user.username
         # if form.is_valid():
         #     form.save()
         name = request.POST.get('name')
@@ -259,7 +259,7 @@ def captvatikapic(request):
                                cultivation_others=cultivation_others,month=month,well=well,canel=canel,bore_well=bore_well,river=river,
                                source_water=source_water,school_name=school_name,any_weekly_class=any_weekly_class,
                                weekly=weekly,any_innovative=any_innovative,mid_day_meal=mid_day_meal,surplus_selling=surplus_selling,
-                               hot_cooked_meal=hot_cooked_meal,school_child=school_child,school_scale=school_scale,village=village,state=state,name=name,type=type, username=username)
+                               hot_cooked_meal=hot_cooked_meal,school_child=school_child,school_scale=school_scale,village=village,state=state,name=name,type=type)
             picLocation.save()
             datauri = False
             del datauri
@@ -792,8 +792,11 @@ def edit_well_picture(request, pk):
     if request.method == 'POST':
         form = UploadWellPictureForm(request.POST, instance=well_picture)
         if form.is_valid():
+            
+
             well_picture = form.save(commit=False)
             well_picture.username = request.user.username
+            
             well_picture.save()
             messages.success(request, 'Well picture updated successfully')
             return redirect('view_entered_details')
