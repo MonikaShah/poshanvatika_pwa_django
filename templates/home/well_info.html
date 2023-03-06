@@ -1,7 +1,11 @@
 {% extends 'home/base.html'%}
 
 {% block content %}
-
+<style>
+    input::placeholder {
+        color: black;
+      }
+</style>
 <section class="container">
     <div class="row justify-content-around mt-10">
         <div class="col-sm-8 border">
@@ -13,12 +17,24 @@
             <!-- Search form -->
             <form method="GET">
                 <div class="input-group">
-                    <input type="text" class="form-control" name="search" placeholder="Search by well name">
-                    <div class="input-group-append" style="display: flex;">
-                        <button class="btn btn-primary ml-auto" type="submit" style="order: 2;">Search</button>
+                    <input type="text" class="form-control" name="search" placeholder="Search by well name!" style="color:black;" value="{{ request.GET.search }}">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit" onclick="return validateSearch()">Search</button>
                     </div>
                 </div>
             </form>
+        </div>
+        <div class="col-sm-6">
+            <!-- Clear button -->
+            {% if request.GET.search %}
+            <form method="GET">
+                <div class="input-group">
+                    <div class="input-group-append">
+                        <button class="btn btn-secondary" type="button" onclick="location.href='{{ request.path }}'">Clear</button>
+                    </div>
+                </div>
+            </form>
+            {% endif %}
         </div>
     </div>
     
@@ -67,5 +83,25 @@
 
 
 </section>
+<script>
+    function search() {
+        var input = document.querySelector('input[name="search"]');
+        if (input.value) {
+            window.location.href = '?search=' + encodeURIComponent(input.value);
+        }
+    }
 
+    function clearSearch() {
+        var input = document.querySelector('input[name="search"]');
+        input.value = '';
+    }
+    function validateSearch() {
+        var input = document.querySelector('input[name="search"]');
+        if (!input.value.trim()) {
+            alert("Please enter the well name");
+            return false;
+        }
+        return true;
+    }
+</script>
 {% endblock content %}
