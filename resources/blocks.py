@@ -1,7 +1,7 @@
-from wagtail.core import blocks
-from wagtail.core.blocks import StructBlock
-from wagtail.embeds.blocks import EmbedBlock
-from wagtail.images.blocks import ImageChooserBlock
+# from wagtail.core import blocks
+# from wagtail.core.blocks import StructBlock
+# from wagtail.embeds.blocks import EmbedBlock
+# from wagtail.images.blocks import ImageChooserBlock
 
 class ArticleBlock(blocks.StructBlock):
 
