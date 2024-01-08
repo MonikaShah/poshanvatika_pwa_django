@@ -2,7 +2,10 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from . import views
+from map.views import map
+
 urlpatterns = [
+    path('compendium', map, name='compendium'),
     path('about/', views.about, name='about'),
     path('contact/', views.contact, name='contact'),
     path('accounts/', include('allauth.urls')),
