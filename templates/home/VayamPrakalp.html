@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palghar And Nashik Pada Maps</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    
+    <style>
+        #map {
+            height: 800px;
+        }
+        #legend {
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+        }
+        .legend-item {
+            margin-bottom: 5px;
+        }
+        .legend-color {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-right: 5px;
+            border: 1px solid #777;
+        }
+        
+    </style>
+</head>
+<body>
+
+<h1>सर्व प्रकल्पांची गावे</h1>
+
+<div>
+    <label>
+        <input type="checkbox" id="junglejivi" checked> जंगलजिवीका
+    </label>
+    <label>
+        <input type="checkbox" id="padopadi_swaraj"> पाडोपाडी स्वराज्य
+    </label>
+    <label>
+        <input type="checkbox" id="suposhan"> सुपोषण
+    </label>
+    <label>
+        <input type="checkbox" id="vanhuk_cfr"> वनहक्क CFR
+    </label>
+    <label>
+        <input type="checkbox" id="madhmashi_palan"> मधमाशीपालन
+    </label>
+    <label>
+        <input type="checkbox" id="rohyo"> रोह्यो
+    </label>
+    <label>
+        <input type="checkbox" id="pesa_jagran"> पेसा जागरण
+    </label>
+    <!-- <label>
+        <input type="checkbox" id="ran_bhaji"> Ran bhaji
+    </label>
+    <label>
+        <input type="checkbox" id="vanopaj_abhyas"> vanopaj_abhyas
+    </label>
+    <label>
+        <input type="checkbox" id="uppada"> uppada
+    </label>
+    <label>
+        <input type="checkbox" id="dhadpad_prayogshala"> dhadpad_prayogshala
+    </label> -->
+</div>
+
+<div id="map">
+
+    <div id="legend">
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: orange ;"></div> जंगलजिवीका
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: rgb(7, 180, 7);"></div> पाडोपाडी स्वराज्य
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: yellow"></div> सुपोषण
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: gray"></div> वनहक्क CFR
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: rgb(64, 164, 240)"></div> मधमाशीपालन
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: red"></div> रोह्यो
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: blue"></div> पेसा जागरण
+        </div>
+        
+        <!-- Add more legend items for other layers -->
+    </div>
+</div>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet-providers/leaflet-providers.js"></script>
+<script>
+    // Initialize the map
+    // var map = L.map('map').setView([0, 0], 2);
+    let mymap = L.map('map',{ scrollWheelZoom: false }).setView([19.732,73.45], 10);
+
+    // Add OpenStreetMap layer by default
+    // var baseLayer = L.
+    var streetLayer = L.tileLayer.provider('OpenStreetMap.Mapnik').addTo(mymap);
+
+    var villageStyles = {
+        normal: { opacity: 0.9 },
+        darker: { opacity: 0.6 } // You can adjust the opacity value as needed
+    };
+
+    var wms_layer0 = L.tileLayer.wms('https://geonode.communitygis.in/geoserver/geonode/wms',{
+          layers: 'maharashtra_districts',
+          format: 'image/png',
+          transparent: 'true',
+          
+          cql_filter: (`(district='Palghar')or (district='Nashik')`),
+        //   styles:'mumbai_roads_prabhagwise20oct23',
+          });
+    mymap.addLayer(wms_layer0);
+
+    // 
+    var wms_layer = L.tileLayer.wms('https://geonode.communitygis.in/geoserver/geonode/wms',{
+          layers: 'nashik_palghar_pada_13feb24',
+          format: 'image/png',
+          transparent: 'true',
+          opacity:'0.9',
+          cql_filter: `junglejivi='1'`,
+          styles:'Agrani_villages',
+          });
+    
+    // var wms_layer = L.tileLayer.wms('https://geoserver2.communitygis.net/geoserver/wms',{
+    
+    var wms_layer1 = L.tileLayer.wms('https://geonode.communitygis.in/geoserver/geonode/wms',{
+          layers: 'nashik_palghar_pada_13feb24',
+          format: 'image/png',
+          transparent: 'true',
+          opacity:'0.9',
+          cql_filter: `padopadi_s='1'`,
+          styles:'ward_122_16sept2021',
+          });
+    var wms_layer2 = L.tileLayer.wms('https://geonode.communitygis.in/geoserver/geonode/wms',{
+          layers: 'nashik_palghar_pada_13feb24',
+          format: 'image/png',
+          transparent: 'true',
+          opacity:'0.9',
+          cql_filter: `suposhan='1'`,
+          styles:'villages',
+          });
+    var wms_layer3 = L.tileLayer.wms('https://geonode.communitygis.in/geoserver/geonode/wms',{
+          layers: 'nashik_palghar_pada_13feb24',
+          format: 'image/png',
+          transparent: 'true',
+          opacity:'0.9',
+          cql_filter: `vanhakk_cf='1'`,
+          styles:'polygon',
+          });
+    var wms_layer4 = L.tileLayer.wms('https://geonode.communitygis.in/geoserver/geonode/wms',{
+          layers: 'nashik_palghar_pada_13feb24',
+          format: 'image/png',
+          transparent: 'true',
+          opacity:'0.9',
+          cql_filter: `madhmashi='1'`,
+        //   styles:'mumbai_roads_prabhagwise20oct23',
+          });
+    var wms_layer5 = L.tileLayer.wms('https://geonode.communitygis.in/geoserver/geonode/wms',{
+          layers: 'nashik_palghar_pada_13feb24',
+          format: 'image/png',
+          transparent: 'true',
+          opacity:'0.9',
+          cql_filter: `rohya='1'`,
+          styles:'household',
+          });
+    var wms_layer6 = L.tileLayer.wms('https://geonode.communitygis.in/geoserver/geonode/wms',{
+          layers: 'nashik_palghar_pada_13feb24',
+          format: 'image/png',
+          transparent: 'true',
+          opacity:'0.9',
+          cql_filter: `pesa_jagra='1'`,
+          styles:'mumbai_sub_census',
+          });
+        //   wms_layer.addTo(mymap)
+
+    // Function to toggle layers based on checkboxes
+    function updateLayers() {
+
+        
+        if (document.getElementById('junglejivi').checked) {
+            mymap.addLayer(wms_layer);
+        } else {
+            mymap.removeLayer(wms_layer);
+        }
+        if (document.getElementById('padopadi_swaraj').checked) {
+            mymap.addLayer(wms_layer1);
+        } else {
+            mymap.removeLayer(wms_layer1);
+        }
+        if (document.getElementById('junglejivi').checked) {
+            mymap.addLayer(wms_layer);
+        } else {
+            mymap.removeLayer(wms_layer);
+        }
+        if (document.getElementById('padopadi_swaraj').checked) {
+            mymap.addLayer(wms_layer1);
+        } else {
+            mymap.removeLayer(wms_layer1);
+        }
+        if (document.getElementById('suposhan').checked) {
+            mymap.addLayer(wms_layer2);
+        } else {
+            mymap.removeLayer(wms_layer2);
+        }
+        if (document.getElementById('vanhuk_cfr').checked) {
+            mymap.addLayer(wms_layer3);
+        } else {
+            mymap.removeLayer(wms_layer3);
+        }
+        if (document.getElementById('madhmashi_palan').checked) {
+            mymap.addLayer(wms_layer4);
+        } else {
+            mymap.removeLayer(wms_layer4);
+        }
+        if (document.getElementById('rohyo').checked) {
+            mymap.addLayer(wms_layer5);
+        } else {
+            mymap.removeLayer(wms_layer5);
+        }
+        if (document.getElementById('pesa_jagran').checked) {
+            mymap.addLayer(wms_layer6);
+        } else {
+            mymap.removeLayer(wms_layer6);
+        }
+
+        
+    }
+
+    // Event listeners for checkbox changes
+    document.getElementById('junglejivi').addEventListener('change', updateLayers);
+    document.getElementById('padopadi_swaraj').addEventListener('change', updateLayers);
+    document.getElementById('suposhan').addEventListener('change', updateLayers);
+    document.getElementById('vanhuk_cfr').addEventListener('change', updateLayers);
+    document.getElementById('madhmashi_palan').addEventListener('change', updateLayers);
+    document.getElementById('rohyo').addEventListener('change', updateLayers);
+    document.getElementById('pesa_jagran').addEventListener('change', updateLayers);
+   
+    // Initial call to set up layers
+    updateLayers();
+    
+    
+
+mymap.addEventListener('click', Identify);
+popup_layer = "https://geonode.communitygis.in/geoserver/wms?SERVICE=WMS&VERSION=1.3.0&REQUEST=GetFeatureInfo&LAYERS=" + wms_layer1.options.layers + "&QUERY_LAYERS=" + wms_layer1.options.layers;
+
+function Identify(e) {
+ 
+ // set parameters needed for GetFeatureInfo WMS request
+ var sw = mymap.options.crs.project(mymap.getBounds().getSouthWest());
+ var ne = mymap.options.crs.project(mymap.getBounds().getNorthEast());
+ var BBOX = sw.x + "," + sw.y + "," + ne.x + "," + ne.y;
+ var WIDTH = mymap.getSize().x +2;
+ var HEIGHT = mymap.getSize().y +2;
+
+ var X = Math.trunc(mymap.layerPointToContainerPoint(e.layerPoint).x)+2;
+ var Y = Math.trunc(mymap.layerPointToContainerPoint(e.layerPoint).y) +2;
+
+ // compose the URL for the request
+ 
+ 
+ var URL = popup_layer + '&BBOX=' + BBOX + '&FEATURE_COUNT=1&HEIGHT=' + HEIGHT + '&WIDTH=' + WIDTH + '&INFO_FORMAT=application%2Fjson&TILED=false&CRS=EPSG%3A3857&I=' + X + '&J=' + Y;
+ var final="<hr>"+'',var1=',', var2=',',var3=',',var4=',',var5=',',var6=',',var7=',';
+ var final20="<hr>"+'',final1=',', final2=',',final=',',final4=',',final5=',',final6=',',final7=',';
+ //send GetFeatureInfo as asynchronous HTTP request using jQuery $.ajax
+// console.log("click",popup_layer,layer1)
+ $.ajax({
+     url: URL,
+     dataType: "json",
+     type: "GET",
+     success: function(data) {
+    //    alert("success-"+data.features.length)
+       data.features.forEach(function(feature) {
+            console.log("Feature Properties:", feature.properties);
+       });
+       
+       if (data.features.length !== 0) { // at least one feature returned in response
+             var feature = data.features[0]; // first feature from response
+             // Set up popup for clicked feature and open it
+             // alert(feature.properties.slum_area)
+             var popup = new L.Popup({
+                 maxWidth: 300
+             });
+     
+       if (feature.properties.area_name){
+        if(feature.properties.junglejivi == 1){
+            var1='जंगलजिवीका'
+            final= final+var1+',';
+            final20 = final20+"<b>"+"जंगलजिवीका:"+"</b>"+feature.properties.add_v_j+','+"<br><hr>";
+        }
+        if(feature.properties.padopadi_s == 1){
+            var2='पाडोपाडी स्वराज्य'
+            // var20= ;
+            final= final+var2+',';
+            final20 = final20+"<b>"+"पाडोपाडी स्वराज्य:"+"</b>"+feature.properties.add_v_ps+','+"<br><hr>";
+        }
+        if(feature.properties.suposhan == 1){
+            var3='सुपोषण'
+            // var20= feature.properties.add_v_r;
+            final= final+var3+',';
+            final20 = final20+"<b>"+"सुपोषण:"+"</b>"+feature.properties.add_v_s+','+"<br><hr>";
+        }
+        if(feature.properties.vanhakk_cf == 1){
+            var4='वनहक्क CFR'
+            // var20= feature.properties.add_v_r;
+            final= final+var4+',';
+            final20 = final20+"<b>"+"वनहक्क CFR:"+"</b>"+feature.properties.add_v_v+','+"<br><hr>";
+        }
+        if(feature.properties.madhmashi == 1){
+            var5='मधमाशीपालन'
+            // var20= feature.properties.add_v_r;
+            final= final+var5+',';
+            final20 = final20+"<b>"+"मधमाशीपालन:"+"</b>"+feature.properties.add_v_m+','+"<br><hr>";
+        }
+        if(feature.properties.rohya == 1){
+            var6='रोह्यो'
+            // var20= feature.properties.add_v_r;
+            final= final+var6+',';
+            final20 = final20+"<b>"+"रोह्यो:"+"</b>"+feature.properties.add_v_r+','+"<br><hr>";
+        }
+        if(feature.properties.pesa_jagra == 1){
+            var7='पेसा जागरण'
+            // var20= feature.properties.add_v_r;
+            final= final+var7;
+            final20 = final20+"<b>"+"पेसा जागरण गावे:"+"</b>"+feature.properties.add_v_pj+','+"<br><hr>";
+        }
+        
+        content = "<table class = 'popupclass'style ='border: 1px solid white' ><tr style ='border: 1px solid white'><td colspan=6><b> Village Information</b></td><td></td></tr>" +
+                      "<tr style ='border: 1px solid white'><td><b>Panchayat: </b></td><td style ='text-align:left;'>" + feature.properties.area_name + "</td></tr>"+
+                      "<tr style ='border: 1px solid white'><td><b>Taluka: </b></td><td style ='text-align:left;'>" + feature.properties.taluka_nam + "</td></tr>"+
+                      "<tr style ='border: 1px solid white'><td><b>District: </b></td><td style ='text-align:left;'>" + feature.properties.dist_name + "</td></tr>"+  
+                      "<tr style ='border: 1px solid white'><td><b>Village status : </b></td><td style ='text-align:left;'>" +"<font colour='blue'>" +final+"</font>"+"</td></tr>"+  
+                      "<tr style ='border: 1px solid white'><td><b>Villages under grampanchayat : </b></td><td style ='text-align:left;'>" + final20+ "</td></tr>"+
+                    //   "<tr style ='border: 1px solid white'><td><b>Quality of Segregated Waste: </b></td><td style ='text-align:left;'>" + feature.properties.add_v_ps + "</td></tr>"+
+                      
+                        // "<tr style ='border: 1px solid white'><td><b>Area of Garden : </b></td><td>" + feature.properties.Area + "(sq. meters)</td></tr>"+
+                        "</table>";
+                    popup.setContent(content);
+                    popup.setLatLng(e.latlng);
+                    mymap.openPopup(popup);
+       }
+    }   
+    }
+ });
+}
+</script>
+
+
+</body>
+</html>
+

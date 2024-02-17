@@ -374,6 +374,8 @@ def about(request):
 
 def myPoshan(request):
     return render(request,"home/myPoshan.html",{})
+def VayamUpakram(request):
+    return render(request, "home/VayamPrakalp.html")
 def treecensus(request):
     tree = CensusTable.objects.all()
     tree_satara = CensusTable.objects.filter(name_of_the_ulb='Satara Municipal Council')
