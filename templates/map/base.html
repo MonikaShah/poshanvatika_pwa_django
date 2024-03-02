@@ -1,8 +1,7 @@
 {% include 'home/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-	<head>
+
+	
 		<!-- Required meta tags -->
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -26,71 +25,14 @@
 		<link rel="stylesheet" href="{% static 'static1/css/animate.min.css' %}" />
 		<link rel="stylesheet" href="{% static 'static1/css/mycss.css' %}" />
 
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<link rel="stylesheet" href="{% static 'static1/front.css' %}" />
 
-		<script src="{% static 'static1/leaflet-src.js' %}"></script>
-		<!-- <script src="src/jquery-3.2.0.min.js"></script> -->
-		<script src="{% static 'static1/plugins/L.Control.Pan.js' %}"></script>
-		<script src="{% static 'static1/plugins/L.Control.Zoomslider.js' %}"></script>
-		<script src="{% static 'static1/plugins/L.Control.MousePosition.js' %}"></script>
-		<script src="{% static 'static1/plugins/L.Control.Sidebar.js' %}"></script>
-		<script src="{% static 'static1/plugins/Leaflet.PolylineMeasure.js' %}"></script>
-		<script src="{% static 'static1/plugins/easy-button.js' %}"></script>
-		<script src="{% static 'static1/plugins/leaflet-providers.js' %}"></script>
-		<script src="{% static 'static1/plugins/leaflet-opencage/src/js/L.Control.OpenCageSearch.js' %}"></script>
-		<!-- <script src="{% static 'app.js' %}"></script> -->
-		<!-- <link rel="stylesheet" type="leaflet.wms.js" href="{% static 'css/component.css' %}"  /> -->
-		<link rel="stylesheet" href="{% static 'static1/mystyle.css' %}" />
-		<link rel="stylesheet" href="{% static 'static1/css/component.css' %}" />
-		<script src="{% static 'static1/plugins/leaflet.ajax.min.js' %}"></script>
-		<script src="{% static 'static1/js/modernizr-custom.js' %}"></script>
-		<script src="{% static 'static1/leaflet.wms.js' %}"></script>
-
-		<script src="{% static 'static1/js/classie.js' %}"></script>
-		<!-- <script src="js/dummydata.js"></script> -->
-		<!-- <script src="src/js/main.js"></script> -->
-		<script src="{% static 'static1/js/main.js' %}"></script>
-		<script src="{% static 'static1/myscript.js' %}"></script>
-
-		<!-- scripts for spinner -->
-
-		<script src="{% static 'static1/spin/spin.js'%}"></script>
-		<script src="{% static 'static1/leaflet.spin.min.js' %}"></script>
-
-		<!-- font-awesome -->
-		<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
-
-		<!-- script for leaflet font awesome-->
-		<script src="{% static 'static1/leaflet.awesome-markers.js' %}"></script>
-		<link rel="stylesheet" href="{% static 'static1/leaflet.awesome-markers.css' %}" />
-
-		<!-- leaflet-messagebox-->
-		<script src="{% static 'static1/leaflet-messagebox.js' %}"></script>
-		<link rel="stylesheet" href="{% static 'static1/leaflet-messagebox.css' %}" />
-
-		<!-- leaflet-measure-->
-		<script src="{% static 'static1/leaflet_measure/leaflet.measure.js' %}"></script>
-		<link rel="stylesheet" href="{% static 'static1/leaflet_measure/leaflet.measure.css' %}" />
-
-		<!-- leaflet-search -->
-		<script src="{% static 'static1/leaflet-search/leaflet-search.src.js' %}"></script>
-		<link rel="stylesheet" href="{% static 'static1/leaflet-search/leaflet-search.src.css' %}" />
-
-		<!-- leaflet minimap -->
-		<script src="{% static 'static1/leaflet-minimap/Control.MiniMap.min.js' %}"></script>
-		<link rel="stylesheet" href="{% static 'static1/leaflet-minimap/Control.MiniMap.min.css' %}" />
-
-		<!-- leaflet lagend graphic -->
-
-		<script src="{% static 'static1/leaflet-legend-graphics/leaflet.wmslegend.js' %}"></script>
-		<link rel="stylesheet" href="{% static 'static1/leaflet-legend-graphics/leaflet.wmslegend.css' %}" />
-
+		
+		
 		<!-- <link rel="stylesheet" href=""/>
 <script src="leaflet-legend-graphics/leaflet.wmslegend.js"></script> -->
-	</head>
-
-	<body>
+	
 		<style>
 			body {
 				position: fixed;
@@ -121,7 +63,7 @@
 			}
 		</style>
 		{% block nav %} {% endblock%}
-		<div id="mapdiv" class="col-md-12"></div>
+		<div id="" class="col-md-12"></div>
 
 		<script>
 			var mymap;
@@ -142,9 +84,9 @@
 			});
 			mymap.messagebox.options.timeout = 5000;
 			mymap.messagebox.setPosition('bottomright');
-			lyrOSM = L.tileLayer.provider('OpenStreetMap.Mapnik');
+			var lyrOSM = L.tileLayer.provider('OpenStreetMap.Mapnik');
 			lyrOSM2 = L.tileLayer.provider('OpenStreetMap.Mapnik');
-			lyrImagery = L.tileLayer.provider('Esri.WorldImagery');
+			var lyrImagery = L.tileLayer.provider('Esri.WorldImagery');
 			mymap.addLayer(lyrOSM);
 
 			var wms = L.tileLayer.wms('https://geoserver2.communitygis.net/geoserver/wms', {
@@ -154,6 +96,8 @@
 				transparent: 'true',
 			});
       		wms.addTo(mymap);
+
+			
     
 			var miniMap = new L.Control.MiniMap(lyrOSM2, { toggleDisplay: true }).addTo(mymap);
 			//  var miniMap = new L.Control.MiniMap(lyrOSM).addTo(mymap);
@@ -214,7 +158,7 @@
 
 			var ctlZoomslider = L.control.zoomslider({ position: 'topright' }).addTo(mymap);
 
-			ctlAttribute = L.control.attribution({ position: 'bottomleft' }).addTo(mymap);
+			// ctlAttribute = L.control.attribution({ position: 'bottomleft' }).addTo(mymap);
 			ctlAttribute.addAttribution('&copy; <a href="http://www.makerghat.org">makerGHAT</a>');
 		</script>
 	</body>

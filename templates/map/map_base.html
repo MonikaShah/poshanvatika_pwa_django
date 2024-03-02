@@ -120,7 +120,9 @@
 			}
 		</style>
 		{% block nav %} {% endblock%}
-		<div id="mapdiv" class="col-md-12"></div>
+		<div id="mapdiv" class="col-md-12">
+			<button class="openbtn" onclick="openNav()" style="margin-top: 70px; position: absolute; top: 10px; left: 10px;">Open Sidebar</button>
+		</div>
 
 		<script>
 			var mymap;
@@ -182,7 +184,9 @@
 			});
 		</script>
 
-		{% block content%} {% endblock %}
+		{% block content%}
+		
+		{% endblock %}
 
 		<script>
 			$('#closebutton').click(function () {

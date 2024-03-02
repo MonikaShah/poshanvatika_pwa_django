@@ -98,67 +98,84 @@ table, th, td
     align-items: center;
     justify-content: center;
 }
-#demo-modal1{
+/* #demo-modal1{
   max-height: 950px;
   width:1025px;
   background-color: transparent;
-}    
+}     */
 
 </style>
 {% endblock %}
 
 
+<div id ="container" style="display: flex;height: 100vh;width:100%;">
 
-<div id="side-bar" style="background-color: rgba(223, 217, 217, 0.952);">                <!-- Main container -->
-
+  <div id = "side-bar" style="width: auto; float: left;overflow-y: auto;margin-left: 1px;border-style: double;" >
     <!-- <a class="nav-link" href="{% url 'treecharts' %}">Charts<span class="sr-only">(current)</span></a> -->
     <br>
-    <a class="nav-link" href="https://ee.kobotoolbox.org/x/KCR9XYmc" style="color: black;"><b><u>Form</u></b><span class="sr-only">(current)</span></a>
+    <a class="nav-link subheader" href="https://ee.kobotoolbox.org/x/KCR9XYmc" ><b><u>Form</u></b><span class="sr-only">(current)</span></a>
     <br>
     <hr>
     <br>
     <!--Creating div for navigated area view-->
-   <h5>Pune Tree Census</h5>
+   <a class="subheader">Pune Tree Census</a>
     <div class="tooltips" title="Please select the PV" id="pv">
         
         <label><input type="checkbox" value="dehuEB" id ="dehuEB" onchange="getPoshan(this)"><span style="color:black;"><b> Show Dehu EB </b></span></label>
                          
-  </div>
-  <div class="tooltips" title="Please select the PV" id="pv">
+    </div>
+    <div class="tooltips" title="Please select the PV" id="pv">
         
-    <label><input type="checkbox" value="sataraEB" id ="sataraEB" onchange="getPoshan(this)"><span style="color:black;"><b> Show Satara EB ({{ tree_count_satara }})</b></span></label>
+      <label><input type="checkbox" value="sataraEB" id ="sataraEB" onchange="getPoshan(this)"><span style="color:black;"><b> Show Satara EB ({{ tree_count_satara }})</b></span></label>
                      
-  </div>
-  <div class="tooltips" title="Please select the PV" id="pv">
+    </div>
+    <div class="tooltips" title="Please select the PV" id="pv">
         
     <label><input type="checkbox" value="nateputeEB" id ="nateputeEB" onchange="getPoshan(this)"><span style="color:black;"><b> Show Natepute EB ({{ tree_count_natepute }})</b></span></label>
                      
-  </div>
-<hr>
-  <h6><b>Last Updated few hours back(on 22March2022)</b></h6>
+    </div>
+  <hr>
+  <h6><b>Last Updated on 22March2022 </b></h6>
   <!-- <button type="button" onclick="{{ tree_count }}">Total Count</button> -->
   <h6 style ="line-height: 2.0;"> Total Tree Count : {{ tree_count }} </h6>
   <!-- <h6 style ="line-height: 2.0;"> Satara Tree Count : {{ tree_count_satara }} </h6> -->
   <!-- <h6 style ="line-height: 2.0;"> Natepute Tree Count : {{ tree_count_natepute }} </h6> -->
+  </div>
+  <div id="mapid" style="width: auto;flex: 1;">
+      
+  </div>
 </div>
 <script>
 
+var mymap = L.map('mapid').setView([19.7515+1,75.7139+2], 4.5);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '© OpenStreetMap'
+    }).addTo(mymap);
     
+    console.log('l/tilelayer');
+    var wms = L.tileLayer.wms('https://geoserver2.communitygis.net/geoserver/wms', {
+				//layer: layer,
+        layers: 'geonode:states_in_india',
+				format: 'image/png',
+				transparent: 'true',
+			});
+      wms.addTo(mymap);
 
-//add Pune boundary to map
-// var wms_layer = L.tileLayer.wms('https://geoserver2.communitygis.net/geoserver/wms', {
-//                                         layers: 'geonode:all_india_districts_11june2020',
-//                                         format: 'image/png',
-//                                         transparent: 'true',
-//                                         //tiled: true,
-//                                         cql_filter: `district='Pune'`, 
-//                                         //opacity:0.5,
-//                                         // version: '1.3.0',
+// add Pune boundary to map
+var wms_layer = L.tileLayer.wms('https://geoserver2.communitygis.net/geoserver/wms', {
+                                        layers: 'geonode:all_india_districts_11june2020',
+                                        format: 'image/png',
+                                        transparent: 'true',
+                                        //tiled: true,
+                                        cql_filter: `district='Pune'`, 
+                                        //opacity:0.5,
+                                        // version: '1.3.0',
                                         
-//                                     }); 
-//         wms_layer.addTo(mymap);   
+                                    }); 
+        wms_layer.addTo(mymap);   
 
-
+      	
 
     var list = [];
 

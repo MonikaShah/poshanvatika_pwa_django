@@ -5,39 +5,37 @@
 {% endblock %}
 
 {% block map %}
+
 <style>
-  .open-button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #007bff; /* Blue */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+ .open-button {
+    display: none; /* Initially hide the hamburger icon */
 }
-.fa-bars {
-  /* Set the color of the bars icon */
-  color: #333; /* Example color */
 
-  /* Set the font size of the bars icon */
-  font-size: 24px; /* Example font size */
+/* Media query for mobile devices */
+@media screen and (max-width: 600px) {
+    #side-bar {
+        display: none; /* Hide the sidebar for mobile devices */
+    }
 
-  /* Add any additional styles as needed */
+    .open-button {
+        display: inline-block; /* Display the hamburger icon for mobile devices */
+    }
 }
 
 </style>
+<!-- <script src="https://unpkg.com/leaflet-pancontrol"></script> -->
 
-<button class="openbtn" onclick="openNav()">Open/Close <span class="open-button"></span></button>
+<!-- <button class="openbtn" onclick="openNav()">Open/Close <span class="open-button"></span></button> -->
 
 <div id ="container" style="display: flex;height: 100vh;width:100%;">
-  <div id = "side-bar" style="width: auto; float: left;overflow-y: auto;margin-left: 1px;border-style: double;" >
+  <div id = "side-bar" style="width: auto;height:80vh;float: left;overflow-y: auto;margin-left: 1px;border-style: double;" >
     <!-- <div style="text-align: center">
       <button style="display: inline-block ;position: relative; background: #000; opacity: 0.60;" id="closebutton"
         name="closebutton" class="btn btn-secondary" onclick="toggleme()"><span class="fa fa-bars"></span></button>
     </div> -->
     <ul id="mobile-nav" style="z-index: 9999999;">
     
-    <br><li ><a class="subheader" >USER AUTHENTICATION</a></li>
+    <br><li ><a class="subheader" > USER AUTHENTICATION </a></li>
 
     {% if user.is_authenticated %}
    
@@ -50,7 +48,7 @@
     <li>
       <div class="divider"></div>
     </li>
-    <br><li ><a class="subheader" >DATA CONTRIBUTION AND FORMS</a></li>
+    <br><li ><a class="subheader" > DATA CONTRIBUTION AND FORMS </a></li>
     
     
     <li><a href="https://ee.kobotoolbox.org/x/vHVD3HnV" class="custom-link">PoshanVaitka Form</a> </li>
@@ -97,12 +95,16 @@
   </div> 
   
 </div> 
+<!-- <div id="hamburger-icon" class="open-button" onclick="toggleSidebar()">
+  <span class="fa fa-bars"></span>
+</div> -->
 
 <script>
+
     let isClicked = false
     var mymap = L.map('mapid').setView([19.7515+1,75.7139+2], 4.5);
-    
-    
+    // Create a sidebar control
+
     var mbAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
 			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
 		mbUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
@@ -137,7 +139,8 @@
       wms.addTo(mymap);
       //console.log(layers);
       console.log(wms);
-
+    
+    
     // var baseLayers = {
 		//"Grayscale": grayscale,
 		//"Streets": streets
@@ -180,16 +183,7 @@
 
     
 </script>
-<!-- <script>
-  var ctlSidebar = L.control.sidebar('side-bar').addTo(mymap);
-  var closeButton = document.getElementById('closeButton');
 
-  // Add a click event listener to the close button
-  closeButton.addEventListener('click', function () {
-  alert("close")
-  ctlSidebar.toggle();
-  });
-</script> -->
 <script>
 //wells
     var wellIcon = L.icon({
@@ -939,6 +933,9 @@ var table =
 <!-- kobo -poshan ends -->
 <script>
   
+  
+
+  
   var overlays = {
         //"States":indiaState,
         "Districts":indiaDistrict,
@@ -952,41 +949,45 @@ var table =
 	};
  
         
-	L.control.layers(baseLayers, overlays).addTo(mymap);
-  //L.control.layers(overlays).addTo(mymap);
-
+	
 document.addEventListener('DOMContentLoaded', () => {
     var elems = document.querySelectorAll('.modal');
     var instances = M.Modal.init(elems, {opacity:.3});
 });
 
-var opensidebar = document.createElement('button');
- opensidebar.innerHTML = 'Open Sidebar';
- opensidebar.style.position = 'absolute';
-function toggleme(){
-  // alert("clicked to close")
-  mySideBar = document.getElementById('side-bar');
-  if (mySideBar.style.display === 'none') {
-    mySideBar.style.display = 'block';
-        } else {
-          mySideBar.style.display = 'none';
-        }
-    // document.getElementById('side-bar').style.display='none';
-  }
-
-
+// function openNav() {
+//     // Code to open the side navigation menu or sidebar
+//     // document.getElementById("side-bar").style.width = "250px"; // Set the width of the sidebar
+//     // document.getElementById("mapid").style.marginLeft = "250px"; // Adjust the margin of the main content to accommodate the sidebar
+//     mySideBar = document.getElementById('side-bar');
+//   if (mySideBar.style.display === 'none') {
+//     mySideBar.style.display = 'block';
+//         } else {
+//           mySideBar.style.display = 'none';
+//         }
+// }
 function openNav() {
-    // Code to open the side navigation menu or sidebar
-    // document.getElementById("side-bar").style.width = "250px"; // Set the width of the sidebar
-    // document.getElementById("mapid").style.marginLeft = "250px"; // Adjust the margin of the main content to accommodate the sidebar
-    mySideBar = document.getElementById('side-bar');
-  if (mySideBar.style.display === 'none') {
-    mySideBar.style.display = 'block';
-        } else {
-          mySideBar.style.display = 'none';
-        }
-}
-
+        var sidebar = document.getElementById("side-bar");
+        sidebar.style.display = (sidebar.style.display === "block") ? "none" : "block";
+    }
+L.control.layers(baseLayers, overlays).addTo(mymap);
+ 
 
 </script>
+<script>
+  
+  // Define a custom control for closing the sidebar
+  var CloseControl = L.Control.extend({
+      onAdd: function(map) {
+          var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
+          container.innerHTML = '<button class="btn btn-primary" onclick="openNav()"><span class ="fa fa-bars"></span> </button>';
+          
+          return container;
+      }
+  });
+
+  // Add the custom close control to the map
+  new CloseControl({ position: 'topleft' }).addTo(mymap);
+  </script>
+
 {% endblock map%}
