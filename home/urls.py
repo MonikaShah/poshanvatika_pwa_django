@@ -3,7 +3,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from . import views
 from map.views import map
-
+from django.conf.urls.i18n import urlpatterns as i18n_urls
 urlpatterns = [
     path('compendium', map, name='compendium'),
     path('about/', views.about, name='about'),
@@ -24,6 +24,9 @@ urlpatterns = [
     path('captwellpic/', views.captwellpic, name='captwellpic'),
     path('uploadwellpic/', views.uploadwellpic, name='uploadwellpic'),
     path('viewVatikas/', views.viewVatikas, name='viewVatikas'),
+    path('viewAFIFVatikas/', views.viewAFIFVatikas, name='viewAFIFVatikas'),
+    # path('viewselfconsVatikas/', views.viewselfconsVatikas, name='viewselfconsVatikas'),
+
     path('viewWells/',views.viewWells, name='viewWells'),
     path('ahmednagar_schools/',views.ahmednagar_schools,name='ahmednagar_schools'),
     path('ahmed_sch_form/',views.ahmed_sch_form,name='ahmed_sch_form'),
@@ -37,7 +40,7 @@ urlpatterns = [
     path('view_entered_details/', views.view_entered_details, name="view_entered_details"),
     # path('delete/<int:id>', views.delete, name='delete')
     path('edit_well_picture/<int:pk>/', views.edit_well_picture, name='edit_well_picture'),
-
+    path('i18n/', include('django.conf.urls.i18n')),
 
 
 

@@ -43,15 +43,31 @@ from django.views import View
 # from PIL import Image
 # from django.core.files.uploadedfile import InMemoryUploadedFile
 
+def viewselfconsVatikas(request):
+    selfcons = PoshanFormInformation.objects.filter(level_nutri_garden='for_self_consumption',nutri_garden_scale ='Only for vegetables and fruits, Backyard Poultry')
+    context = {'selfcons': selfcons }
+    return render(request, 'home/viewVatikas.html', context )
+
+def viewAFIFVatikas(request):
+    vatikas2 = UploadPictureModel.objects.filter(type='AFIF')
+    vatikascount = UploadPictureModel.objects.count()
+    view_name = 'viewAFIFVatikas'
+    context = {'vatikas2': vatikas2,'vatikascount':vatikascount,'view_name': view_name,'is_view_AFIF_Vatikas': view_name == 'viewAFIFVatikas' }
+    return render(request, 'home/viewVatikas.html', context )
+
 def viewVatikas(request):
     wells = UploadWellPictureModel.objects.all()
+    view_name = 'viewVatikas'
     vatikas = UploadPictureModel.objects.all()
+    vatikascount = UploadPictureModel.objects.count()
     vatikas1 = PoshanFormInformation.objects.all()
+    onlinevatikascount = PoshanFormInformation.objects.count()
     vatikas3 = KoboPoshan.objects.all()
+    kobovatiakscount = KoboPoshan.objects.count()
     vatikas2 = UploadPictureModel.objects.filter(type='AFIF')
     selfcons = PoshanFormInformation.objects.filter(level_nutri_garden='for_self_consumption',nutri_garden_scale ='Only for vegetables and fruits, Backyard Poultry')
     sellsurp = PoshanFormInformation.objects.filter(level_nutri_garden='selling_surplus')
-    context = {'vatikas1': vatikas1,'vatikas2': vatikas2, 'vatikas':vatikas,'selfcons':selfcons,'sellsurp':sellsurp,'vatikas3':vatikas3}
+    context = {'vatikas1': vatikas1,'vatikas2': vatikas2, 'vatikas':vatikas,'selfcons':selfcons,'sellsurp':sellsurp,'vatikas3':vatikas3,'vatikascount':vatikascount,'onlinevatikascount':onlinevatikascount,'kobovatiakscount':kobovatiakscount,'view_name': view_name,'is_view_Vatikas': view_name == 'viewVatikas' }
     # context = {'wells': wells, 'mylist':mylist}
     return render(request, 'home/viewVatikas.html', context )
     # return render(request, 'map/map.html', context)
