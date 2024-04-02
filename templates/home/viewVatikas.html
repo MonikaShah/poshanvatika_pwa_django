@@ -3,6 +3,11 @@
 {% block extra_resources%}
 
 {% endblock %}
+{% load i18n %}
+{% load socialaccount %}
+
+{% get_current_language as LANGUAGE_CODE %}
+{% get_available_languages as LANGUAGES %}
 
 {% block map %}
 
@@ -21,6 +26,32 @@
         display: inline-block; /* Display the hamburger icon for mobile devices */
     }
 }
+select {
+    /* Reset any styles that might affect the visibility */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    /* Ensure the dropdown is visible */
+    visibility: visible;
+    display: block;
+}
+
+    /* Style the legend */
+    #legend {
+        position: absolute;
+        bottom: 50px;
+        right: 10px;
+        background-color: white;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    }
+    #legend h4 {
+        margin-top: 0;
+    }
+    #legend div {
+        margin-bottom: 5px;
+    }
 
 </style>
 <!-- <script src="https://unpkg.com/leaflet-pancontrol"></script> -->
@@ -40,47 +71,59 @@
     </div> -->
     <ul id="mobile-nav" style="z-index: 9999999;">
     
-    <br><li ><a class="subheader" > USER AUTHENTICATION </a></li>
+    <br><li ><a class="subheader" > {% trans "USER AUTHENTICATION" %} </a></li>
 
     {% if user.is_authenticated %}
    
-    <li><a href="{% url 'logout' %}" class="custom-link">Logout</a></li>
+    <li><a href="{% url 'logout' %}" class="custom-link">{% trans "Logout" %}</a></li>
     {% else %}
-    <li><a href="{% url 'login' %}" class="custom-link">Login</a></li>
-    <li><a href="{% url 'register' %}" class="custom-link">Register</a></li>
+    <li><a href="{% url 'login' %}" class="custom-link">{% trans "Login" %}</a></li>
+    <li><a href="{% url 'register' %}" class="custom-link">{% trans "Register" %}</a></li>
     {% endif %}
 
     <li>
       <div class="divider"></div>
     </li>
-    <br><li ><a class="subheader" > DATA CONTRIBUTION AND FORMS </a></li>
+    <br><li ><a class="subheader" > {% trans "DATA CONTRIBUTION AND FORMS" %} </a></li>
     
     
-    <li><a href="https://ee.kobotoolbox.org/x/vHVD3HnV" class="custom-link">PoshanVaitka Form</a> </li>
-    <li><a href="{% url 'captvatikapic'%}" class="custom-link">Capture PoshanVatikas</a></li>
+    <li><a href="https://ee.kobotoolbox.org/x/vHVD3HnV" class="custom-link">{% trans "PoshanVaitka Form" %}</a> </li>
+    <li><a href="{% url 'captvatikapic'%}" class="custom-link">{% trans "Capture PoshanVatikas" %}</a></li>
     <!-- <li><a href="http://ee.communitygis.net/x/RWF4D9SR" class="waves-effect">Vistrit Mahiti(Marathi Form)</a></li> -->
-    <li><a href="{% url 'captwellpic'%}" class="custom-link">Capture Wells</a></li>
+    <li><a href="{% url 'captwellpic'%}" class="custom-link">{% trans "Capture Wells" %}</a></li>
     
-    <li><a href="{% url 'captseedpic'%}" class="custom-link">Capture Seed</a></li>
-    <li><a href="{% url 'viewVatikas'%}" class="custom-link">View All PoshanVatikas</a></li>
-    <li><a href="{% url 'well_info'%}" class="custom-link">View Wells Data</a></li>
-    <li><a href="{% url 'viewWells'%}" class="custom-link" >View Wells</a></li>
+    <li><a href="{% url 'captseedpic'%}" class="custom-link">{% trans "Capture Seed" %}</a></li>
+    <li><a href="{% url 'viewVatikas'%}" class="custom-link">{% trans "View All PoshanVatikas" %}</a></li>
+    <ol><li><a href="{% url 'viewAFIFVatikas'%}" class="custom-link">{% trans "View AFIF PoshanVatikas" %}</a></li></ol>
+    
+    <li><a href="{% url 'well_info'%}" class="custom-link">{% trans "View Wells Data" %}</a></li>
+    <li><a href="{% url 'viewWells'%}" class="custom-link" >{% trans "View Wells" %}</a></li>
     {% if user.is_authenticated %}
-    <li><a href="{% url 'archive' %}" class="custom-link" ><b>Archived PoshanVatikas</b></a></li>
+    <li><a href="{% url 'archive' %}" class="custom-link" ><b>{% trans "Archived PoshanVatikas" %}</b></a></li>
     
     {% endif %}
     <br><li>
       <div class="divider"></div>
     </li>
-    <li><a class="subheader">POSHANVATIKA</a></li>
+    <li><a class="subheader">{% trans "POSHANVATIKA" %}</a></li>
     <!-- <li><a href="{% url 'heir_map' %}" class="custom-link">Map</a></li> -->
-    <li><a href="{% url 'news' %}"  class="custom-link">Reports(coming soon)</a></li>
+    <li><a href="{% url 'news' %}"  class="custom-link">{% trans "Reports(coming soon..)" %}</a></li>
     <!-- <li><a href="/pages/resources" class="waves-effect">Resources</a></li> -->
-    <li><a href="{% url 'news' %}" class="custom-link">Feedback(coming soon)</a></li>
+    <li><a href="{% url 'news' %}" class="custom-link">{% trans "Feedback(coming soon..)" %}</a></li>
+    
+   
     </ul> 
   </div>
   <div id="mapid" style="width: auto;flex: 1;">
     
+  </div>
+  <div id="legend" class="leaflet-control leaflet-control-custom">
+    
+      <img src="../static/map/images/logo_3.png" width="30px" height="30px"/>AFIF Vatikas : {{ vatikascount }}<br>
+    {% if is_view_Vatikas %}
+    <img src="../static/map/images/pw_logo.png" width="30px" height="30px"/>PoshnaVatikas added Online : {{ onlinevatikascount }}<br>
+    <img src="../static/map/images/leaves-icon-13.png" width="30px" height="30px"/>PoshanVatikas added via KoboForm: {{ kobovatiakscount }}<br>
+    {% endif %}
   </div>
 </div>
   <!-- Modal Structure -->
@@ -100,6 +143,7 @@
   </div> 
   
 </div> 
+
 <!-- <div id="hamburger-icon" class="open-button" onclick="toggleSidebar()">
   <span class="fa fa-bars"></span>
 </div> -->
@@ -134,7 +178,7 @@
       attribution: '© OpenStreetMap'
     }).addTo(mymap);
     
-    console.log('l/tilelayer');
+    // console.log('l/tilelayer');
     var wms = L.tileLayer.wms('https://geoserver2.communitygis.net/geoserver/wms', {
 				//layer: layer,
         layers: 'geonode:states_in_india',
@@ -143,7 +187,7 @@
 			});
       wms.addTo(mymap);
       //console.log(layers);
-      console.log(wms);
+      // console.log(wms);
     
     
     // var baseLayers = {
@@ -243,9 +287,9 @@
 
       var poshanlayerGroup = L.layerGroup().addTo(mymap);
 </script>
-     
+
 {% for i in vatikas %}
- 
+
    <script>
       //  alert("in vatikas -" +i+"- "+ +i.nutri_nm) 
 
@@ -899,7 +943,7 @@ var table =
   c = "{{i.lat_lng}}".split(sep=' ');
   lat = c[0];
   lng = c[1];
-  console.log("cordinates : ",c[0],"+",c[1]);
+  // console.log("cordinates : ",c[0],"+",c[1]);
 
   var popupOptions =
   {
@@ -979,6 +1023,7 @@ L.control.layers(baseLayers, overlays).addTo(mymap);
  
 
 </script>
+
 <script>
   
   // Define a custom control for closing the sidebar
@@ -994,5 +1039,6 @@ L.control.layers(baseLayers, overlays).addTo(mymap);
   // Add the custom close control to the map
   new CloseControl({ position: 'topleft' }).addTo(mymap);
   </script>
+
 
 {% endblock map%}
