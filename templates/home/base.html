@@ -234,10 +234,10 @@ select#language option {
     <!-- <li><a href="" class="waves-effect">Tree Census</a></li> -->
     <li><a href="{% url 'news' %}" class="waves-effect">{% trans "Nutrition Beneficiaries" %}</a></li>
     <li><a href="{% url 'compendium' %}" class="waves-effect">{% trans "Compendiums" %}</a></li>
-    <li> <a href="{% url 'news' %}" class="waves-effect">{% trans "Marketplace<i class="material-icons right">arrow_drop_down</i></a></li>
+    <li> <a href="{% url 'news' %}" class="waves-effect">{% trans "Marketplace"%}<i class="material-icons right">arrow_drop_down</i></a></li>
     <li> <a href= "{% url 'news' %}" class="waves-effect">{% trans "News" %}</a></li>
     <li><a href="{% url 'contact' %}" class="waves-effect">{% trans "Contact" %}<i class="material-icons  right">mail_outline</i></a></li> 
-    <li><a class="subheader">{% trans "POSHANVATIKA</a></li>
+    <li><a class="subheader">{% trans "POSHANVATIKA"%}</a></li>
     <li><a href="{% url 'heir_map' %}" class="waves-effect">{% trans "Map" %}</a></li>
     <li><a href="{% url 'news' %}" class="waves-effect">{% trans "Reports(coming soon)" %}</a></li>
     <!-- <li><a href="/pages/resources" class="waves-effect">Resources</a></li> -->
@@ -332,31 +332,47 @@ select#language option {
 
     {% if user.is_authenticated %}
    
-    <li><a href="{% url 'logout' %}" class="waves-effect">Logout</a></li>
+    
+    <li><a href="{% url 'logout' %}" class="waves-effect">{% trans "Logout" %}</a></li>
     {% else %}
-    <li><a href="{% url 'login' %}" class="waves-effect">Login</a></li>
-    <li><a href="{% url 'register' %}" class="waves-effect">Register</a></li>
+    <li><a href="{% url 'login' %}" class="waves-effect">{% trans "Login" %}</a></li>
+    <li><a href="{% url 'register' %}" class="waves-effect">{% trans "Register" %}</a></li>
+    
     {% endif %}
 
     <li>
       <div class="divider"></div>
     </li>
-    <li ><a class="subheader" >DATA CONTRIBUTION AND FORMS</a></li>
+    <!-- <li ><a class="subheader" >DATA CONTRIBUTION AND FORMS</a></li>
     
     
     <li><a href="https://ee.kobotoolbox.org/x/vHVD3HnV" style="font-size: 15px;">PoshanVaitka Form</a> </li>
     <li><a href="{% url 'captvatikapic'%}" class="waves-effect">Capture PoshanVatikas</a></li>
-    <!-- <li><a href="http://ee.communitygis.net/x/RWF4D9SR" class="waves-effect">Vistrit Mahiti(Marathi Form)</a></li> -->
+    
     <li><a href="{% url 'captwellpic'%}" class="waves-effect">Capture Wells</a></li>
     <li><a href="{% url 'well_info'%}" class="waves-effect">View Wells Data</a></li>
     <li><a href="{% url 'captseedpic'%}" class="waves-effect">Capture Seed</a></li>
     <li><a href="{% url 'viewVatikas'%}" class="waves-effect">View All PoshanVatikas</a></li>
-    <!-- <li><a href="{% url 'viewWells'%}" class="waves-effect" style="pointer-events: none">View Wells</a></li> -->
+   
     <li><a href="{% url 'viewWells'%}" class="waves-effect">View Wells</a></li>
     {% if user.is_authenticated %}
     <li><a href="{% url 'archive' %}" class="waves-effect" ><b>Archived PoshanVatikas</b></a></li>
-    {% endif %}
+    {% endif %} -->
+    <li ><a class="subheader" >{% trans "DATA CONTRIBUTION AND FORMS" %}</a></li>
     
+    
+    <li><a href="https://ee.kobotoolbox.org/x/vHVD3HnV" style="font-size: 15px;">{% trans "PoshanVaitka Form" %}</a> </li>
+    <li><a href="{% url 'captvatikapic'%}" class="waves-effect">{% trans "Capture PoshanVatikas" %}</a></li>
+    <!-- <li><a href="http://ee.communitygis.net/x/RWF4D9SR" class="waves-effect">Vistrit Mahiti(Marathi Form)</a></li> -->
+    <li><a href="{% url 'captwellpic'%}" class="waves-effect">{% trans "Capture Wells" %}</a></li>
+    
+    <li><a href="{% url 'captseedpic'%}" class="waves-effect">{% trans "Capture Seed" %}</a></li>
+    <li><a href="{% url 'viewVatikas'%}" class="waves-effect">{% trans "View All PoshanVatikas" %}</a></li>
+    <li><a href="{% url 'well_info'%}" class="waves-effect">{% trans "View Wells Data" %}</a></li>
+    <li><a href="{% url 'viewWells'%}" class="waves-effect" >{% trans "View Wells" %}</a></li>
+    {% if user.is_authenticated %}
+    <li><a href="{% url 'archive' %}" class="waves-effect" ><b>{% trans "Archived PoshanVatikas" %}</b></a></li>
+    {% endif %}
     <!-- <li>
       <div class="divider"></div>
     </li>
