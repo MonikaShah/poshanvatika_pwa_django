@@ -66,12 +66,14 @@ def viewVatikas(request):
     kobovatiakscount = KoboPoshan.objects.count()
     vatikas2 = UploadPictureModel.objects.filter(type='AFIF')
     selfcons = PoshanFormInformation.objects.filter(level_nutri_garden='for_self_consumption',nutri_garden_scale ='Only for vegetables and fruits, Backyard Poultry')
+    selfconscount =selfcons.count()
     sellsurp = PoshanFormInformation.objects.filter(level_nutri_garden='selling_surplus')
-    context = {'vatikas1': vatikas1,'vatikas2': vatikas2, 'vatikas':vatikas,'selfcons':selfcons,'sellsurp':sellsurp,'vatikas3':vatikas3,'vatikascount':vatikascount,'onlinevatikascount':onlinevatikascount,'kobovatiakscount':kobovatiakscount,'view_name': view_name,'is_view_Vatikas': view_name == 'viewVatikas' }
+    sellsurpcount = sellsurp.count()
+    context = {'vatikas1': vatikas1,'vatikas2': vatikas2, 'vatikas':vatikas,'selfcons':selfcons,'sellsurp':sellsurp,'vatikas3':vatikas3,'vatikascount':vatikascount,'onlinevatikascount':onlinevatikascount,'kobovatiakscount':kobovatiakscount,'selfconscount':selfconscount,'sellsurpcount':sellsurpcount,'view_name': view_name,'is_view_Vatikas': view_name == 'viewVatikas' }
     # context = {'wells': wells, 'mylist':mylist}
     return render(request, 'home/viewVatikas.html', context )
     # return render(request, 'map/map.html', context)
-
+    
 # def viewVatikas(request):
 #     # wells = UploadWellPictureModel.objects.all()
 #     vatikas = UploadPictureModel.objects.all()
