@@ -191,10 +191,10 @@ select#language option {
 
       <li><a href="{% url 'contact' %}" class="waves-effect">{% trans "Contact" %}<i class="material-icons  right">mail_outline</i></a></li> 
       <li>
-        <form action="{% url 'set_language' %}" method="post">
+        <form id="languageForm" action="{% url 'set_language' %}" method="post">
           {% csrf_token %}
           <input name="next" type="hidden" value="{{ redirect_to }}" />            
-          <select name="language" style="width: auto;" id="">
+          <select name="language" style="width: auto;" id="languageSelect">
             {% get_current_language as LANGUAGE_CODE %}
             {% get_available_languages as LANGUAGES %}
             {% get_language_info_list for LANGUAGES as languages %}
@@ -203,7 +203,7 @@ select#language option {
                   {% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}>
                       {{ language.name_local }} ({{ language.code }})
                 </option>    {% endfor %}
-          </select>  <input type = "submit" value ="Go">
+          </select>  <input type = "submit" value ="Go" style="display: none;">
       </form>
       
       </li>
@@ -283,21 +283,20 @@ select#language option {
     <li><a class="nav-link" href="https://ee.kobotoolbox.org/x/KCR9XYmc">Form</a></li> -->
     <!-- <li><a class="nav-link" href="">Charts</a></li> -->
     <li>
-    <form action="{% url 'set_language' %}" method="post">
-      {% csrf_token %}
-      <input name="next" type="hidden" value="{{ redirect_to }}" />           
-      <select name="language" style="width: auto;" id="">
-        {% get_current_language as LANGUAGE_CODE %}
-        {% get_available_languages as LANGUAGES %}
-        {% get_language_info_list for LANGUAGES as languages %}
-        {% for language in languages %} {{language}}
-            <option value="{{ language.code }}"
-              {% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}>
-                  {{ language.name_local }} ({{ language.code }})
-                  test
-            </option>    {% endfor %}
-      </select>  <input type = "submit" value ="Go">
-  </form>     
+      <form id="languageForm" action="{% url 'set_language' %}" method="post">
+        {% csrf_token %}
+        <input name="next" type="hidden" value="{{ redirect_to }}" />            
+        <select name="language" style="width: auto;" id="languageSelect">
+          {% get_current_language as LANGUAGE_CODE %}
+          {% get_available_languages as LANGUAGES %}
+          {% get_language_info_list for LANGUAGES as languages %}
+          {% for language in languages %} 
+              <option value="{{ language.code }}"
+                {% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}>
+                    {{ language.name_local }} ({{ language.code }})
+              </option>    {% endfor %}
+        </select>  <input type = "submit" value ="Go" style="display: none;">
+    </form>     
 </li>
   </ul>
 
@@ -387,7 +386,15 @@ select#language option {
   </ul>
   
 </div>
-  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var languageSelect = document.getElementById('languageSelect');
+      languageSelect.addEventListener('change', function() {
+        document.getElementById('languageForm').submit(); // Automatically submit the form when selection changes
+      });
+    });
+  </script>
+
   {% block content %}
 
   {% endblock %}
