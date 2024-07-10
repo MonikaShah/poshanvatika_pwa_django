@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.contrib.auth.models import User
 from django.db import models
+from django.utils.translation import ugettext_lazy as _  # or gettext_lazy
 
 class BasicPoshanForm(forms.ModelForm):
     class Meta:
@@ -23,6 +24,30 @@ class UploadPictureForm(forms.ModelForm):
         model = UploadPictureModel
         # fields = ('picture','name','nutri_nm','area','village','district','state','pincode','lat','lng')
         fields = '__all__'
+        labels = {
+            'picture': _("Picture"),
+            'name': _("Name"),
+            'nutri_nm': _("Nutrient Name"),
+            'area': _("Area"),
+            'village': _("Village"),
+            'district': _("District"),
+            'state': _("State"),
+            'pincode': _("Pincode"),
+            'lat': _("Latitude"),
+            'lng': _("Longitude"),
+        }
+        help_texts = {
+            'picture': _("Upload a picture"),
+            'name': _("Enter your name"),
+            'nutri_nm': _("Enter the nutrient name"),
+            'area': _("Enter the area"),
+            'village': _("Enter the village"),
+            'district': _("Enter the district"),
+            'state': _("Enter the state"),
+            'pincode': _("Enter the pincode"),
+            'lat': _("Enter the latitude"),
+            'lng': _("Enter the longitude"),
+        }
 
 class UploadWellPictureForm(forms.ModelForm):
     class Meta:

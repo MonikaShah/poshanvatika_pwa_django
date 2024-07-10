@@ -13,8 +13,8 @@ import matplotlib.pyplot as plt
 import plotly.express as px
 from django.http import HttpResponse
 import csv
-
-
+from django.db.models.functions import ExtractYear
+from django.db.models import Count
 
 #login dependacies
 from django.contrib.auth import login, authenticate #add this
@@ -60,6 +60,10 @@ def viewVatikas(request):
     view_name = 'viewVatikas'
     vatikas = UploadPictureModel.objects.all()
     vatikascount = UploadPictureModel.objects.count()
+    AFIF_yearly_counts = UploadPictureModel.objects.annotate(year=ExtractYear('submission_date')) \
+    .values('year') \
+    .annotate(count=Count('id')) \
+    .order_by('year')
     vatikas1 = PoshanFormInformation.objects.all()
     onlinevatikascount = PoshanFormInformation.objects.count()
     vatikas3 = KoboPoshan.objects.all()
@@ -69,7 +73,7 @@ def viewVatikas(request):
     selfconscount =selfcons.count()
     sellsurp = PoshanFormInformation.objects.filter(level_nutri_garden='selling_surplus')
     sellsurpcount = sellsurp.count()
-    context = {'vatikas1': vatikas1,'vatikas2': vatikas2, 'vatikas':vatikas,'selfcons':selfcons,'sellsurp':sellsurp,'vatikas3':vatikas3,'vatikascount':vatikascount,'onlinevatikascount':onlinevatikascount,'kobovatiakscount':kobovatiakscount,'selfconscount':selfconscount,'sellsurpcount':sellsurpcount,'view_name': view_name,'is_view_Vatikas': view_name == 'viewVatikas' }
+    context = {'vatikas1': vatikas1,'vatikas2': vatikas2, 'vatikas':vatikas,'selfcons':selfcons,'sellsurp':sellsurp,'vatikas3':vatikas3,'vatikascount':vatikascount,'onlinevatikascount':onlinevatikascount,'kobovatiakscount':kobovatiakscount,'AFIF_yearly_counts':AFIF_yearly_counts,'selfconscount':selfconscount,'sellsurpcount':sellsurpcount,'view_name': view_name,'is_view_Vatikas': view_name == 'viewVatikas' }
     # context = {'wells': wells, 'mylist':mylist}
     return render(request, 'home/viewVatikas.html', context )
     # return render(request, 'map/map.html', context)

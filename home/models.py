@@ -4,7 +4,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.db.models.fields.files import ImageField
 from django.core.exceptions import ValidationError
-import easygui
+# import easygui
 import sys
 from django.db import models
 from PIL import Image
@@ -13,6 +13,7 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 #from matplotlib.pyplot import summer
 from numpy import average
 import datetime
+from django.utils.translation import ugettext_lazy as _  # or gettext_lazy
 
 # Create your models here.
 
@@ -160,16 +161,16 @@ class CensusTable(models.Model):
 
 class UploadPictureModel(models.Model):
     # picture = models.ImageField(upload_to='PoshanVatikaPics/', blank=True, null=True, default='PoshanVatikaPics/noImage.jpg')
-    name = models.CharField(max_length=100, blank=True, null=True)
+    name = models.CharField(max_length=100, blank=True, null=True,verbose_name=_("Beneficiary Name"))
     # nutri_nm = models.CharField(max_length=100, default='')
     # area = models.IntegerField()
-    village = models.CharField(max_length=100, blank=True, null=True)
+    village = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("Village"))
     # district = models.CharField(max_length=100, blank=True, null=True)
-    state = models.CharField(max_length=100, blank=True, null=True)
+    state = models.CharField(max_length=100, blank=True, null=True, verbose_name=_("State"))
     # pincode = models.CharField(max_length=8, blank=True, null=True)
     # lat = models.CharField(max_length=15)
     # lng = models.CharField(max_length=15)
-    picture = models.ImageField(upload_to='PoshanVatikaPics/', blank=True, null=True, default='PoshanVatikaPics/noImage.jpg')
+    picture = models.ImageField(upload_to='PoshanVatikaPics/', blank=True, null=True, default='PoshanVatikaPics/noImage.jpg', verbose_name=_("Picture"))
     organization = models.CharField(max_length = 100, default='', blank=True,null = True)
     district  = models.CharField(max_length = 50, default='', blank=True,null = True) 
     pincode=models.CharField(max_length= 50, default='', blank=True,null = True)     
