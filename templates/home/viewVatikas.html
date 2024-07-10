@@ -117,15 +117,23 @@ select {
   <div id="mapid" style="width: auto;flex: 1;">
     
   </div>
-  <div id="legend" class="leaflet-control leaflet-control-custom">
+  <div id="legend" class="leaflet-control leaflet-control-custom"><centre><b>Statistics</b></centre><br>
     
-      <img src="../static/map/images/logo_3.png" width="30px" height="30px"/>AFIF Vatikas : {{ vatikascount }}<br>
+      
+      <!-- <img src="../static/map/images/logo_3.png" width="30px" height="30px"/>AFIF Yealy Wise Vatikas : {{ AFIF_yearly_counts }}<br> -->
     {% if is_view_Vatikas %}
     <img src="../static/map/images/pw_logo.png" width="30px" height="30px"/>PoshnaVatikas added Online : {{ onlinevatikascount }}<br>
-    <img src="../static/map/images/leaves-icon-13.png" width="30px" height="30px"/>PoshanVatikas added via KoboForm: {{ kobovatiakscount }}<br>
+    
     <img src="../static/map/images/pw_logo.png" width="30px" height="30px"/>PoshnaVatikas Selling Surplus : {{ sellsurpcount }}<br>
     <img src="../static/map/images/pw_logo.png" width="30px" height="30px"/>Self Consuming PoshanVatikas: {{ selfconscount }}<br>
+    <hr>
+    <img src="../static/map/images/leaves-icon-13.png" width="30px" height="30px"/>PoshanVatikas added Offline: {{ kobovatiakscount }}<br>
     {% endif %}
+    <hr>
+    <img src="../static/map/images/logo_3.png" width="30px" height="30px"/>AFIF Total Vatikas : {{ vatikascount }}<br>
+      {% for entry in AFIF_yearly_counts%}
+      <li style="margin-left: 20px;">Year: {{entry.year}}, AFIF added: {{entry.count}}</li>
+      {% endfor %}
   </div>
 </div>
   <!-- Modal Structure -->
