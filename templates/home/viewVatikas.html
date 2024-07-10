@@ -120,20 +120,44 @@ select {
   <div id="legend" class="leaflet-control leaflet-control-custom"><centre><b>Statistics</b></centre><br>
     
       
-      <!-- <img src="../static/map/images/logo_3.png" width="30px" height="30px"/>AFIF Yealy Wise Vatikas : {{ AFIF_yearly_counts }}<br> -->
-    {% if is_view_Vatikas %}
-    <img src="../static/map/images/pw_logo.png" width="30px" height="30px"/>PoshnaVatikas added Online : {{ onlinevatikascount }}<br>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
     
-    <img src="../static/map/images/pw_logo.png" width="30px" height="30px"/>PoshnaVatikas Selling Surplus : {{ sellsurpcount }}<br>
-    <img src="../static/map/images/pw_logo.png" width="30px" height="30px"/>Self Consuming PoshanVatikas: {{ selfconscount }}<br>
-    <hr>
-    <img src="../static/map/images/leaves-icon-13.png" width="30px" height="30px"/>PoshanVatikas added Offline: {{ kobovatiakscount }}<br>
-    {% endif %}
-    <hr>
-    <img src="../static/map/images/logo_3.png" width="30px" height="30px"/>AFIF Total Vatikas : {{ vatikascount }}<br>
-      {% for entry in AFIF_yearly_counts%}
-      <li style="margin-left: 20px;">Year: {{entry.year}}, AFIF added: {{entry.count}}</li>
-      {% endfor %}
+    <!-- Tab navigation -->
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link" id="poshna-tab" data-toggle="tab" href="#poshna" role="tab" aria-controls="poshna" aria-selected="false">PoshnaVatikas</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" id="afif-tab" data-toggle="tab" href="#afif" role="tab" aria-controls="afif" aria-selected="true">AFIF</a>
+      </li>
+      
+    </ul>
+    
+    <!-- Tab content -->
+    <div class="tab-content" id="myTabContent">
+      <!-- AFIF tab -->
+      <div class="tab-pane fade show active" id="afif" role="tabpanel" aria-labelledby="afif-tab">
+        <img src="../static/map/images/logo_3.png" width="30px" height="30px"/> AFIF Total Vatikas : {{ vatikascount }}<br>
+        <ul>
+          {% for entry in AFIF_yearly_counts %}
+            <li>Year: {{ entry.year }}, AFIF added: {{ entry.count }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      
+      <!-- PoshnaVatikas tab -->
+      <div class="tab-pane fade" id="poshna" role="tabpanel" aria-labelledby="poshna-tab">
+        {% if is_view_Vatikas %}
+          <img src="../static/map/images/pw_logo.png" width="30px" height="30px"/> PoshnaVatikas added Online: {{ onlinevatikascount }}<br>
+          <img src="../static/map/images/pw_logo.png" width="30px" height="30px"/> PoshnaVatikas Selling Surplus: {{ sellsurpcount }}<br>
+          <img src="../static/map/images/pw_logo.png" width="30px" height="30px"/> Self Consuming PoshanVatikas: {{ selfconscount }}<br>
+          <hr>
+          <img src="../static/map/images/leaves-icon-13.png" width="30px" height="30px"/> PoshanVatikas added Offline: {{ kobovatiakscount }}<br>
+          <hr>
+        {% endif %}
+      </div>
+    </div>
   </div>
 </div>
   <!-- Modal Structure -->
