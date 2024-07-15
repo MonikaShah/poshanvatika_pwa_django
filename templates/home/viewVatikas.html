@@ -62,6 +62,9 @@ select {
 <!-- script for leaflet font awesome-->
 <script src="{% static 'static1/leaflet.awesome-markers.js' %}"></script>
 <link rel="stylesheet" href="{% static 'static1/leaflet.awesome-markers.css' %}" />
+<!-- For sweet alerts -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <div id ="container" style="display: flex;height: 100vh;width:100%;">
   <div id = "side-bar" style="width: auto;height:80vh;float: left;overflow-y: auto;margin-left: 1px;border-style: double;" >
@@ -71,12 +74,13 @@ select {
     </div> -->
     <ul id="mobile-nav" style="z-index: 9999999;">
     
-    <br><li ><a class="subheader" > {% trans "USER AUTHENTICATION" %} </a></li>
+    <br>
 
     {% if user.is_authenticated %}
-   
+    <li ><a class="subheader" > {% trans "USER AUTHENTICATION" %} - {{user.username}} </a></li>
     <li><a href="{% url 'logout' %}" class="custom-link">{% trans "Logout" %}</a></li>
     {% else %}
+    <li ><a class="subheader" > {% trans "USER AUTHENTICATION" %} - Guest </a></li>
     <li><a href="{% url 'login' %}" class="custom-link">{% trans "Login" %}</a></li>
     <li><a href="{% url 'register' %}" class="custom-link">{% trans "Register" %}</a></li>
     {% endif %}
@@ -94,7 +98,8 @@ select {
     
     <li><a href="{% url 'captseedpic'%}" class="custom-link">{% trans "Capture Seed" %}</a></li>
     <li><a href="{% url 'viewVatikas'%}" class="custom-link">{% trans "View All PoshanVatikas" %}</a></li>
-    <ol><li><a href="{% url 'viewAFIFVatikas'%}" class="custom-link">{% trans "View AFIF PoshanVatikas" %}</a></li></ol>
+    <li><a href="{% url 'viewSarkariVatikas'%}" class="custom-link" id ="view-sarkari-vatikas">{% trans "View MWCD PoshanVatikas" %}</a></li>
+    <li><a href="{% url 'viewAFIFVatikas'%}" class="custom-link">{% trans "View AFIF PoshanVatikas" %}</a></li>
     
     <li><a href="{% url 'well_info'%}" class="custom-link">{% trans "View Wells Data" %}</a></li>
     <li><a href="{% url 'viewWells'%}" class="custom-link" >{% trans "View Wells" %}</a></li>
@@ -126,10 +131,11 @@ select {
     <!-- Tab navigation -->
     <ul class="nav nav-tabs" id="myTab" role="tablist">
       <li class="nav-item">
-        <a class="nav-link" id="poshna-tab" data-toggle="tab" href="#poshna" role="tab" aria-controls="poshna" aria-selected="false">PoshnaVatikas</a>
+        <a class="nav-link" id="poshna-tab" data-toggle="tab" href="#poshna" role="tab" aria-controls="poshna" aria-selected="true">All PoshnaVatikas</a>
       </li>
+     
       <li class="nav-item">
-        <a class="nav-link active" id="afif-tab" data-toggle="tab" href="#afif" role="tab" aria-controls="afif" aria-selected="true">AFIF</a>
+        <a class="nav-link active" id="afif-tab" data-toggle="tab" href="#afif" role="tab" aria-controls="afif" aria-selected="false">AFIF</a>
       </li>
       
     </ul>
@@ -149,7 +155,7 @@ select {
       <!-- PoshnaVatikas tab -->
       <div class="tab-pane fade" id="poshna" role="tabpanel" aria-labelledby="poshna-tab">
         {% if is_view_Vatikas %}
-          <img src="../static/map/images/pw_logo.png" width="30px" height="30px"/> PoshnaVatikas added Online: {{ onlinevatikascount }}<br>
+          <img src="../static/map/images/pw_logo.png" width="30px" height="30px"/> PoshnaVatikas added Online: {{ onlinevatikascount|add:vatikascount}}<br>
           <img src="../static/map/images/pw_logo.png" width="30px" height="30px"/> PoshnaVatikas Selling Surplus: {{ sellsurpcount }}<br>
           <img src="../static/map/images/pw_logo.png" width="30px" height="30px"/> Self Consuming PoshanVatikas: {{ selfconscount }}<br>
           <hr>
@@ -207,10 +213,10 @@ select {
 		// tileSize: 512,
 		// zoomOffset: -1
     // }).addTo(mymap);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '© OpenStreetMap'
-    }).addTo(mymap);
+    // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    //   maxZoom: 19,
+    //   attribution: '© OpenStreetMap'
+    // }).addTo(mymap);
     
     // console.log('l/tilelayer');
     var wms = L.tileLayer.wms('https://geoserver2.communitygis.net/geoserver/wms', {
@@ -264,7 +270,28 @@ select {
     }
 );
 
-    
+document.getElementById('view-sarkari-vatikas').addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent default link behavior
+
+    // Toggle visibility of mahaSchools layer
+    if (mymap.hasLayer(mahaSchools)) {
+        mymap.removeLayer(mahaSchools);
+    } else {
+        mymap.addLayer(mahaSchools);
+
+        mymap.removeLayer(poshanlayerGroup);
+        mymap.removeLayer(poshanlayerGroup2);
+        mymap.removeLayer(poshanlayerGroup3);
+        var maharashtraLatLng = [19.7515, 75.7139];
+        mymap.setView(maharashtraLatLng, 8);
+        Swal.fire({
+            icon: 'info',
+            title: 'Data shown for demo purpose only',
+            showConfirmButton: false,
+            timer: 1500
+        });
+    }
+});
 </script>
 
 <script>
