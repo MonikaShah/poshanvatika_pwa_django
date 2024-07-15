@@ -26,7 +26,7 @@ urlpatterns = [
     path('viewVatikas/', views.viewVatikas, name='viewVatikas'),
     path('viewAFIFVatikas/', views.viewAFIFVatikas, name='viewAFIFVatikas'),
     # path('viewselfconsVatikas/', views.viewselfconsVatikas, name='viewselfconsVatikas'),
-
+    path('viewsarkarivatikas/', views.viewsarkarivatikas, name='viewSarkariVatikas'),
     path('viewWells/',views.viewWells, name='viewWells'),
     path('ahmednagar_schools/',views.ahmednagar_schools,name='ahmednagar_schools'),
     path('ahmed_sch_form/',views.ahmed_sch_form,name='ahmed_sch_form'),
