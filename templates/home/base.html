@@ -163,20 +163,20 @@ select#language option {
       
         
     
-      <a href="/" class="brand-logo" style="color: white;  font-weight: bold; font-size: 16px; text-align: left;">{% trans "PoshanVatika" %}{% if user.is_authenticated %}<span class="hide-on-small-only"> - Welcome {{ user.username }}</span>{% else %}
-        <span class="hide-on-small-only">{% trans " - Welcome Guest" %}</span>{% endif %}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      {% comment %} <!-- Display Username-->
+      <!-- <a href="/" class="brand-logo" style="color: white;  font-weight: bold; font-size: 16px; text-align: left;">{% if user.is_authenticated %}<span class="hide-on-small-only"> - Welcome {{ user.username }}</span>{% else %}
+        <span class="hide-on-small-only">{% trans "Welcome Guest" %}</span>{% endif %}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      Display Username
             {% if user.is_authenticated %}
             <span class="right" style="color: white; font-weight: bold; font-size: 16px; text-align: right;">{{ user.username }}</span>
-          {% endif %} {% endcomment %}
+          {% endif %} -->
             <!-- <a href="#" data-target="mobile-nav" class="sidenav-trigger">
               <i class="material-icons">menu</i>
             </a> -->
 
             
-      <!--<a href="/" style="text-decoration: none;"><span style="color: white;  font-weight: bold; font-size: 22px; text-align: left;">PoshanVatika</span></a>-->
+      <!-- <a href="/" style="text-decoration: none;"><span style="color: white;  font-weight: bold; font-size: 22px; text-align: left;">PoshanVatika</span></a> -->
       <ul id="topnav" class="right hide-on-med-and-down" style="align-items: center;"> 
-      
+        <li><a href="{% url 'viewVatikas' %}" class="waves-effect">{% trans "Home" %}</a></li>
         <li><a href="{% url 'about' %}" class="waves-effect">{% trans "About" %}</a></li>
       <li><a href="{% url 'myPoshan' %}" class="waves-effect">{% trans "My Poshanvatikas" %}</a></li>
       <!-- <li><a href="" class="waves-effect">Tree Census</a></li> -->
@@ -184,29 +184,27 @@ select#language option {
       <li><a href="{% url 'compendium' %}" class="waves-effect">{% trans "Compendiums" %}</a></li>
       {% comment %} <li><a href="/well_info">Well Info</a></li> {% endcomment %}
       <li> <a href="{% url 'news' %}" class="dropdown-trigger" data-target="dropdown">{% trans "Marketplace" %}<i class="material-icons right">arrow_drop_down</i></a></li>
-      
-      <!-- <li> <a href= "{% url 'howto' %}" class="waves-effect">How To</a></li> -->
-
-    <!-- /<li> <a href= "{% url 'howto' %}" class="waves-effect">How To</a></li> -->
-
+     
       <li><a href="{% url 'contact' %}" class="waves-effect">{% trans "Contact" %}<i class="material-icons  right">mail_outline</i></a></li> 
+      
       <li>
         <form id="languageForm" action="{% url 'set_language' %}" method="post">
           {% csrf_token %}
           <input name="next" type="hidden" value="{{ redirect_to }}" />            
-          <select name="language" style="width: auto;" id="languageSelect">
+          <select class="waves-effect" name="language"  id="languageSelect">
             {% get_current_language as LANGUAGE_CODE %}
             {% get_available_languages as LANGUAGES %}
             {% get_language_info_list for LANGUAGES as languages %}
             {% for language in languages %} 
-                <option value="{{ language.code }}"
-                  {% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}>
-                      {{ language.name_local }} ({{ language.code }})
-                </option>    {% endfor %}
-          </select>  <input type = "submit" value ="Go" style="display: none;">
-      </form>
-      
+              <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}>
+                {{ language.name_local }} ({{ language.code }})
+              </option>
+            {% endfor %}
+          </select>
+          <input type="submit" value="Go" style="display: none;">
+        </form>
       </li>
+      
       <!-- <li><span class="right grey-text text-darken-1 hide-on-med-and-down">
         <a><i class="material-icons sidenav-trigger" data-target="side-menu">menu</i></a>
       </span></li> -->
@@ -219,11 +217,11 @@ select#language option {
   <!--mobile view left nav-->
   <ul class="sidenav" id="mobile-nav" style="z-index: 9999999;border-style: double;border-color: red;">
     
-    <li><a class="subheader" style="font-size: 18px;">{% trans "POSHANVATIKA" %}
+    <li><a class="subheader" style="font-size: 18px;">
       {% if user.is_authenticated %}
-      {% trans "- Welcome {{ user.username }}" %} 
+      {% trans "Welcome {{ user.username }}" %} 
       {% else %}
-      {% trans "- Welcome Guest" %}
+      {% trans "Welcome Guest" %}
       {% endif %}
     
     </a></li>
@@ -282,22 +280,25 @@ select#language option {
     
     <li><a class="nav-link" href="https://ee.kobotoolbox.org/x/KCR9XYmc">Form</a></li> -->
     <!-- <li><a class="nav-link" href="">Charts</a></li> -->
-    <li>
-      <form id="languageForm" action="{% url 'set_language' %}" method="post">
-        {% csrf_token %}
-        <input name="next" type="hidden" value="{{ redirect_to }}" />            
-        <select name="language" style="width: auto;" id="languageSelect">
-          {% get_current_language as LANGUAGE_CODE %}
-          {% get_available_languages as LANGUAGES %}
-          {% get_language_info_list for LANGUAGES as languages %}
-          {% for language in languages %} 
-              <option value="{{ language.code }}"
-                {% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}>
-                    {{ language.name_local }} ({{ language.code }})
-              </option>    {% endfor %}
-        </select>  <input type = "submit" value ="Go" style="display: none;">
-    </form>     
-</li>
+    <li><a href="{% url 'contact' %}" class="waves-effect">{% trans "Contact" %}<i class="material-icons  right">mail_outline</i></a></li> 
+      <li>
+        <form id="languageForm" action="{% url 'set_language' %}" method="post">
+          {% csrf_token %}
+          <input name="next" type="hidden" value="{{ redirect_to }}" />            
+          <select class="waves-effect" name="language" style="width: auto;" id="languageSelect">
+            {% get_current_language as LANGUAGE_CODE %}
+            {% get_available_languages as LANGUAGES %}
+            {% get_language_info_list for LANGUAGES as languages %}
+            {% for language in languages %} 
+              <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}>
+                {{ language.name_local }} ({{ language.code }})
+              </option>
+            {% endfor %}
+          </select>
+          <input type="submit" value="Go" style="display: none;">
+        </form>
+      </li>
+    
   </ul>
 
 </ul>
