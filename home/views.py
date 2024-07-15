@@ -7,7 +7,7 @@ import re
 from django.core.files.base import ContentFile
 from django.core.files.storage import FileSystemStorage
 import base64
-import time
+import time,requests
 import pandas as pd
 import matplotlib.pyplot as plt
 import plotly.express as px
@@ -36,6 +36,7 @@ from django.db.models.functions import TruncMonth
 from django.db.models import Sum, Avg ,Max
 
 from django.views import View
+from xml.etree import ElementTree as ET
 #for rendering the data from database 
 
 # #compress image
@@ -77,7 +78,14 @@ def viewVatikas(request):
     # context = {'wells': wells, 'mylist':mylist}
     return render(request, 'home/viewVatikas.html', context )
     # return render(request, 'map/map.html', context)
+def viewsarkarivatikas(request):
+    # Your view logic here
+    view_name = 'viewsarkarivatikas'
     
+
+    context = {'view_name': view_name}
+    return render(request, 'home/viewVatikas.html', context)
+
 # def viewVatikas(request):
 #     # wells = UploadWellPictureModel.objects.all()
 #     vatikas = UploadPictureModel.objects.all()
