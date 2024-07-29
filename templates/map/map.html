@@ -153,7 +153,7 @@
    // putmap("geonode:states_in_india");
 
    // function putmap(layer){
-    var wms = L.tileLayer.wms('https://geoserver2.communitygis.net/geoserver/wms', {
+    var wms = L.tileLayer.wms('https://geonode.communitygis.in/geoserver/wms', {
 				//layer: layer,
         layers: 'geonode:states_in_india',
 				format: 'image/png',
@@ -177,7 +177,7 @@
 
       };
 
-    let indiaState = L.tileLayer.wms("https://geoserver2.communitygis.net/geoserver/wms", {
+    let indiaState = L.tileLayer.wms("https://geonode.communitygis.in/geoserver/wms", {
             layers: "geonode:states_in_india",
             format: "image/png",
             transparent: "true",
