@@ -16,6 +16,7 @@ urlpatterns = [
     path('treecensus/', views.treecensus, name='treecensus'),
     path('treecharts/', views.treecharts, name='treecharts'),
     path('VayamUpakram/', views.VayamUpakram, name='VayamUpakram'),
+    path('WB_SNCU/', views.WB_SNCU, name='WB_SNCU'),
 
     path('news/', views.news, name='news'),
     path('howto/', views.howto, name='howto'),
