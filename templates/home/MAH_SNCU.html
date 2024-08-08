@@ -177,15 +177,37 @@
                         legend.onAdd = function () {
                             var div = L.DomUtil.create('div', 'legend');
                             div.innerHTML = `
-                                <div><b>Death Percentage Legend</b></div>
-                                <div><i style="background: #FFFFFF"></i> 0 (${categoryCounts['white']})</div>
-                                <div><i style="background: #0b6b1b"></i> 0.01% - 3.65% (${categoryCounts['green']})</div>
-                                <div><i style="background: #e5b009"></i> 3.66 - 6.83 (${categoryCounts['yellow']})</div>
-                                <div><i style="background: #d31717"></i> 6.84 - 15.27 (${categoryCounts['red']})</div>
-                                <div><i style="background: #808080"></i> NaN (${categoryCounts['gray']})</div>
-                            `;
-                            return div;
-                        };
+                            <div><b>Death Percentage Legend</b></div>
+                            <table style="width: 100%; border-spacing: 0;">
+                                <tr>
+                                    <th style="text-align: left;">Death %</th>
+                                    <th style="text-align: right;">Count</th>
+                                </tr>
+                                <tr>
+                                    <td><i style="background: #FFFFFF;"></i> 0</td>
+                                    <td style="text-align: right;">${categoryCounts['white']}</td>
+                                </tr>
+                                <tr>
+                                    <td><i style="background: #0b6b1b;"></i> 0.01% - 3.65%</td>
+                                    <td style="text-align: right;">${categoryCounts['green']}</td>
+                                </tr>
+                                <tr>
+                                    <td><i style="background: #e5b009;"></i> 3.66% - 6.83%</td>
+                                    <td style="text-align: right;">${categoryCounts['yellow']}</td>
+                                </tr>
+                                <tr>
+                                    <td><i style="background: #d31717;"></i> 6.84% - 15.27%</td>
+                                    <td style="text-align: right;">${categoryCounts['red']}</td>
+                                </tr>
+                                <tr>
+                                    <td><i style="background: #808080;"></i> NaN</td>
+                                    <td style="text-align: right;">${categoryCounts['gray']}</td>
+                                </tr>
+                            </table>
+                        `;
+                        return div;
+                    };
+
 
                         legend.addTo(map);
                     } else {
