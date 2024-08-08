@@ -125,7 +125,7 @@
                         data.features.forEach(feature => {
                             var deathPer = parseFloat(feature.properties.SNCU_Death).toFixed(2);
 
-                            alert(deathPer)
+                            
                             if (isNaN(deathPer) || deathPer === null) {
                                 categoryCounts['gray'] += 1;
                             } else if (deathPer > 6.84) {
