@@ -1,152 +1,247 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>West Bengal SNCU Death Percentage</title>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maharashtra State SNCU GIS MAP</title>
     <link rel="stylesheet" href="{% static 'static1/leaflet.css' %}" />
     <style>
-        #map { height: 100vh; }
-        .info {
-            padding: 6px 8px;
-            font: 14px/16px Arial, Helvetica, sans-serif;
-            background: white;
-            background: rgba(255, 255, 255, 0.8);
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-            border-radius: 5px;
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+        }
+        
+        #map { height: calc(100vh - 50px); }
+
+        .header {
+            background-color: #004d40;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            box-shadow: 0px 4px 2px -2px gray;
         }
         .death-label {
             padding: 2px;
             font-size: 12px;
-            color:red;
-            
+            color: red; /* Text color for tooltips */
         }
-        .pincode-label {
-            padding: 2px;
+
+        .legend {
+            background: white;
+            border: 2px solid #000;
+            border-radius: 5px;
+            padding: 8px;
             font-size: 12px;
-            color: blue;
+            line-height: 16px;
+            position: absolute;
+            bottom: 60px;
+            right: 10px;
+            z-index: 1000;
+            width: 300px; /* Increased width */
+           
+        }
+
+        .legend i {
+            width: 14px;
+            height: 14px;
+            display: inline-block;
+            margin-right: 5px;
+            border: 2px solid #000;
+            border-radius: 50%;
+            background-color: transparent;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+
+        th, td {
+            padding: 2px 5px;
+            text-align: left;
+        }
+
+        th {
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            .header {
+                font-size: 18px;
+                padding: 8px;
+            }
+
+            .legend {
+                font-size: 10px;
+                padding: 6px;
+                line-height: 14px;
+                bottom: 40px;
+            }
+
+            .legend i {
+                width: 12px;
+                height: 12px;
+            }
+
+            table {
+                font-size: 10px;
+            }
         }
     </style>
 </head>
+</head>
 <body>
+    <div class="header">
+        West Bengal SNCU GIS MAP
+    </div>
+   
     <div id="map"></div>
     <script src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'></script>
     <script>
         // Initialize the map
-        var map = L.map('map').setView([22.5726, 88.3639], 9);
+        // var map = L.map('map').setView([23.2726, 87.6639], 9);
+        var map = L.map('map');
+
+        function setMapView() {
+            var zoomLevel = window.innerWidth <= 600 ? 7 : 9; // Decrease zoom for mobile
+            map.setView([23.2726, 87.6639], zoomLevel);
+        }
+
+        // Initialize the map
+        setMapView();
 
         // Add a base layer
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19
         }).addTo(map);
 
-        // Define GeoJSON URLs
-        var wb_pincodeSNCU = 'https://geonode.communitygis.in/geoserver/wfs?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode:WB_pincode_withSNCU_v1&outputFormat=application/json';
-        var WB_state =  'https://geonode.communitygis.in/geoserver/wfs?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode:WB_state&outputFormat=application/json';
-        var WB_centroid_death_v1 = 'https://geonode.communitygis.in/geoserver/wfs?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode:WB_centroid_percentDeath_V1&outputFormat=application/json';
+        // Define WMS layers
+        var wmsState = L.tileLayer.wms('https://geonode.communitygis.in/geoserver/wms', {
+            layers: 'geonode:WB_state',
+            format: 'image/png',
+            transparent: true
+        }).addTo(map);
 
-        var wms = L.tileLayer.wms('https://geonode.communitygis.in/geoserver/wms', {
-				//layer: layer,
-        layers: 'geonode:WB_state',
-				format: 'image/png',
-				transparent: 'true',
-			});
-      wms.addTo(map);
-      var wms1 = L.tileLayer.wms('https://geonode.communitygis.in/geoserver/wms', {
-				//layer: layer,
-        layers: 'geonode:WB_pincode_withSNCU_v1',
-				format: 'image/png',
-				transparent: 'true',
-			});
-      wms1.addTo(map);
-      var wms2 = L.tileLayer.wms('https://geonode.communitygis.in/geoserver/wms', {
-				//layer: layer,
-        layers: 'geonode:WB_centroid_percentDeath_V1',
-				format: 'image/png',
-				transparent: 'true',
-			});
-      wms2.addTo(map);
-      
-        // Define styles for the layers
-        
+        var wmsSNCU = L.tileLayer.wms('https://geonode.communitygis.in/geoserver/wms', {
+            layers: 'geonode:WB_pincode_withSNCU_v1',
+            format: 'image/png',
+            transparent: true
+        }).addTo(map);
 
-        var stateStyle = {
-            color: '#000000',
-            weight: 2,
-            opacity: 1,
-            fillOpacity: 0.0
-        };
+        var wmsDeath = L.tileLayer.wms('https://geonode.communitygis.in/geoserver/wms', {
+            layers: 'geonode:WB_centroid_percentDeath_V1',
+            format: 'image/png',
+            transparent: true
+        }).addTo(map);
 
-        var pointStyle = function(feature) {
-            return {
-                radius: 8,
-                fillColor: getColor(feature.properties.death_per_),
-                color: "#000",
-                weight: 1,
-                opacity: 1,
-                fillOpacity: 0.8
-            };
-        };
-
-        // Color function for points based on death_per_ value
+        // Function to get color based on death percentage
         function getColor(d) {
-            if (d == null || isNaN(d)) return 'transparent'; // Exclude points without valid data
             return d > 10.0 ? '#FF0000' :
                    d > 4.7 ? '#FFFF00' :
-                   d >= 0 ? '#00FF00' :
+                   d > 0 ? '#00FF00' :
                             'transparent';
         }
 
-        
-        // Fetch and handle point data
-        fetch(WB_centroid_death_v1)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok. Status: ' + response.status);
-                }
-                return response.json();
-            })
+        // Fetch and handle point data for SNCU centroids
+        fetch('https://geonode.communitygis.in/geoserver/wfs?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode:WB_centroid_percentDeath_V1&outputFormat=application/json')
+            .then(response => response.json())
             .then(data => {
-                if (data && data.features) {
-                    L.geoJson(data, {
-                        pointToLayer: function (feature, latlng) {
-                            var marker = L.circleMarker(latlng, pointStyle(feature));
+                var categoryCounts = {
+                    'green': 0,
+                    'yellow': 0,
+                    'red': 0
+                };
 
-                            // Add the death_per_ value as a label on the circleMarker
-                            var deathPer = feature.properties.death_per_;
-                            marker.bindTooltip(deathPer != null ? deathPer.toString() + '%'  : 'N/A', {
-                                permanent: false,
-                                direction: 'right',
-                                className: 'death-label',
-                                opacity: 0.8
-                            });
+                L.geoJson(data, {
+                    pointToLayer: function (feature, latlng) {
+                        var deathPer = feature.properties.death_per_;
+                        
+                        // Filter out 0% and NaN values
+                        if (deathPer === 0 || isNaN(deathPer) || deathPer === null) return null;
 
-                            // Add click event to display popup
-                            marker.on('click', function(e) {
-                                var popupContent = `
-                                    <div>
-                                        <b>Death Percentage:</b> ${deathPer != null ? deathPer.toString() : 'N/A'}<br>
-                                        <b>SNCU Name:</b> ${feature.properties.sncu_name_ || 'Unknown'}<br>
-                                        <b>Pincode:</b> ${feature.properties.pincode || 'Unknown'}
-                                    </div>
-                                `;
-                                L.popup()
-                                    .setLatLng(e.latlng)
-                                    .setContent(popupContent)
-                                    .openOn(map);
-                            });
+                        var marker = L.circleMarker(latlng, {
+                            radius: 8,
+                            fillColor: getColor(deathPer),
+                            color: "#000",
+                            weight: 2,
+                            opacity: 1,
+                            fillOpacity: 0.8
+                        }).addTo(map);
 
-                            return marker;
-                        },
-                        filter: function (feature) {
-                            var d = feature.properties.death_per_;
-                            return d != null && !isNaN(d) && (d >= 0 && d <= 4.7 || d > 4.7 && d <= 10.0 || d > 10.0);
+                        // Bind tooltip with death percentage
+                        marker.bindTooltip(deathPer.toString() + '%', {
+                            permanent: false,
+                            direction: 'right',
+                            className: 'death-label',
+                            opacity: 0.8
+                            
+                        });
+
+                        // Increment category counts
+                        if (deathPer > 10.0) {
+                            categoryCounts['red']++;
+                        } else if (deathPer > 4.7) {
+                            categoryCounts['yellow']++;
+                        } else if (deathPer > 0) {
+                            categoryCounts['green']++;
                         }
-                    }).addTo(map);
-                } else {
-                    console.error('Invalid GeoJSON data for points. Data or features may be missing.');
-                }
+
+                        // Bind click event for popup
+                        marker.on('click', function(e) {
+                            var popupContent = `
+                                <div style="color: red;">
+                                    <b>Death Percentage:</b> ${deathPer.toString()}<br>
+                                    <b>SNCU Name:</b> ${feature.properties.sncu_name_ || 'Unknown'}<br>
+                                    <b>Pincode:</b> ${feature.properties.pincode || 'Unknown'}
+                                </div>
+                            `;
+                            L.popup()
+                                .setLatLng(e.latlng)
+                                .setContent(popupContent)
+                                .openOn(map);
+                        });
+
+                        return marker;
+                    }
+                });
+
+                // Add the legend with counts
+                var legend = L.control({ position: 'bottomright' });
+
+                legend.onAdd = function () {
+                    var div = L.DomUtil.create('div', 'legend');
+                    div.innerHTML = `
+                        <div><b>Death Percentage Legend</b></div>
+                        <table>
+                            <tr>
+                                <th>SNCU</th>
+                                <th>Count</th>
+                            </tr>
+                            <tr>
+                                <td><i style="background: #00FF00"></i> 0.01 - 4.7%</td>
+                                <td style="text-align: right;">${categoryCounts['green']}</td>
+                            </tr>
+                            <tr>
+                                <td><i style="background: #FFFF00"></i> 4.71 - 10.0%</td>
+                                <td style="text-align: right;">${categoryCounts['yellow']}</td>
+                            </tr>
+                            <tr>
+                                <td><i style="background: #FF0000"></i> > 10.0%</td>
+                                <td style="text-align: right;">${categoryCounts['red']}</td>
+                            </tr>
+                        </table>
+                    `;
+                    return div;
+                };
+
+                legend.addTo(map);
             })
             .catch(error => console.error('Error fetching point data:', error));
     </script>
