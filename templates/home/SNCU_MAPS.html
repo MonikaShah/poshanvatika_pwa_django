@@ -26,16 +26,68 @@
             font-size: 12px;
             color: blue;
         }
-        /* Custom CSS for positioning zoom controls */
         .leaflet-control-zoom {
             position: absolute;
             bottom: 10px;
             right: 10px;
-            background: white;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-            border-radius: 5px;
             z-index: 1000;
         }
+        .legend {
+            background: white;
+            border: 2px solid #000; /* Black border */
+            
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 14px;
+            line-height: 18px;
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            z-index: 1000;
+            width: 200px; /* Increase the width of the legend container */
+        }
+        .legend i {
+            width: 18px;
+            height: 18px;
+            display: inline-block;
+            margin-right: 8px;
+            border: 2px solid #000; /* Black border for color swatches */
+        }
+        #stateSelector label {
+            display: block;
+            margin-bottom: 5px;
+            border: 1px solid #000; /* Black border around radio button labels */
+            border-radius: 5px;
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        #stateSelector input[type="radio"] {
+            margin-right: 5px;
+        }
+
+       /* / * Style for the overlay control */ 
+    .overlay-control {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 1000;
+        background: white;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .overlay-control button {
+        display: block;
+        margin: 5px 0;
+        padding: 5px 10px;
+        border: 1px solid #000; /* Black border for buttons */
+        border-radius: 5px;
+        background-color: #fff; /* White background for buttons */
+        cursor: pointer;
+    }
+
     </style>
 </head>
 <body>
@@ -46,16 +98,29 @@
             <label><input type="radio" name="state" value="westbengal"> West Bengal</label>
         </form>
     </div>
+    
     <script src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'></script>
     <script>
         // Initialize the map
         var map = L.map('map', {
-            zoomControl: true // Enable zoom controls
+            zoomControl: true // Ensure zoom controls are enabled
         }).setView([19.601, 76.168], 8);
-
-        // Add a base layer
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19
+        }).addTo(map);
+
+
+        // Define base layers
+        var osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19
+        });
+
+        var satelliteLayer = L.tileLayer('https://{s}.satellite.tile.osm.org/{z}/{x}/{y}.png', { // Replace with actual satellite URL
+            maxZoom: 19
+        });
+        // Add zoom control explicitly
+        L.control.zoom({
+            position: 'bottomright' // Position it at the bottom right
         }).addTo(map);
 
         // Define GeoJSON URLs for Maharashtra
@@ -78,12 +143,12 @@
         var wbPointsLayer;
 
         // Define styles for the layers
-        var stateStyle = {
-            color: '#000000',
-            weight: 2,
-            opacity: 1,
-            fillOpacity: 0.0
-        };
+        // var stateStyle = {
+        //     color: '#000000',
+        //     weight: 2,
+        //     opacity: 1,
+        //     fillOpacity: 0.0
+        // };
 
         var pointStyle = function(feature) {
             return {
@@ -102,7 +167,7 @@
             if (isNaN(d) || d == "#DIV/0!") return '#FFFFFF'; // White for invalid data
             return d > 6.83 ? '#FF0000' : // Red for 6.84 to 15.27
                    d > 3.56 ? '#FFFF00' : // Yellow for 3.56 to 6.83
-                   d > 0.1 ? '#00FF00' : // Green for 0.1 to 3.65
+                   d > 0.01 ? '#00FF00' : // Green for 0.01 to 3.65
                    d === 0 ? '#FFFFFF' : // White for 0
                    'transparent'; // Transparent for any other case
         }
@@ -178,9 +243,8 @@
                         mahPointsLayer.addTo(map);
                     }
                 });
-                map.setView([19.601, 76.168], 8); // Set the correct view and zoom for Maharashtra
             } else if (state === 'westbengal') {
-                map.setView([23.5726, 87.6639], 9); // Set the correct view and zoom for West Bengal
+                map.setView([23.5726, 87.3639], 9);
                 wbWms.addTo(map);
                 createPointsLayer(wb_centroid_death_v1).then(layer => {
                     wbPointsLayer = layer;
@@ -198,6 +262,53 @@
 
         // Initialize map with Maharashtra data
         switchState('maharashtra');
+        var legend = L.control({position: 'bottomright'});
+
+        function addLegend() {
+            var legend = L.control({position: 'bottomleft'});
+            legend.onAdd = function () {
+                var div = L.DomUtil.create('div', 'legend');
+                div.innerHTML += '<b>Death Percentage</b><br>';
+                div.innerHTML += '<i style="background: #00FF00"></i> 0.01 - 3.65<br>';
+                div.innerHTML += '<i style="background: #FFFF00"></i> 3.56 - 6.83<br>';
+                div.innerHTML += '<i style="background: #FF0000"></i> 6.84 - 15.27<br>';
+                div.innerHTML += '<i style="background: #FFFFFF"></i>0 Deaths or  Invalid Data<br>';
+                return div;
+            };
+            legend.addTo(map);
+        }
+
+        // Add the legend to the map
+        addLegend();
+        
+        // Overlay control buttons
+        document.getElementById('osmButton').addEventListener('click', function() {
+            map.eachLayer(function (layer) {
+                if (layer !== map._layers[1]) {
+                    map.removeLayer(layer);
+                }
+            });
+            osmLayer.addTo(map);
+        });
+
+        document.getElementById('satelliteButton').addEventListener('click', function() {
+            map.eachLayer(function (layer) {
+                if (layer !== map._layers[1]) {
+                    map.removeLayer(layer);
+                }
+            });
+            satelliteLayer.addTo(map);
+        });
+
+        document.getElementById('noBackgroundButton').addEventListener('click', function() {
+            map.eachLayer(function (layer) {
+                if (layer !== map._layers[1]) {
+                    map.removeLayer(layer);
+                }
+            });
+        });
+
+        
     </script>
 </body>
 </html>
