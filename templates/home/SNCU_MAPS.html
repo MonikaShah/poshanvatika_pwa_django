@@ -35,7 +35,6 @@
         .legend {
             background: white;
             border: 2px solid #000; /* Black border */
-            
             border-radius: 5px;
             padding: 10px;
             font-size: 14px;
@@ -61,33 +60,9 @@
             padding: 5px;
             cursor: pointer;
         }
-
         #stateSelector input[type="radio"] {
             margin-right: 5px;
         }
-
-       /* / * Style for the overlay control */ 
-    .overlay-control {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        z-index: 1000;
-        background: white;
-        padding: 10px;
-        border-radius: 5px;
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-    }
-
-    .overlay-control button {
-        display: block;
-        margin: 5px 0;
-        padding: 5px 10px;
-        border: 1px solid #000; /* Black border for buttons */
-        border-radius: 5px;
-        background-color: #fff; /* White background for buttons */
-        cursor: pointer;
-    }
-
     </style>
 </head>
 <body>
@@ -98,57 +73,41 @@
             <label><input type="radio" name="state" value="westbengal"> West Bengal</label>
         </form>
     </div>
-    
     <script src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'></script>
     <script>
         // Initialize the map
         var map = L.map('map', {
             zoomControl: true // Ensure zoom controls are enabled
         }).setView([19.601, 76.168], 8);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19
-        }).addTo(map);
-
 
         // Define base layers
         var osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19
-        });
+        }).addTo(map);
 
         var satelliteLayer = L.tileLayer('https://{s}.satellite.tile.osm.org/{z}/{x}/{y}.png', { // Replace with actual satellite URL
             maxZoom: 19
         });
-        // Add zoom control explicitly
-        L.control.zoom({
-            position: 'bottomright' // Position it at the bottom right
-        }).addTo(map);
 
-        // Define GeoJSON URLs for Maharashtra
-        var mah_centroid_death_v1 = 'https://geonode.communitygis.in/geoserver/wfs?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode:Mah_centroid_percentDeath&outputFormat=application/json';
+        // Define WMS layers
         var mahWms = L.tileLayer.wms('https://geonode.communitygis.in/geoserver/wms', {
             layers: 'geonode:states_in_india',
             format: 'image/png',
             transparent: 'true',
             cql_filter: `state='Maharashtra'`,
         });
-        var mahPointsLayer;
 
-        // Define GeoJSON URLs for West Bengal
-        var wb_centroid_death_v1 = 'https://geonode.communitygis.in/geoserver/wfs?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode:WB_centroid_percentDeath_V1&outputFormat=application/json';
         var wbWms = L.tileLayer.wms('https://geonode.communitygis.in/geoserver/wms', {
             layers: 'geonode:WB_state',
             format: 'image/png',
             transparent: 'true',
         });
-        var wbPointsLayer;
 
-        // Define styles for the layers
-        // var stateStyle = {
-        //     color: '#000000',
-        //     weight: 2,
-        //     opacity: 1,
-        //     fillOpacity: 0.0
-        // };
+        var mah_centroid_death_v1 = 'https://geonode.communitygis.in/geoserver/wfs?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode:Mah_centroid_percentDeath&outputFormat=application/json';
+        var wb_centroid_death_v1 = 'https://geonode.communitygis.in/geoserver/wfs?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode:WB_centroid_percentDeath_V1&outputFormat=application/json';
+
+        var mahPointsLayer;
+        var wbPointsLayer;
 
         var pointStyle = function(feature) {
             return {
@@ -161,7 +120,6 @@
             };
         };
 
-        // Color function for points based on death_per_ value
         function getColor(d) {
             d = parseFloat(d);
             if (isNaN(d) || d == "#DIV/0!") return '#FFFFFF'; // White for invalid data
@@ -185,7 +143,6 @@
                         return L.geoJson(data, {
                             pointToLayer: function (feature, latlng) {
                                 var marker = L.circleMarker(latlng, pointStyle(feature));
-
                                 var deathPer = parseFloat(feature.properties.SNCU_Death || feature.properties.death_per_);
                                 var roundedDeathPer = !isNaN(deathPer) ? deathPer.toFixed(2) : 'N/A';
                                 marker.bindTooltip(roundedDeathPer + '%', {
@@ -194,7 +151,6 @@
                                     className: 'death-label',
                                     opacity: 0.8
                                 });
-
                                 marker.on('click', function(e) {
                                     var popupContent = `
                                         <div>
@@ -208,7 +164,6 @@
                                         .setContent(popupContent)
                                         .openOn(map);
                                 });
-
                                 return marker;
                             },
                             filter: function (feature) {
@@ -227,17 +182,20 @@
                 });
         }
 
-        // Function to switch layers based on state selection
         function switchState(state) {
             map.eachLayer(function (layer) {
-                if (layer !== map._layers[1]) { // Ensure base layer is not removed
+                if (layer !== osmLayer) { // Ensure base layer is not removed
                     map.removeLayer(layer);
                 }
             });
 
             if (state === 'maharashtra') {
+                map.setView([19.601, 76.168], 8);
                 mahWms.addTo(map);
                 createPointsLayer(mah_centroid_death_v1).then(layer => {
+                    if (mahPointsLayer) {
+                        map.removeLayer(mahPointsLayer);
+                    }
                     mahPointsLayer = layer;
                     if (mahPointsLayer) {
                         mahPointsLayer.addTo(map);
@@ -247,6 +205,9 @@
                 map.setView([23.5726, 87.3639], 9);
                 wbWms.addTo(map);
                 createPointsLayer(wb_centroid_death_v1).then(layer => {
+                    if (wbPointsLayer) {
+                        map.removeLayer(wbPointsLayer);
+                    }
                     wbPointsLayer = layer;
                     if (wbPointsLayer) {
                         wbPointsLayer.addTo(map);
@@ -255,17 +216,15 @@
             }
         }
 
-        // Event listener for radio buttons
         document.getElementById('stateSelector').addEventListener('change', function (e) {
             switchState(e.target.value);
         });
 
-        // Initialize map with Maharashtra data
         switchState('maharashtra');
-        var legend = L.control({position: 'bottomright'});
+
+        var legend = L.control({position: 'bottomleft'});
 
         function addLegend() {
-            var legend = L.control({position: 'bottomleft'});
             legend.onAdd = function () {
                 var div = L.DomUtil.create('div', 'legend');
                 div.innerHTML += '<b>Death Percentage</b><br>';
@@ -278,37 +237,8 @@
             legend.addTo(map);
         }
 
-        // Add the legend to the map
         addLegend();
-        
-        // Overlay control buttons
-        document.getElementById('osmButton').addEventListener('click', function() {
-            map.eachLayer(function (layer) {
-                if (layer !== map._layers[1]) {
-                    map.removeLayer(layer);
-                }
-            });
-            osmLayer.addTo(map);
-        });
 
-        document.getElementById('satelliteButton').addEventListener('click', function() {
-            map.eachLayer(function (layer) {
-                if (layer !== map._layers[1]) {
-                    map.removeLayer(layer);
-                }
-            });
-            satelliteLayer.addTo(map);
-        });
-
-        document.getElementById('noBackgroundButton').addEventListener('click', function() {
-            map.eachLayer(function (layer) {
-                if (layer !== map._layers[1]) {
-                    map.removeLayer(layer);
-                }
-            });
-        });
-
-        
     </script>
 </body>
 </html>
