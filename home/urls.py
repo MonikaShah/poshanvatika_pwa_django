@@ -17,6 +17,8 @@ urlpatterns = [
     path('treecharts/', views.treecharts, name='treecharts'),
     path('VayamUpakram/', views.VayamUpakram, name='VayamUpakram'),
     path('WB_SNCU/', views.WB_SNCU, name='WB_SNCU'),
+    path('MAH_SNCU/', views.MAH_SNCU, name='MAH_SNCU'),
+    path('SNCU/', views.SNCU, name='SNCU'),
 
     path('news/', views.news, name='news'),
     path('howto/', views.howto, name='howto'),

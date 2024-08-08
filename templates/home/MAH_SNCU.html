@@ -1,0 +1,156 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Maharashtra State SNCU Death Percentage</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'static1/leaflet.css' %}" />
+    <style>
+        #map { height: 100vh; }
+        .info {
+            padding: 6px 8px;
+            font: 14px/16px Arial, Helvetica, sans-serif;
+            background: white;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+        .death-label {
+            padding: 2px;
+            font-size: 12px;
+            color:red;
+            
+        }
+        .pincode-label {
+            padding: 2px;
+            font-size: 12px;
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <script src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'></script>
+    <script>
+        // Initialize the map
+        var map = L.map('map').setView([19.601, 76.168], 8);
+
+        // Add a base layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19
+        }).addTo(map);
+
+        // Define GeoJSON URLs
+        // var mah_pincodeSNCU = 'https://geonode.communitygis.in/geoserver/wfs?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode:WB_pincode_withSNCU_v1&outputFormat=application/json';
+        // var mah_state =  'https://geonode.communitygis.in/geoserver/wfs?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode:WB_state&outputFormat=application/json';
+        var mah_centroid_death_v1 = 'https://geonode.communitygis.in/geoserver/wfs?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode:Mah_centroid_percentDeath&outputFormat=application/json';
+
+        var wms = L.tileLayer.wms('https://geonode.communitygis.in/geoserver/wms', {
+				//layer: layer,
+        layers: 'geonode:states_in_india',
+				format: 'image/png',
+				transparent: 'true',
+                cql_filter: `state='Maharashtra'`,
+			});
+      wms.addTo(map);
+    //   var wms1 = L.tileLayer.wms('https://geonode.communitygis.in/geoserver/wms', {
+	// 			//layer: layer,
+    //     layers: 'geonode:WB_pincode_withSNCU_v1',
+	// 			format: 'image/png',
+	// 			transparent: 'true',
+	// 		});
+    //   wms1.addTo(map);
+      var wms2 = L.tileLayer.wms('https://geonode.communitygis.in/geoserver/wms', {
+				//layer: layer,
+        layers: 'geonode:Mah_centroid_percentDeath',
+				format: 'image/png',
+				transparent: 'true',
+			});
+      wms2.addTo(map);
+      
+        // Define styles for the layers
+        
+
+        var stateStyle = {
+            color: '#000000',
+            weight: 2,
+            opacity: 1,
+            fillOpacity: 0.0
+        };
+
+        var pointStyle = function(feature) {
+            return {
+                radius: 8,
+                fillColor: getColor(feature.properties.SNCU_Death),
+                color: "#000", // Black outline
+                weight: 2, // Increased outline width
+                opacity: 1,
+                fillOpacity: 0.8
+            };
+        };
+
+        // Color function for points based on death_per_ value
+        function getColor(d) {
+            if (d == null || isNaN(d) || d == "#DIV/0!") return '#FFFFFF'; // White for 0 or invalid data
+            return d > 6.83 ? '#FF0000' : // Red for 6.84 to 15.27
+                d > 3.56 ? '#FFFF00' : // Yellow for 3.56 to 6.83
+                d > 0.1 ? '#00FF00' : // Green for 0.1 to 3.65
+                d === 0 ? '#FFFFFF' : // White for 0
+                'transparent'; // Transparent for any other case
+        }
+        
+        // Fetch and handle point data
+        fetch(mah_centroid_death_v1)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok. Status: ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data && data.features) {
+                    L.geoJson(data, {
+                        pointToLayer: function (feature, latlng) {
+                            var marker = L.circleMarker(latlng, pointStyle(feature));
+
+                            // Add the death_per_ value as a label on the circleMarker
+                            var deathPer = parseFloat(feature.properties.SNCU_Death);
+                            var roundedDeathPer = !isNaN(deathPer) ? deathPer.toFixed(2) : 'N/A';
+                            marker.bindTooltip(roundedDeathPer + '%', {
+                                permanent: false,
+                                direction: 'right',
+                                className: 'death-label',
+                                opacity: 0.8
+                            });
+
+                            // Add click event to display popup
+                            marker.on('click', function(e) {
+                                var popupContent = `
+                                    <div>
+                                        <b>Death Percentage:</b> ${roundedDeathPer != null ? roundedDeathPer.toString() : 'N/A'}<br>
+                                        <b>SNCU Name:</b> ${feature.properties.unit_name || 'Unknown'}<br>
+                                        <b>Address:</b> ${feature.properties.Adress || 'Unknown'}
+                                    </div>
+                                `;
+                                L.popup()
+                                    .setLatLng(e.latlng)
+                                    .setContent(popupContent)
+                                    .openOn(map);
+                            });
+
+                            return marker;
+                        },
+                        filter: function (feature) {
+                            var d = feature.properties.SNCU_Death;
+                            return d != null && !isNaN(d) && (d >= 0 && d <= 4.7 || d > 4.7 && d <= 10.0 || d > 10.0);
+                        }
+                    }).addTo(map);
+                } else {
+                    console.error('Invalid GeoJSON data for points. Data or features may be missing.');
+                }
+            })
+            .catch(error => console.error('Error fetching point data:', error));
+    </script>
+</body>
+</html>

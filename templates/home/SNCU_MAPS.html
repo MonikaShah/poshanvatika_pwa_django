@@ -1,0 +1,203 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>State SNCU Death Percentage</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'static1/leaflet.css' %}" />
+    <style>
+        #map { height: 100vh; }
+        .info {
+            padding: 6px 8px;
+            font: 14px/16px Arial, Helvetica, sans-serif;
+            background: white;
+            background: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+        }
+        .death-label {
+            padding: 2px;
+            font-size: 12px;
+            color: red;
+        }
+        .pincode-label {
+            padding: 2px;
+            font-size: 12px;
+            color: blue;
+        }
+        /* Custom CSS for positioning zoom controls */
+        .leaflet-control-zoom {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: white;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <div style="position: absolute; top: 10px; left: 10px; z-index: 1000; background: white; padding: 10px; border-radius: 5px; box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);">
+        <form id="stateSelector">
+            <label><input type="radio" name="state" value="maharashtra" checked> Maharashtra</label><br>
+            <label><input type="radio" name="state" value="westbengal"> West Bengal</label>
+        </form>
+    </div>
+    <script src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'></script>
+    <script>
+        // Initialize the map
+        var map = L.map('map', {
+            zoomControl: true // Enable zoom controls
+        }).setView([19.601, 76.168], 8);
+
+        // Add a base layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19
+        }).addTo(map);
+
+        // Define GeoJSON URLs for Maharashtra
+        var mah_centroid_death_v1 = 'https://geonode.communitygis.in/geoserver/wfs?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode:Mah_centroid_percentDeath&outputFormat=application/json';
+        var mahWms = L.tileLayer.wms('https://geonode.communitygis.in/geoserver/wms', {
+            layers: 'geonode:states_in_india',
+            format: 'image/png',
+            transparent: 'true',
+            cql_filter: `state='Maharashtra'`,
+        });
+        var mahPointsLayer;
+
+        // Define GeoJSON URLs for West Bengal
+        var wb_centroid_death_v1 = 'https://geonode.communitygis.in/geoserver/wfs?service=WFS&version=1.0.0&request=GetFeature&typeName=geonode:WB_centroid_percentDeath_V1&outputFormat=application/json';
+        var wbWms = L.tileLayer.wms('https://geonode.communitygis.in/geoserver/wms', {
+            layers: 'geonode:WB_state',
+            format: 'image/png',
+            transparent: 'true',
+        });
+        var wbPointsLayer;
+
+        // Define styles for the layers
+        var stateStyle = {
+            color: '#000000',
+            weight: 2,
+            opacity: 1,
+            fillOpacity: 0.0
+        };
+
+        var pointStyle = function(feature) {
+            return {
+                radius: 8,
+                fillColor: getColor(feature.properties.SNCU_Death || feature.properties.death_per_),
+                color: "#000",
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.8
+            };
+        };
+
+        // Color function for points based on death_per_ value
+        function getColor(d) {
+            d = parseFloat(d);
+            if (isNaN(d) || d == "#DIV/0!") return '#FFFFFF'; // White for invalid data
+            return d > 6.83 ? '#FF0000' : // Red for 6.84 to 15.27
+                   d > 3.56 ? '#FFFF00' : // Yellow for 3.56 to 6.83
+                   d > 0.1 ? '#00FF00' : // Green for 0.1 to 3.65
+                   d === 0 ? '#FFFFFF' : // White for 0
+                   'transparent'; // Transparent for any other case
+        }
+
+        function createPointsLayer(geojsonUrl) {
+            return fetch(geojsonUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok. Status: ' + response.status);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data && data.features) {
+                        return L.geoJson(data, {
+                            pointToLayer: function (feature, latlng) {
+                                var marker = L.circleMarker(latlng, pointStyle(feature));
+
+                                var deathPer = parseFloat(feature.properties.SNCU_Death || feature.properties.death_per_);
+                                var roundedDeathPer = !isNaN(deathPer) ? deathPer.toFixed(2) : 'N/A';
+                                marker.bindTooltip(roundedDeathPer + '%', {
+                                    permanent: false,
+                                    direction: 'right',
+                                    className: 'death-label',
+                                    opacity: 0.8
+                                });
+
+                                marker.on('click', function(e) {
+                                    var popupContent = `
+                                        <div>
+                                            <b>Death Percentage:</b> ${roundedDeathPer}<br>
+                                            <b>SNCU Name:</b> ${feature.properties.unit_name || feature.properties.sncu_name_ || 'Unknown'}<br>
+                                            <b>Address:</b> ${feature.properties.Adress || feature.properties.pincode || 'Unknown'}
+                                        </div>
+                                    `;
+                                    L.popup()
+                                        .setLatLng(e.latlng)
+                                        .setContent(popupContent)
+                                        .openOn(map);
+                                });
+
+                                return marker;
+                            },
+                            filter: function (feature) {
+                                var d = parseFloat(feature.properties.SNCU_Death || feature.properties.death_per_);
+                                return !isNaN(d) && (d >= 0 && d <= 4.7 || d > 4.7 && d <= 10.0 || d > 10.0);
+                            }
+                        });
+                    } else {
+                        console.error('Invalid GeoJSON data for points. Data or features may be missing.');
+                        return null;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching point data:', error);
+                    return null;
+                });
+        }
+
+        // Function to switch layers based on state selection
+        function switchState(state) {
+            map.eachLayer(function (layer) {
+                if (layer !== map._layers[1]) { // Ensure base layer is not removed
+                    map.removeLayer(layer);
+                }
+            });
+
+            if (state === 'maharashtra') {
+                mahWms.addTo(map);
+                createPointsLayer(mah_centroid_death_v1).then(layer => {
+                    mahPointsLayer = layer;
+                    if (mahPointsLayer) {
+                        mahPointsLayer.addTo(map);
+                    }
+                });
+                map.setView([19.601, 76.168], 8); // Set the correct view and zoom for Maharashtra
+            } else if (state === 'westbengal') {
+                map.setView([23.5726, 87.6639], 9); // Set the correct view and zoom for West Bengal
+                wbWms.addTo(map);
+                createPointsLayer(wb_centroid_death_v1).then(layer => {
+                    wbPointsLayer = layer;
+                    if (wbPointsLayer) {
+                        wbPointsLayer.addTo(map);
+                    }
+                });
+            }
+        }
+
+        // Event listener for radio buttons
+        document.getElementById('stateSelector').addEventListener('change', function (e) {
+            switchState(e.target.value);
+        });
+
+        // Initialize map with Maharashtra data
+        switchState('maharashtra');
+    </script>
+</body>
+</html>

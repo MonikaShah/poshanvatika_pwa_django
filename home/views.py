@@ -411,6 +411,11 @@ def VayamUpakram(request):
 def WB_SNCU(request):
     return render(request, "home/WB_SNCU.html")
 
+def SNCU(request):
+    return render(request, "home/SNCU_MAPS.html")
+def MAH_SNCU(request):
+    return render(request, "home/MAH_SNCU.html")
+
 def treecensus(request):
     tree = CensusTable.objects.all()
     tree_satara = CensusTable.objects.filter(name_of_the_ulb='Satara Municipal Council')
