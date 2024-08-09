@@ -147,20 +147,20 @@
                             var deathPer = parseFloat(feature.properties.SNCU_Death).toFixed(2);
 
                             if (isNaN(deathPer) || deathPer === null) {
-                                categoryCounts['gray'] += 1;
+                                categoryCounts['white'] += 1;
                             } else if (deathPer > 6.84) {
                                 categoryCounts['red'] += 1;
                             } else if (deathPer > 3.65) {
                                 categoryCounts['yellow'] += 1;
-                            } else if (deathPer > 0.01) {
+                            } else if (deathPer >= 0) {
                                 categoryCounts['green'] += 1;
                             } else {
-                                categoryCounts['white'] += 1;
+                                categoryCounts['gray'] += 1;
                             }
 
                             var marker = L.circleMarker([feature.geometry.coordinates[1], feature.geometry.coordinates[0]], {
                                 radius: 10,
-                                fillColor: isNaN(deathPer) ? '#808080' : deathPer > 6.84 ? '#d31717' : deathPer > 3.65 ? '#e5b009' : deathPer > 0.01 ? '#0b6b1b' : '#FFFFFF',
+                                fillColor: isNaN(deathPer) ? '#FFFFFF' : deathPer > 6.84 ? '#d31717' : deathPer > 3.65 ? '#e5b009' : deathPer >= 0 ? '#0b6b1b' : '#808080',
                                 color: "#000",
                                 weight: 2,
                                 opacity: 1,
@@ -200,12 +200,9 @@
                                         <th>Death %</th>
                                         <th>Count</th>
                                     </tr>
+                                    
                                     <tr>
-                                        <td><i style="background: #FFFFFF;"></i> 0</td>
-                                        <td>${categoryCounts['white']}</td>
-                                    </tr>
-                                    <tr>
-                                        <td><i style="background: #0b6b1b;"></i> 0.01% - 3.65%</td>
+                                        <td><i style="background: #0b6b1b;"></i> 0% - 3.65%</td>
                                         <td>${categoryCounts['green']}</td>
                                     </tr>
                                     <tr>
@@ -217,8 +214,8 @@
                                         <td>${categoryCounts['red']}</td>
                                     </tr>
                                     <tr>
-                                        <td><i style="background: #808080;"></i> NaN</td>
-                                        <td>${categoryCounts['gray']}</td>
+                                        <td><i style="background: #FFFFFF;"></i> 0</td>
+                                        <td>${categoryCounts['white']}</td>
                                     </tr>
                                 </table>
                             `;
