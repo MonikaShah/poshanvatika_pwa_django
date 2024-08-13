@@ -82,3 +82,6 @@ class CreateUserForm(UserCreationForm):
 #             if commit:
 #                 user.save()
 #             return user
+
+class AutoCADFileUploadForm(forms.Form):
+    file = forms.FileField(label='Select AutoCAD file')
