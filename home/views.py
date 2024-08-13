@@ -51,6 +51,7 @@ from django.contrib import messages
 from django.conf import settings
 import os
 from django.shortcuts import render
+
 def upload_autocadFiles(request):
     if request.method == 'POST':
         form = AutoCADFileUploadForm(request.POST, request.FILES)
@@ -62,11 +63,13 @@ def upload_autocadFiles(request):
             existing_files = []
             unsupported_files = []
 
+            # Set the external mount path
+            directory_path = '/mnt/HC_Volume_22591574/autocadfiles'
+            
             for file in files:
                 # Check file extension
-                if file.name.endswith(('.xml', '.csv')):
+                if file.name.endswith(('.dxf', '.dwg')):
                     # Ensure the directory exists
-                    directory_path = os.path.join(settings.MEDIA_ROOT, 'data/autocadfiles')
                     if not os.path.exists(directory_path):
                         os.makedirs(directory_path, exist_ok=True)
 
@@ -103,6 +106,59 @@ def upload_autocadFiles(request):
         form = AutoCADFileUploadForm()
 
     return render(request, 'home/upload.html', {'form': form})
+
+# def upload_autocadFiles(request):
+#     if request.method == 'POST':
+#         form = AutoCADFileUploadForm(request.POST, request.FILES)
+#         upload_type = request.POST.get('uploadType')
+
+#         if form.is_valid():
+#             files = request.FILES.getlist('file')
+#             uploaded_files = []
+#             existing_files = []
+#             unsupported_files = []
+
+#             for file in files:
+#                 # Check file extension
+#                 if file.name.endswith(('.dxf', '.dwg')):
+#                     # Ensure the directory exists
+#                     directory_path = os.path.join(settings.MEDIA_ROOT, 'data/autocadfiles')
+#                     if not os.path.exists(directory_path):
+#                         os.makedirs(directory_path, exist_ok=True)
+
+#                     # Construct the full file path
+#                     file_path = os.path.join(directory_path, file.name)
+
+#                     # Check if the file already exists
+#                     if os.path.exists(file_path):
+#                         existing_files.append(file.name)
+#                     else:
+#                         # Save the file to the desired location
+#                         with open(file_path, 'wb+') as destination:
+#                             for chunk in file.chunks():
+#                                 destination.write(chunk)
+#                         uploaded_files.append(file.name)
+#                 else:
+#                     unsupported_files.append(file.name)
+
+#             # Create messages with counts
+#             if uploaded_files:
+#                 messages.success(request, f"Files uploaded successfully: {', '.join(uploaded_files)}. Total uploaded: {len(uploaded_files)}")
+            
+#             if existing_files:
+#                 messages.error(request, f"Files already exist: {', '.join(existing_files)}. Total existing: {len(existing_files)}")
+            
+#             if unsupported_files:
+#                 messages.error(request, f"Unsupported files: {', '.join(unsupported_files)}. Total unsupported: {len(unsupported_files)}")
+
+#             return render(request, 'home/upload.html', {'form': form})
+
+#         else:
+#             messages.error(request, "Form is not valid.")
+#     else:
+#         form = AutoCADFileUploadForm()
+
+#     return render(request, 'home/upload.html', {'form': form})
 # def upload_autocadFiles(request):
 #     if request.method == 'POST':
 #         form = AutoCADFileUploadForm(request.POST, request.FILES)
