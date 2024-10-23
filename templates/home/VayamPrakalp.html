@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,8 +6,9 @@
     <title>Palghar And Nashik Pada Maps</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-    
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <!-- <script src="https://unpkg.com/leaflet-kml@latest/leaflet-kml.js"></script> -->
+    <script src="https://unpkg.com/leaflet-omnivore@0.3.3/leaflet-omnivore.min.js"></script>
     <style>
         #map {
             height: 800px;
@@ -30,6 +31,15 @@
             height: 20px;
             margin-right: 5px;
             border: 1px solid #777;
+        }
+        .legend-color1 {
+            display: inline-block;
+            width: 20px; /* Width of the circle */
+            height: 20px; /* Height of the circle */
+            margin-right: 5px; /* Space between the circle and the text */
+            background-color: #4b8011; /* Color of the circle */
+            border-radius: 50%; /* Makes the element circular */
+            cursor: pointer;    
         }
         
     </style>
@@ -80,6 +90,7 @@
         <div class="legend-item">
             <div class="legend-color" style="background-color: orange ;"></div> जंगलजिवीका
         </div>
+       
         <div class="legend-item">
             <div class="legend-color" style="background-color: rgb(7, 180, 7);"></div> पाडोपाडी स्वराज्य
         </div>
@@ -98,7 +109,76 @@
         <div class="legend-item">
             <div class="legend-color" style="background-color: blue"></div> पेसा जागरण
         </div>
-        
+        <hr>
+        <div class="legend-item" style="margin-left: 20px;">
+            <div class="legend-color1" style="background-color: #4CAF50 ;cursor: pointer;" onclick="toggleTable()"></div> Tree plantations
+            <table id="legend-table" style=" margin-top: 10px;">
+                <thead>
+                    <tr>
+                        <th>Village</th>
+                        <th>Plantation</th>
+                        <th>Mortality (Sept-24)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Chinchwadi</td>
+                        <td>1685</td>
+                        <td>86</td>
+                    </tr>
+                    <tr>
+                        <td>Devichapada</td>
+                        <td>935</td>
+                        <td>37</td>
+                    </tr>
+                    <tr>
+                        <td>Bejpada</td>
+                        <td>660</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>khairmal</td>
+                        <td>161</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>Vanvasipada</td>
+                        <td>287</td>
+                        <td>11</td>
+                    </tr>
+                    <tr>
+                        <td>Vazarepada</td>
+                        <td>215</td>
+                        <td>32</td>
+                    </tr>
+                    <tr>
+                        <td>Sadadpana</td>
+                        <td>425</td>
+                        <td>25</td>
+                    </tr>
+                    <tr>
+                        <td>Bormal</td>
+                        <td>260</td>
+                        <td>15</td>
+                    </tr>
+                    <tr>
+                        <td>Ranpada</td>
+                        <td>637</td>
+                        <td>74</td>
+                    </tr>
+                    <tr>
+                        <td>Bardapada</td>
+                        <td>1796</td>
+                        <td>54</td>
+                    </tr>
+                    <tr>
+                        <td><b>Total</b></td>
+                        <td><b>7061</b></td>
+                        <td><b>344</b></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         <!-- Add more legend items for other layers -->
     </div>
 </div>
@@ -107,7 +187,7 @@
 <script>
     // Initialize the map
     // var map = L.map('map').setView([0, 0], 2);
-    let mymap = L.map('map',{ scrollWheelZoom: false }).setView([19.732,73.45], 10);
+    let mymap = L.map('map',{ scrollWheelZoom: false }).setView([19.952,73.25], 10.5);
 
     // Add OpenStreetMap layer by default
     // var baseLayer = L.
@@ -139,7 +219,16 @@
           });
     
     // var wms_layer = L.tileLayer.wms('https://geoserver2.communitygis.net/geoserver/wms',{
-    
+    var kmlLayer = L.tileLayer.wms('https://geonode.communitygis.in/geoserver/geonode/wms',{
+          layers: 'merged_jungle_jivika_trees',
+          format: 'image/png',
+          transparent: 'true',
+          opacity:'0.9',
+        //   cql_filter: `junglejivi='1'`,
+        //   styles:'Agrani_villages',
+          });
+        
+
     var wms_layer1 = L.tileLayer.wms('https://geonode.communitygis.in/geoserver/geonode/wms',{
           layers: 'nashik_palghar_pada_13feb24',
           format: 'image/png',
@@ -196,8 +285,16 @@
         
         if (document.getElementById('junglejivi').checked) {
             mymap.addLayer(wms_layer);
+            mymap.addLayer(kmlLayer);
+            // Add the KML layer to the map
+            // kmlLayer.on("loaded", function(e) {
+            // mymap.fitBounds(e.target.getBounds());
+            // });
+
+            // map.addLayer(kmlLayer);
         } else {
             mymap.removeLayer(wms_layer);
+            mymap.removeLayer(kmlLayer);
         }
         if (document.getElementById('padopadi_swaraj').checked) {
             mymap.addLayer(wms_layer1);
@@ -359,6 +456,16 @@ function Identify(e) {
     }
  });
 }
+
+// function toggleTable() {
+//     var table = document.getElementById("legend-table");
+//     if (table.style.display === "none") {
+//         table.style.display = "table";
+//     } else {
+//         table.style.display = "none";
+//     }
+// }
+
 </script>
 
 
