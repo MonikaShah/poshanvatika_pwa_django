@@ -19,6 +19,7 @@ urlpatterns = [
     path('WB_SNCU/', views.WB_SNCU, name='WB_SNCU'),
     path('MAH_SNCU/', views.MAH_SNCU, name='MAH_SNCU'),
     path('upload_autocadFiles/', views.upload_autocadFiles, name='upload_autocadFiles'),
+    path('ruTAG/', views.ruTAG, name='ruTAG'),
     # path('SNCU/', views.SNCU, name='SNCU'),
 
     path('news/', views.news, name='news'),

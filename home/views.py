@@ -604,6 +604,9 @@ def myPoshan(request):
 def VayamUpakram(request):
     return render(request, "home/VayamPrakalp.html")
 
+def ruTAG(request):
+    return render(request, "home/ruTAG.html")
+
 def WB_SNCU(request):
     return render(request, "home/WB_SNCU.html")
 
