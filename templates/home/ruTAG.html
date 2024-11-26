@@ -136,10 +136,18 @@
 
                     // Click popup
                     const otherFields = Object.entries(feature.properties)
-                        .filter(([key]) => key !== 'ruTAG_Name')
-                        .map(([key, value]) => `<b>${key}:</b> ${value}`)
-                        .join('<br>');
-                    layer.bindPopup(`<b>Rutag Name:</b> ${rutagName}<br>${otherFields}`);
+                    .filter(([key]) => !['fid', 'id', 'ruTAG_Name', 'area','ruTAG_Sate',].includes(key)) // Exclude these keys                        .map(([key, value]) => `<b>${key}:</b> ${value}`)
+                    .map(([key, value]) => {
+                    // Rename specific keys
+                    if (key === 'district') key = 'District';
+                    if (key === 'state') key = 'State';
+                    if (key === 'ruTAG_Fund') key = 'Funded By';
+                    if (key === 'rutag_no_o') key = 'Technology Count';
+
+                return `<b>${key}:</b> ${value}`;
+            })
+                    .join('<br>');
+                    layer.bindPopup(`<b>Technology Name:</b> ${rutagName}<br>${otherFields}`);
                 }
             });
 
